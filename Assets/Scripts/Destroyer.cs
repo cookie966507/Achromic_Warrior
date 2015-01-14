@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Destroyer : MonoBehaviour {
+public class Destroyer : MonoBehaviour
+{
 	public bool _destroyDelay = false;
 	public float _lifeTime = 3f;
 

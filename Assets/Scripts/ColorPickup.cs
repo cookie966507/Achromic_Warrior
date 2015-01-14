@@ -6,7 +6,7 @@ public class ColorPickup : MonoBehaviour
 {
 
 	private float _amount;
-	private ColorElement _color = ColorElement.White;
+	private ColorElement _color;
 
 
 	void Start ()
