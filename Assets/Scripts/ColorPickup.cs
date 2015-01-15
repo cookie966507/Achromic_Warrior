@@ -28,10 +28,13 @@ public class ColorPickup : MonoBehaviour
 			Destroy(gameObject);
 		}
 		*/
-		if(rigidbody2D.velocity.y <= 0 && col.transform.tag.Equals("ground"))
+		if(col.transform.tag.Equals("ground"))
 		{
-			rigidbody2D.velocity = Vector2.zero;
-			Destroy (rigidbody2D);
+			if(rigidbody2D.velocity.y <= 0)
+			{
+				rigidbody2D.velocity = Vector2.zero;
+				Destroy (rigidbody2D);
+			}
 		}
 	}
 
