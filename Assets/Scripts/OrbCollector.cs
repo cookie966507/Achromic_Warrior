@@ -16,7 +16,8 @@ public class OrbCollector : MonoBehaviour
 	{
 		if(col.transform.tag.Equals("orb"))
 		{
-			_player.AddColor(CustomColor.GetColor(col.transform.GetComponent<ColorPickup>().ColorType));
+			ColorPickup _orb = col.transform.GetComponent<ColorPickup>();
+			_player.AddColor(CustomColor.GetColor(_orb.ColorType), _orb.Amount);
 			Destroy(col.gameObject);
 		}
 	}

@@ -5,7 +5,7 @@ using Assets.Scripts.Enums;
 public class ColorPickup : MonoBehaviour
 {
 
-	private float _amount;
+	private float _amount = 10;
 	private ColorElement _color;
 
 
@@ -33,7 +33,8 @@ public class ColorPickup : MonoBehaviour
 			if(rigidbody2D.velocity.y <= 0)
 			{
 				rigidbody2D.velocity = Vector2.zero;
-				Destroy (rigidbody2D);
+				rigidbody2D.gravityScale = 0;
+				//Destroy (rigidbody2D);
 			}
 		}
 	}
