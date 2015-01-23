@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Enums;
 
+/*
+ * Armor of the player
+ * Will probably contain more effects later
+ * Just updates the color
+ */
 public class PlayerArmor : MonoBehaviour {
 
-	public void UpdateArmor(Vector3 _color)
+	public void UpdateArmor(ColorElement _color)
 	{
-		//for each piece of armor, update the color
-		//renderer.material.color = _color;
+		this.renderer.material.color = CustomColor.GetColor(_color);
+	}
+	public void UpdateArmor(Color _color)
+	{
+		this.renderer.material.color = _color;
 	}
 }

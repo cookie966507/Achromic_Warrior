@@ -1,34 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * Class controlling the player's camera
+ */
 public class CameraController : MonoBehaviour
 {
+	//target to follow
+	private Transform _target;
 
-	private Transform _target; //target to follow
+	//speed of the camera
+	private float _speed = 0.1f;
 
-	private float _speed = 0.1f; //speed of the camera
+	//refs for smooth damp
+	private float _xVel;
+	private float _yVel;
 
-	private float _xVel; //ref for smooth damp
-	private float _yVel; //ref for smooth damp
+	//target position
+	private float _x;
+	private float _y;
 
-	private float _x; //target x
-	private float _y; //target y
-	private float _currX; //current x
-	private float _currY; //current y
+	//current positions
+	private float _currX;
+	private float _currY;
 
 	void Start ()
 	{
-		_target = GameObject.Find("Player Camera Target").transform; //find target
+		//find target
+		_target = GameObject.Find("Player Camera Target").transform;
 	}
 	
 	void Update ()
 	{
+		//get target position
 		_x = _target.position.x;
 		_y = _target.position.y;
 
+		//update current values
 		_currX = Mathf.SmoothDamp(_currX, _x, ref _xVel, _speed);
 		_currY = Mathf.SmoothDamp(_currY, _y, ref _yVel, _speed);
 
+		//apply change
 		this.transform.position = new Vector3(_currX, _currY, this.transform.position.z);
 
 	}

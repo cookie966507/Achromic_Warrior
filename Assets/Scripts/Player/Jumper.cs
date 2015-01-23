@@ -1,23 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * Class controlling a characters ability to jump;
+ */
 public class Jumper : MonoBehaviour
 {
-	private float _force = 10;
+	//force upward
+	public float _force = 10;
 
+	//determine if able to jump
 	public bool CanJump()
 	{
+		//on the ground
 		bool _grounded = false;
 
-		RaycastHit2D _hit = Physics2D.Raycast(this.transform.position, Vector3.down, 0.1f, (1 << LayerMask.NameToLayer("terrain")));
+		//layers to collide with
+		int _layerMask = (1 << LayerMask.NameToLayer("player")) | (1 << LayerMask.NameToLayer("orb_collector"));
+		//compliment to collide with all EXCEPT these layers
+		_layerMask = ~_layerMask;
+
+		//raycast to see if we can jump off of something
+		RaycastHit2D _hit = Physics2D.Raycast(this.transform.position, Vector3.down, 0.1f, _layerMask);
+		//if we hit something
 		if(_hit.collider != null)
 		   {
+			//if falling down
 			if(this.transform.parent.rigidbody2D.velocity.y <= 0f)
 			{
+				//character is able to jump
 				_grounded = true;
 			}
 		}
-
 		return _grounded;
 	}
 

@@ -2,39 +2,39 @@
 using System.Collections;
 using Assets.Scripts.Enums;
 
+/*
+ * Class for picking up colors
+ */
 public class ColorPickup : MonoBehaviour
 {
-
-	private float _amount = 10;
+	//amount to add to color
+	private float _amount = 50;
+	//what kind of color pickup
 	private ColorElement _color;
 
 
 	void Start ()
 	{
+		//color the orb based on the assign color; stick with rgb for now
 		if(_color.Equals(ColorElement.Red)) renderer.material.color = Color.red;
 		else if(_color.Equals(ColorElement.Green)) renderer.material.color = Color.green;
 		else if(_color.Equals(ColorElement.Blue)) renderer.material.color = Color.blue;
 
 		else Debug.LogError("Colors for orbs should just be rgb");
-
-		Destroy (this.gameObject, 10f);
 	}
 
+	//pickup collides with something
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		/*    Make Player check for this
-		if(col.transform.tag.Equals("Player"))
-		{
-			Destroy(gameObject);
-		}
-		*/
+		//if the pickup hits the ground
 		if(col.transform.tag.Equals("ground"))
 		{
+			//if falling down
 			if(rigidbody2D.velocity.y <= 0)
 			{
+				//stop velocity
 				rigidbody2D.velocity = Vector2.zero;
 				rigidbody2D.gravityScale = 0;
-				//Destroy (rigidbody2D);
 			}
 		}
 	}

@@ -4,7 +4,7 @@ using Assets.Scripts.Enums;
 
 public static class CustomColor
 {
-
+	//get color based on enum element
 	public static Color GetColor(ColorElement _color)
 	{
 		switch(_color)
@@ -54,6 +54,7 @@ public static class CustomColor
 		return new Color(0f, 0f, 0f);
 	}
 
+	//converting colors if using 0-255 instead of 0-1
 	public static Color ConvertColor(float r, float g, float b){
 		Color color = new Color(r/255, g/255, b/255);
 		return color;
