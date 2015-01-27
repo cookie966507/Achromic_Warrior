@@ -7,17 +7,12 @@ using Assets.Scripts.Enums;
  */
 public class TrainingDummy : Enemy
 {
-	void Start()
+	protected override void StartUp()
 	{
-		//call base enemy init
-		base.Init();
 	}
 
-	void Update()
+	protected override void Run()
 	{
-		//call base enemy update hit
-		base.UpdateHit();
-
 		//specific to training dummys and the hingejoint2D components attached to them
 		if(_player.transform.position.x - this.transform.position.x < 0 && this.transform.localScale.x > 0)
 		{

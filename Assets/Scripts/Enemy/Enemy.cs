@@ -5,7 +5,7 @@ using Assets.Scripts.Enums;
 /*
  * Base enemy class
  */
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
 	//color element associated with the enemy
 	public ColorElement _color;
@@ -27,12 +27,19 @@ public class Enemy : MonoBehaviour
 	
 	void Start () {
 		Init();
+        StartUp();
 	}
 
 	void Update()
 	{
 		UpdateHit();
+        Run();
 	}
+
+    //subclasses should implement these instead of Start() and Update() 
+    //so we can control enemy globals easily from this class
+    protected abstract void Run();
+    protected abstract void StartUp();
 
 	// Produces the orbs
 	public void ProduceOrbs(int _num)
