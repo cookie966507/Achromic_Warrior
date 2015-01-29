@@ -47,7 +47,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 125
+  spritePixelsToUnits: 500
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -56,100 +56,100 @@ TextureImporter:
     - name: numbers_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 195
-        width: 36
-        height: 56
+        x: 11
+        y: 767
+        width: 151
+        height: 255
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_1
       rect:
         serializedVersion: 2
-        x: 67
-        y: 196
-        width: 21
-        height: 54
+        x: 289
+        y: 772
+        width: 103
+        height: 246
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_2
       rect:
         serializedVersion: 2
-        x: 123
-        y: 196
-        width: 37
-        height: 55
+        x: 524
+        y: 772
+        width: 146
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_3
       rect:
         serializedVersion: 2
-        x: 183
-        y: 195
-        width: 36
-        height: 56
+        x: 774
+        y: 768
+        width: 143
+        height: 253
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_4
       rect:
         serializedVersion: 2
-        x: 2
-        y: 108
-        width: 40
-        height: 54
+        x: 6
+        y: 421
+        width: 167
+        height: 246
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_5
       rect:
         serializedVersion: 2
-        x: 65
-        y: 107
-        width: 35
-        height: 55
+        x: 265
+        y: 417
+        width: 151
+        height: 259
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_6
       rect:
         serializedVersion: 2
-        x: 124
-        y: 107
-        width: 37
-        height: 56
+        x: 519
+        y: 416
+        width: 151
+        height: 255
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_7
       rect:
         serializedVersion: 2
-        x: 183
-        y: 108
-        width: 37
-        height: 54
+        x: 775
+        y: 421
+        width: 146
+        height: 246
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_8
       rect:
         serializedVersion: 2
-        x: 4
-        y: 19
-        width: 36
-        height: 56
+        x: 11
+        y: 64
+        width: 151
+        height: 254
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: numbers_9
       rect:
         serializedVersion: 2
-        x: 63
-        y: 19
-        width: 36
-        height: 56
+        x: 265
+        y: 64
+        width: 151
+        height: 255
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
