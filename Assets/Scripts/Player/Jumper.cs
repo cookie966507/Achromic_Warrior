@@ -16,7 +16,7 @@ public class Jumper : MonoBehaviour
 		bool _grounded = false;
 
 		//layers to collide with
-		int _layerMask = (1 << LayerMask.NameToLayer("player")) | (1 << LayerMask.NameToLayer("orb_collector"));
+		int _layerMask = (1 << LayerMask.NameToLayer("player")) | (1 << LayerMask.NameToLayer("orb_collector") | (1 << LayerMask.NameToLayer("Default")));
 		//compliment to collide with all EXCEPT these layers
 		_layerMask = ~_layerMask;
 
