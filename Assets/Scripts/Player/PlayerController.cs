@@ -7,14 +7,12 @@ using Assets.Scripts;
  */
 public class PlayerController : MonoBehaviour
 {
-	//reference to the plyer
-	//private Player _player;
 	//reference to the jumper
 	private Jumper _jumper;
 	//jump button pressed
 	private bool _jump = false;
 	//how much control you have in the air
-	private float _airControl = 0.1f;
+	private float _airControl = 0.3f;
 
 	//reference to the attack
 	public PlayerAttack _attack;
@@ -28,16 +26,27 @@ public class PlayerController : MonoBehaviour
 	//capping the speed of the player
 	public float _maxSpeed = 4f;
 
+	//for seeing if we pressed the down button once during the double tap
+	private float _downTimer = 0f;
+	private float _downDelay = 0.5f;
+	private bool _downFirstPress = false;
+
+	//for ghosting through platforms
+	private float _ghostTimer = 0f;
+	private float _ghostDelay = 0.5f;
+	private bool _ghost = false;
+
+	//cheat for tricking Unity when dealing with collision magic
+	private BoxCollider2D _playerCollider;
+	private bool _colSwitch = false;
+
+
 	void Awake()
 	{
 		//find jumper
 		_jumper = this.GetComponentInChildren<Jumper>();
-	}
-
-	void Start ()
-	{
-		//find player
-		//_player = GameObject.Find("player").GetComponent<Player>();
+		//find collider
+		_playerCollider = this.GetComponent<BoxCollider2D>();
 	}
 	
 	void Update () {
@@ -52,8 +61,64 @@ public class PlayerController : MonoBehaviour
 		{
 			_attack.gameObject.SetActive(true);
 		}
+
+		//if our cheat is on, out collider is off, so we need to tun it back on
+		if(_colSwitch)
+		{
+			_colSwitch = false;
+			_playerCollider.enabled = true;
+		}
+
+		//if the button has been pressed once
+		if(_downFirstPress) _downTimer += Time.deltaTime;
+
+		//if down is pressed
+		if(CustomInput.DownFreshPress)
+		{
+			//and it is the first time
+			if(!_downFirstPress){
+				//set down as being pressed
+				_downFirstPress = true;
+				_downTimer = 0f;
+			}
+			//second press
+			else
+			{
+				//took too long to double tap
+				if(_downTimer > _downDelay)
+				{
+					//reset we have pushed down once
+					_downFirstPress = true;
+					_downTimer = 0f;
+				}
+				//double tapped in time
+				else
+				{
+					//we should be ghosting
+					_ghost = true;
+					_ghostTimer = 0f;
+					_downFirstPress = false;
+					//turn on the cheat for collision stuff
+					_colSwitch = true;
+					_playerCollider.enabled = false;
+				}
+			}
+		}
+		//if ghosting
+		if(_ghost) _ghostTimer += Time.deltaTime;
+
+		//if ghosting is over
+		if(_ghostTimer > _ghostDelay)
+		{
+			_ghost = false;
+			_ghostTimer = 0;
+		}
+
+		//ignore collision between the player and platforms
+		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("platform"), _ghost);
 	}
 
+	//fixed update runs on a timed cycle (for physics stuff)
 	void FixedUpdate ()
 	{
 		//caching the horizontal input
@@ -103,16 +168,28 @@ public class PlayerController : MonoBehaviour
 	{
 		// Switch the way the player is labelled as facing.
 		_facingRight = !_facingRight;
-		
+
+		//sprites should be separate from the collider to get rid of weird collision stuff (that I understand)
+		Transform _sprites = transform.FindChild("Sprites");
 		// Multiply the player's x local scale by -1.
-		Vector3 _scale = transform.localScale;
+		Vector3 _scale = _sprites.localScale;
 		_scale.x *= -1;
-		transform.localScale = _scale;
+		_sprites.localScale = _scale;
 	}
 
 	//updating the max speed; this will control how fast the player moves
 	public void UpdateSpeed(float _maxSpeed)
 	{
 		this._maxSpeed = _maxSpeed;
+	}
+
+	//getter-setter for ghosting
+	public bool Ghost
+	{
+		get{return _ghost;}
+		set{
+			_ghost = value;
+			_ghostTimer = 0f;
+		}
 	}
 }
