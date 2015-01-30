@@ -4,12 +4,15 @@ using System.Collections;
 /*
  * Follows a target exactly
  */
-public class FollowTarget : MonoBehaviour
+namespace Assets.Scripts.Util
 {
-	public Transform _target;
+    public class FollowTarget : MonoBehaviour
+    {
+        public Transform _target;
 
-	void Update ()
-	{
-		this.transform.position = _target.position;
-	}
+        void Update()
+        {
+            this.transform.position = _target.position;
+        }
+    }
 }
