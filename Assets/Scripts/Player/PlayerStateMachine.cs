@@ -8,7 +8,7 @@ namespace Assets.Scripts.Player
     /* This file controls all of the transitions between states*/
     class PlayerStateMachine
     {
-        public static enum State { idle = 0, move, jump, inAir, attack1, attack2, attack3, movingAttack, inAirAttack, parry, block, crouch, hit, dead };
+        public enum State { idle = 0, move, jump, inAir, attack1, attack2, attack3, movingAttack, inAirAttack, parry, block, crouch, hit, dead };
 
         private delegate State machine(bool inAir, bool blockSuccess, bool hit, bool animDone);//function pointer
         private machine[] getNextState;//array of function pointers
