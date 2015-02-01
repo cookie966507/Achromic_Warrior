@@ -76,8 +76,8 @@ public abstract class Enemy : MonoBehaviour
 		//find the player
 		_player = GameObject.Find("player");
 
-		int ENEMY = LayerMask.NameToLayer("enemy");
-		int GHOSTING_ENEMY = LayerMask.NameToLayer("ghosting_enemy");
+		ENEMY = LayerMask.NameToLayer("enemy");
+		GHOSTING_ENEMY = LayerMask.NameToLayer("ghosting_enemy");
 	}
 
 	//what happens when hit
