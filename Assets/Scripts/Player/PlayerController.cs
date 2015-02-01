@@ -26,18 +26,13 @@ public class PlayerController : MonoBehaviour
 	//capping the speed of the player
 	public float _maxSpeed = 4f;
 
-	//for seeing if we pressed the down button once during the double tap
-	private float _downTimer = 0f;
-	private float _downDelay = 0.5f;
-	private bool _downFirstPress = false;
-
 	//for ghosting through platforms
 	private float _ghostTimer = 0f;
 	private float _ghostDelay = 0.5f;
 	private bool _ghost = false;
 
 	//cheat for tricking Unity when dealing with collision magic
-	private BoxCollider2D _playerCollider;
+	private Collider2D _playerCollider;
 	private bool _colSwitch = false;
 
 
@@ -50,8 +45,15 @@ public class PlayerController : MonoBehaviour
 	}
 	
 	void Update () {
+		//if our cheat is on, out collider is off, so we need to tun it back on
+		if(_colSwitch)
+		{
+			_colSwitch = false;
+			_playerCollider.enabled = true;
+		}
+
 		//if jump is pressed
-		if(CustomInput.JumpFreshPress)
+		if(CustomInput.JumpFreshPress && !CustomInput.Down)
 		{
 			_jump = true;
 		}
@@ -62,47 +64,15 @@ public class PlayerController : MonoBehaviour
 			_attack.gameObject.SetActive(true);
 		}
 
-		//if our cheat is on, out collider is off, so we need to tun it back on
-		if(_colSwitch)
-		{
-			_colSwitch = false;
-			_playerCollider.enabled = true;
-		}
-
-		//if the button has been pressed once
-		if(_downFirstPress) _downTimer += Time.deltaTime;
-
 		//if down is pressed
-		if(CustomInput.DownFreshPress)
+		if(CustomInput.Down && CustomInput.JumpFreshPress)
 		{
-			//and it is the first time
-			if(!_downFirstPress){
-				//set down as being pressed
-				_downFirstPress = true;
-				_downTimer = 0f;
-			}
-			//second press
-			else
-			{
-				//took too long to double tap
-				if(_downTimer > _downDelay)
-				{
-					//reset we have pushed down once
-					_downFirstPress = true;
-					_downTimer = 0f;
-				}
-				//double tapped in time
-				else
-				{
-					//we should be ghosting
-					_ghost = true;
-					_ghostTimer = 0f;
-					_downFirstPress = false;
-					//turn on the cheat for collision stuff
-					_colSwitch = true;
-					_playerCollider.enabled = false;
-				}
-			}
+			//we should be ghosting
+			_ghost = true;
+			_ghostTimer = 0f;
+
+			_colSwitch = true;
+			_playerCollider.enabled = false;
 		}
 		//if ghosting
 		if(_ghost) _ghostTimer += Time.deltaTime;

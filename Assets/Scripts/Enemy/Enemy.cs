@@ -15,6 +15,14 @@ public abstract class Enemy : MonoBehaviour
 	private float _timer;
 	public bool _hit = false;
 
+	//layers for ghosting/reverting
+	private int ENEMY;
+	private int GHOSTING_ENEMY;
+
+	//for ghosting through platforms
+	private float _ghostTimer = 0f;
+	private float _ghostDelay = 0.5f;
+
 	//orbs to spawn when hit
 	[HideInInspector]
 	public GameObject _orb;
@@ -33,6 +41,7 @@ public abstract class Enemy : MonoBehaviour
 	void Update()
 	{
 		UpdateHit();
+		if(this.gameObject.layer.Equals(GHOSTING_ENEMY)) UpdateGhost();
         Run();
 	}
 
@@ -66,6 +75,9 @@ public abstract class Enemy : MonoBehaviour
 
 		//find the player
 		_player = GameObject.Find("player");
+
+		int ENEMY = LayerMask.NameToLayer("enemy");
+		int GHOSTING_ENEMY = LayerMask.NameToLayer("ghosting_enemy");
 	}
 
 	//what happens when hit
@@ -102,6 +114,31 @@ public abstract class Enemy : MonoBehaviour
 				_hit = false;
 			}
 		}
+	}
+
+	//Ghosting
+	public void UpdateGhost()
+	{
+		_ghostTimer += Time.deltaTime;
+		if(_ghostTimer > _ghostDelay)
+		{
+			_ghostTimer = 0f;
+			this.gameObject.layer = ENEMY;
+		}
+	}
+
+	//Enemy ghost init by platform trigger
+	public void InitGhost()
+	{
+		this.gameObject.layer = GHOSTING_ENEMY;
+		_ghostTimer = 0;
+	}
+
+	//Enemt ghost exited by leaving platform trigger
+	public void ExitGhost()
+	{
+		this.gameObject.layer = ENEMY;
+		_ghostTimer = 0;
 	}
 
 	//Gets or sets the color

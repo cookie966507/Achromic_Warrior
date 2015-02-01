@@ -12,6 +12,10 @@ public class PlatformGhoster : MonoBehaviour
 		{
 			col.GetComponent<PlayerController>().Ghost = true;
 		}
+		else if(col.transform.tag.Equals("enemy"))
+		{
+			col.GetComponent<Enemy>().InitGhost();
+		}
 	}
 
 	void OnTriggerStay2D(Collider2D col)
@@ -20,6 +24,10 @@ public class PlatformGhoster : MonoBehaviour
 		{
 			col.GetComponent<PlayerController>().Ghost = true;
 		}
+		else if(col.transform.tag.Equals("enemy"))
+		{
+			col.GetComponent<Enemy>().InitGhost();
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D col)
@@ -27,6 +35,10 @@ public class PlatformGhoster : MonoBehaviour
 		if(col.transform.tag.Equals("Player"))
 		{
 			col.GetComponent<PlayerController>().Ghost = false;
+		}
+		else if(col.transform.tag.Equals("enemy"))
+		{
+			col.GetComponent<Enemy>().ExitGhost();
 		}
 	}
 }
