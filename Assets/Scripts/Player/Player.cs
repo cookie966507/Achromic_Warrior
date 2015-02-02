@@ -90,6 +90,10 @@ public class Player : MonoBehaviour
 		_spd = 0f;
 
 		_controller.UpdateSpeed(Speed);
+
+		_r.UpdateSphereColor(ColorElement.White);
+		_g.UpdateSphereColor(ColorElement.White);
+		_b.UpdateSphereColor(ColorElement.White);
 	}
 
 	//updates the possible color of the player

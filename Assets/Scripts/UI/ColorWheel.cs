@@ -43,6 +43,9 @@ public class ColorWheel : MonoBehaviour
 	private ColorMeter _g;
 	private ColorMeter _b;
 
+	//reference to frame
+	private MeterUI _frame;
+
 	void Awake()
 	{
 		//assign tab scales
@@ -64,6 +67,7 @@ public class ColorWheel : MonoBehaviour
 		_r = GameObject.Find("R").GetComponent<ColorMeter>();
 		_g = GameObject.Find("G").GetComponent<ColorMeter>();
 		_b = GameObject.Find("B").GetComponent<ColorMeter>();
+		_frame = GameObject.Find("frame").GetComponent<MeterUI>();
 	}
 
 	void Update ()
@@ -85,6 +89,9 @@ public class ColorWheel : MonoBehaviour
 		{
 			_player.Color = ColorElement.Black;
 			_player.UpdateStats();
+			this.UpdateSpheres(ColorElement.Black);
+			_frame._achromic = true;
+			_frame.FrameColor = ColorElement.Black;
 		}
 
 		//changing color based on meter values and current color
@@ -98,6 +105,8 @@ public class ColorWheel : MonoBehaviour
 				{
 					_player.Color = _activeTab.Color;
 					_player.UpdateStats();
+					this.UpdateSpheres(_activeTab.Color);
+					//_frame.FrameColor = _activeTab.Color;
 				}
 			}
 			//player has a color
@@ -124,6 +133,8 @@ public class ColorWheel : MonoBehaviour
 						//change to that color
 						_player.Color = _activeTab.Color;
 						_player.UpdateStats();
+						this.UpdateSpheres(_activeTab.Color);
+						//_frame.FrameColor = _activeTab.Color;
 					}
 				}
 			}
@@ -171,5 +182,25 @@ public class ColorWheel : MonoBehaviour
 		_tabs[(int)ColorElement.Azure].GreyTab.SetActive(_b.transform.localScale.x == 0f || _g.transform.localScale.x == 0f); //azure
 		_tabs[(int)ColorElement.Rose].GreyTab.SetActive(_r.transform.localScale.x == 0f || _b.transform.localScale.x == 0f); //rose
 		_tabs[(int)ColorElement.Violet].GreyTab.SetActive(_r.transform.localScale.x == 0f || _b.transform.localScale.x == 0f); //violet
+	}
+
+	//Update UI spheres
+	public void UpdateSpheres(ColorElement _color)
+	{
+		if(CustomColor.GetColor(_color).r > 0) _r.UpdateSphereColor(ColorElement.Red);
+		else _r.UpdateSphereColor(ColorElement.White);
+
+		if(CustomColor.GetColor(_color).g > 0) _g.UpdateSphereColor(ColorElement.Green);
+		else _g.UpdateSphereColor(ColorElement.White);
+
+		if(CustomColor.GetColor(_color).b > 0) _b.UpdateSphereColor(ColorElement.Blue);
+		else _b.UpdateSphereColor(ColorElement.White);
+
+		if(_color.Equals(ColorElement.Black))
+		{
+			_r.UpdateSphereColor(ColorElement.Black);
+			_g.UpdateSphereColor(ColorElement.Black);
+			_b.UpdateSphereColor(ColorElement.Black);
+		}
 	}
 }
