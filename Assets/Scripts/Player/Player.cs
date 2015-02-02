@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
 	//base stats
 	private float _baseAtk = 1f;
 	private float _baseDef = 0f;
-	private float _baseSpd = 3f;
+	private float _baseSpd = 5f;
 
 	//changing stats (used as ratio with _primary, _secondary, etc)
 	private float _atk = 0f;

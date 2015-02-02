@@ -5,7 +5,7 @@ using System.Collections;
  * Information about an object's rigidbody
  * Used for pausing and unpausing
  */
-public class RidgidbodyInfo : MonoBehaviour
+public class VelocityInfo : MonoBehaviour
 {
 	//is rigidbody kinematic?
 	public bool _kinematic = false;
