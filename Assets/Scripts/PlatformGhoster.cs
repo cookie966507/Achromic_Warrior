@@ -4,17 +4,19 @@ using System.Collections;
 /*
  * This class goes on a platform and tells the player he can jump through or not
  */
-public class PlatformGhoster : MonoBehaviour
+namespace Assets.Scripts
 {
-	void OnTriggerEnter2D(Collider2D col)
+    public class PlatformGhoster : MonoBehaviour
+    {
+        void OnTriggerEnter2D(Collider2D col)
 	{
 		if(col.transform.tag.Equals("Player"))
 		{
-			col.GetComponent<PlayerController>().Ghost = true;
+			col.GetComponent<Player.PlayerController>().Ghost = true;
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemy>().InitGhost();
+			col.GetComponent<Enemies.Enemy>().InitGhost();
 		}
 	}
 
@@ -22,11 +24,11 @@ public class PlatformGhoster : MonoBehaviour
 	{
 		if(col.transform.tag.Equals("Player"))
 		{
-			col.GetComponent<PlayerController>().Ghost = true;
+            col.GetComponent<Player.PlayerController>().Ghost = true;
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemy>().InitGhost();
+			col.GetComponent<Enemies.Enemy>().InitGhost();
 		}
 	}
 
@@ -34,11 +36,12 @@ public class PlatformGhoster : MonoBehaviour
 	{
 		if(col.transform.tag.Equals("Player"))
 		{
-			col.GetComponent<PlayerController>().Ghost = false;
+            col.GetComponent<Player.PlayerController>().Ghost = false;
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemy>().ExitGhost();
+			col.GetComponent<Enemies.Enemy>().ExitGhost();
 		}
 	}
+    }
 }

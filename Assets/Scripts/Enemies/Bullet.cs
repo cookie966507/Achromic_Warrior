@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.Enemy
+namespace Assets.Scripts.Enemies
 {
     class Bullet : MonoBehaviour
     {
