@@ -27,11 +27,14 @@ namespace Assets.Scripts.Enemies
 
         void Update()
         {
-            //move bullet
-            transform.Translate(dir * speed * Time.deltaTime);
-            //check if too old
-            if ((lifeTime -= Time.deltaTime) < 0)
-                Destroy(this.gameObject);
+            if (Data.GameManager.State != Enums.GameState.Pause)
+            {
+                //move bullet
+                transform.Translate(dir * speed * Time.deltaTime);
+                //check if too old
+                if ((lifeTime -= Time.deltaTime) < 0)
+                    Destroy(this.gameObject);
+            }
         }
 
         //standard destory self on collision

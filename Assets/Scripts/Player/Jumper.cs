@@ -2,6 +2,7 @@
 using System.Collections;
 
 /*
+ * DEPRECIATED DO NOT USE
  * Class controlling a characters ability to jump;
  */
 namespace Assets.Scripts.Player
