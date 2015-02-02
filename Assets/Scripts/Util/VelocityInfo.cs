@@ -7,8 +7,8 @@ using System.Collections;
  */
 namespace Assets.Scripts.Util
 {
-    public class RidgidbodyInfo : MonoBehaviour
-    {
+public class VelocityInfo : MonoBehaviour
+{
         //is rigidbody kinematic?
         public bool _kinematic = false;
 
@@ -99,3 +99,4 @@ namespace Assets.Scripts.Util
         }
     }
 }
+

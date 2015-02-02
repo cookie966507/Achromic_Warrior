@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Assets.Scripts;
+using Assets.Scripts.Data;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Util;
 
 /*
  * Controls te player's movement
@@ -84,48 +86,25 @@ namespace Assets.Scripts.Player
             if (_downFirstPress) _downTimer += Time.deltaTime;
 
             //if down is pressed
-            if (CustomInput.DownFreshPress)
-            {
-                //and it is the first time
-                if (!_downFirstPress)
-                {
-                    //set down as being pressed
-                    _downFirstPress = true;
-                    _downTimer = 0f;
-                }
-                //second press
-                else
-                {
-                    //took too long to double tap
-                    if (_downTimer > _downDelay)
-                    {
-                        //reset we have pushed down once
-                        _downFirstPress = true;
-                        _downTimer = 0f;
-                    }
-                    //double tapped in time
-                    else
-                    {
-                        //we should be ghosting
-                        _ghost = true;
-                        _ghostTimer = 0f;
-                        _downFirstPress = false;
-                        //turn on the cheat for collision stuff
-                        _colSwitch = true;
-                        _playerCollider.enabled = false;
-                    }
-                }
-            }
-            //if ghosting
-            if (_ghost) _ghostTimer += Time.deltaTime;
+            //if down is pressed
+			if(CustomInput.Down && CustomInput.JumpFreshPress)
+			{
+				//we should be ghosting
+				_ghost = true;
+				_ghostTimer = 0f;
 
-            //if ghosting is over
-            if (_ghostTimer > _ghostDelay)
-            {
-                _ghost = false;
-                _ghostTimer = 0;
-            }
+				_colSwitch = true;
+				_playerCollider.enabled = false;
+			}
+			//if ghosting
+			if(_ghost) _ghostTimer += Time.deltaTime;
 
+			//if ghosting is over
+			if(_ghostTimer > _ghostDelay)
+			{
+				_ghost = false;
+				_ghostTimer = 0;
+			}
             //ignore collision between the player and platforms
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("platform"), _ghost);
         }
