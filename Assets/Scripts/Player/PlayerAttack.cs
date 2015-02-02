@@ -10,8 +10,6 @@ namespace Assets.Scripts.Player
     {
         //reference to the player
         private PlayerColorData _player;
-        //time between attacks
-        private float _delay = 0.3f;
 
         void Start()
         {
@@ -19,15 +17,8 @@ namespace Assets.Scripts.Player
             _player = GameObject.Find("player").GetComponent<PlayerColorData>();
         }
 
-        //called when enabled
-        void OnEnable()
-        {
-            //ccall hide method after a certain time after enabled
-            Invoke("Hide", _delay);
-        }
-
         //hide the attack ring
-        void Hide()
+        public void Hide()
         {
             this.gameObject.SetActive(false);
         }

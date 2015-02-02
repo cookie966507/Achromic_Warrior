@@ -12,12 +12,13 @@ namespace Assets.Scripts.Player
         //reference to the jumper
         private Jumper _jumper;
         //jump button pressed
-        private bool _jump = false;
+        private static bool _jump = false;
         //how much control you have in the air
         private float _airControl = 0.3f;
 
         //reference to the attack
         public PlayerAttack _attack;
+        private static PlayerAttack attack;
 
         //firection the player is facing
         [HideInInspector]
@@ -47,6 +48,7 @@ namespace Assets.Scripts.Player
         private delegate void state();
         private state[] doState;
         private bool hit;
+        private Player.PlayerStateMachine.State prevState = 0;
 
         void Awake()
         {
@@ -54,20 +56,21 @@ namespace Assets.Scripts.Player
             _jumper = this.GetComponentInChildren<Jumper>();
             //find collider
             _playerCollider = this.GetComponent<BoxCollider2D>();
+            attack = _attack;
+            machine = new PlayerStateMachine();
+            doState = new state[] { Idle, Move, Jump, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
         }
 
         void Update()
         {
-            //if jump is pressed
-            if (CustomInput.JumpFreshPress)
+            Player.PlayerStateMachine.State currState = machine.update(!_jumper.CanJump(), false, false, !CustomInput.Jump);
+            Debug.Log(currState);
+            doState[(int)currState]();
+            if(prevState!=currState)
             {
-                _jump = true;
-            }
-
-            //if attack is pressed
-            if (CustomInput.AttackFreshPress)
-            {
-                _attack.gameObject.SetActive(true);
+                attack.Hide();
+                _jump = false;
+                //change anim
             }
 
             //if our cheat is on, out collider is off, so we need to tun it back on
@@ -177,13 +180,17 @@ namespace Assets.Scripts.Player
         {
             // Switch the way the player is labelled as facing.
             _facingRight = !_facingRight;
+            this.transform.localScale=new Vector3(-this.transform.localScale.x, this.transform.localScale.y, this.transform.localScale.z);
 
+            /* this should be unnecessary as child objects are relative to the parent so changing the parent scale changes theirs too
+             * -Jonathan
             //sprites should be separate from the collider to get rid of weird collision stuff (that I understand)
             Transform _sprites = transform.FindChild("Sprites");
             // Multiply the player's x local scale by -1.
             Vector3 _scale = _sprites.localScale;
             _scale.x *= -1;
             _sprites.localScale = _scale;
+             */
         }
 
         //updating the max speed; this will control how fast the player moves
@@ -201,6 +208,60 @@ namespace Assets.Scripts.Player
                 _ghost = value;
                 _ghostTimer = 0f;
             }
+        }
+
+        private static void Idle()
+        {
+        }
+
+        private static void Attack1()
+        {
+            attack.gameObject.SetActive(true);
+        }
+        private static void Attack2()
+        {
+            attack.gameObject.SetActive(true);
+        }
+        private static void Attack3()
+        {
+            attack.gameObject.SetActive(true);
+        }
+
+        private static void MovingAttack()
+        {
+            attack.gameObject.SetActive(true);
+        }
+
+        private static void InAirAttack()
+        {
+            attack.gameObject.SetActive(true);
+        }
+        private static void Move()
+        {
+        }
+        private static void Parry()
+        {
+        }
+        private static void Block()
+        {
+        }
+        private static void Crouch()
+        {
+        }
+        private static void Jump()
+        {
+            _jump = true;
+        }
+        private static void InAirNow()
+        {
+        }
+
+        private static void Hit()
+        {
+        }
+
+        private static void Dead()
+        {
         }
     }
 }

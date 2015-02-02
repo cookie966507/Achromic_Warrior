@@ -16,16 +16,16 @@ namespace Assets.Scripts.Player
         private static float hold = 0;//used for delays
         private static bool die = false;
 
-        public PlayerStateMachine(float frameRate)
+        public PlayerStateMachine()
         {
             currState = State.idle;
             //fill array with functions
             getNextState = new machine[] { Idle, Move, Jump, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
         }
 
-        public State update(bool inAir, bool nextToWall, bool hit, bool animDone)
+        public State update(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
-            return currState = getNextState[((int)currState)](inAir, nextToWall, hit, animDone);//gets te next state
+            return currState = getNextState[((int)currState)](inAir, blockSuccess, hit, animDone);//gets te next state
         }
 
 
