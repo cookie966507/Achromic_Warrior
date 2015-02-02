@@ -8,19 +8,20 @@ namespace Assets.Scripts.Player
     /* This file controls all of the transitions between states*/
     class PlayerStateMachine
     {
-        public enum State { idle = 0, move, jump, inAir, attack1, attack2, attack3, movingAttack, inAirAttack, parry, block, crouch, hit, dead };
+        public enum State { idle = 0, move, jump, jump2, inAir, attack1, attack2, attack3, movingAttack, inAirAttack, parry, block, crouch, hit, dead };
 
         private delegate State machine(bool inAir, bool blockSuccess, bool hit, bool animDone);//function pointer
         private machine[] getNextState;//array of function pointers
         private State currState;
         private static float hold = 0;//used for delays
         private static bool die = false;
+        private static bool doubleJumped = false;
 
         public PlayerStateMachine()
         {
             currState = State.idle;
             //fill array with functions
-            getNextState = new machine[] { Idle, Move, Jump, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
+            getNextState = new machine[] { Idle, Move, Jump, Jump2, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
         }
 
         public State update(bool inAir, bool blockSuccess, bool hit, bool animDone)
@@ -205,14 +206,30 @@ namespace Assets.Scripts.Player
                 return State.inAir;
             return State.jump;
         }
+        private static State Jump2(bool inAir, bool blockSuccess, bool hit, bool animDone)
+        {
+            if (hit)
+                return State.hit;
+            if (CustomInput.AttackFreshPress)
+                return State.inAirAttack;
+            if (animDone || !CustomInput.Jump)
+                return State.inAir;
+            return State.jump2;
+        }
         private static State InAirNow(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
                 return State.hit;
             if (CustomInput.AttackFreshPress)
                 return State.inAirAttack;
+            if(!doubleJumped&&CustomInput.JumpFreshPress&&!CustomInput.Down)
+            {
+                doubleJumped = true;
+                return State.jump2;
+            }
             if (!inAir)
             {
+                doubleJumped = false;
                 if (CustomInput.JumpFreshPress)
                     return State.jump;
                 if (CustomInput.Left || CustomInput.Right)

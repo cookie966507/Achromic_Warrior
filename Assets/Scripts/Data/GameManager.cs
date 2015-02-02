@@ -8,9 +8,8 @@ namespace Assets.Scripts.Data
 
 	public class GameManager : MonoBehaviour
 	{
-
 		public static GameManager _instance;
-		public GameState _state = GameState.Game;
+		private static GameState _state = GameState.Game;
 
 		void Awake()
 		{
@@ -44,8 +43,7 @@ namespace Assets.Scripts.Data
 		}
 
 		public void Pause()
-		{
-		
+		{		
 			VelocityInfo[] _bodies = GameObject.FindObjectsOfType<VelocityInfo>();
 			for(int i = 0; i < _bodies.Length; i++)
 			{
@@ -64,7 +62,7 @@ namespace Assets.Scripts.Data
 			}
 		}
 
-		public GameState State
+		public static GameState State
 		{
 			get{return _state;}
 			set{_state = value;}

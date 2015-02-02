@@ -43,9 +43,12 @@ namespace Assets.Scripts.Enemies
 
         void Update()
         {
-            UpdateHit();
-            if (this.gameObject.layer.Equals(GHOSTING_ENEMY)) UpdateGhost();
-            Run();
+            if (Data.GameManager.State != GameState.Pause)
+            {
+                UpdateHit();
+                if (this.gameObject.layer.Equals(GHOSTING_ENEMY)) UpdateGhost();
+                Run();
+            }
         }
 
         //subclasses should implement these instead of Start() and Update() 
@@ -150,6 +153,17 @@ namespace Assets.Scripts.Enemies
         {
             get { return _color; }
             set { _color = value; }
+        }
+
+        public void OnTriggerEnter2D(Collider2D col)
+        {
+            if (Data.GameManager.State != GameState.Pause)
+            {
+                if (col.tag == "Player Attack")
+                {
+                    Hit((int)_player.GetComponent<Player.PlayerColorData>().Attack, this.transform.position);
+                }
+            }
         }
     }
 }
