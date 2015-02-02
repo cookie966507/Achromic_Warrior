@@ -37,13 +37,13 @@ namespace Assets.Scripts.Player
         private bool _downFirstPress = false;
 
         //for ghosting through platforms
-        private float _ghostTimer = 0f;
+        private static float _ghostTimer = 0f;
         private float _ghostDelay = 0.5f;
-        private bool _ghost = false;
+        private static bool _ghost = false;
 
         //cheat for tricking Unity when dealing with collision magic
-        private BoxCollider2D _playerCollider;
-        private bool _colSwitch = false;
+        private static BoxCollider2D _playerCollider;
+        private static bool _colSwitch = false;
 
         private bool animDone = false;
         private PlayerStateMachine machine;
@@ -51,6 +51,7 @@ namespace Assets.Scripts.Player
         private state[] doState;
         private bool hit;
         private Player.PlayerStateMachine.State prevState = 0;
+        private int temp;
 
         void Awake()
         {
@@ -65,15 +66,20 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
-            Player.PlayerStateMachine.State currState = machine.update(!_jumper.CanJump(), false, false, !CustomInput.Jump);
+            if (temp++ > 3)
+                animDone = true;
+            Player.PlayerStateMachine.State currState = machine.update(!_jumper.CanJump(), false, false, animDone);
             Debug.Log(currState);
             doState[(int)currState]();
             if(prevState!=currState)
             {
+                animDone = false;
+                temp = 0;
                 attack.Hide();
                 _jump = false;
                 //change anim
             }
+            prevState = currState;
 
             //if our cheat is on, out collider is off, so we need to tun it back on
             if (_colSwitch)
@@ -81,21 +87,6 @@ namespace Assets.Scripts.Player
                 _colSwitch = false;
                 _playerCollider.enabled = true;
             }
-
-            //if the button has been pressed once
-            if (_downFirstPress) _downTimer += Time.deltaTime;
-
-            //if down is pressed
-            //if down is pressed
-			if(CustomInput.Down && CustomInput.JumpFreshPress)
-			{
-				//we should be ghosting
-				_ghost = true;
-				_ghostTimer = 0f;
-
-				_colSwitch = true;
-				_playerCollider.enabled = false;
-			}
 			//if ghosting
 			if(_ghost) _ghostTimer += Time.deltaTime;
 
@@ -226,6 +217,15 @@ namespace Assets.Scripts.Player
         }
         private static void Crouch()
         {
+            if (CustomInput.JumpFreshPress)
+            {
+                //we should be ghosting
+                _ghost = true;
+                _ghostTimer = 0f;
+
+                _colSwitch = true;
+                _playerCollider.enabled = false;
+            }
         }
         private static void Jump()
         {
@@ -233,6 +233,15 @@ namespace Assets.Scripts.Player
         }
         private static void InAirNow()
         {
+            if (CustomInput.Down && CustomInput.JumpFreshPress)
+            {
+                //we should be ghosting
+                _ghost = true;
+                _ghostTimer = 0f;
+
+                _colSwitch = true;
+                _playerCollider.enabled = false;
+            }
         }
 
         private static void Hit()

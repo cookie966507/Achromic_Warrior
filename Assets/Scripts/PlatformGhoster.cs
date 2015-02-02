@@ -12,11 +12,11 @@ namespace Assets.Scripts
 	{
 		if(col.transform.tag.Equals("Player"))
 		{
-			col.GetComponent<PlayerController>().Ghost = true;
+			col.GetComponent<Player.PlayerController>().Ghost = true;
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemy>().InitGhost();
+			col.GetComponent<Enemies.Enemy>().InitGhost();
 		}
 	}
 
@@ -24,11 +24,11 @@ namespace Assets.Scripts
 	{
 		if(col.transform.tag.Equals("Player"))
 		{
-			col.GetComponent<PlayerController>().Ghost = true;
+            col.GetComponent<Player.PlayerController>().Ghost = true;
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemy>().InitGhost();
+			col.GetComponent<Enemies.Enemy>().InitGhost();
 		}
 	}
 
@@ -36,11 +36,11 @@ namespace Assets.Scripts
 	{
 		if(col.transform.tag.Equals("Player"))
 		{
-			col.GetComponent<PlayerController>().Ghost = false;
+            col.GetComponent<Player.PlayerController>().Ghost = false;
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemy>().ExitGhost();
+			col.GetComponent<Enemies.Enemy>().ExitGhost();
 		}
 	}
     }

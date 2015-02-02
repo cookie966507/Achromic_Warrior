@@ -37,13 +37,15 @@ namespace Assets.Scripts.Player
                 return State.hit; ;
             if (inAir)
                 return State.inAir;
+            if (CustomInput.BlockFreshPress)
+                return State.block;
             if (CustomInput.AttackFreshPress)
                 return State.attack1;
             if (CustomInput.JumpFreshPress)
                 return State.jump;
             if (CustomInput.Left || CustomInput.Right)
                 return State.move;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.Down)
                 return State.crouch;
             return State.idle;
         }
@@ -57,7 +59,7 @@ namespace Assets.Scripts.Player
                 return State.block;
             if(animDone)
             {
-                if (CustomInput.AcceptFreshPress)
+                if (CustomInput.AttackFreshPress)
                     return State.attack2;
                 return State.idle;
             }
@@ -71,7 +73,7 @@ namespace Assets.Scripts.Player
                 return State.block;
             if (animDone)
             {
-                if (CustomInput.AcceptFreshPress)
+                if (CustomInput.AttackFreshPress)
                     return State.attack3;
                 return State.idle;
             }
