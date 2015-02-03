@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.Util
+namespace Assets.Scripts
 {
     public class CustomInput : MonoBehaviour
     {
@@ -688,8 +688,8 @@ namespace Assets.Scripts.Util
 
         public static void DefaultKey()
         {
-            keyBoardAttack = KeyCode.Mouse0;
-            PlayerPrefs.SetInt(0 + KeyHash, (int)KeyCode.Mouse0);
+            keyBoardAttack = KeyCode.K;
+            PlayerPrefs.SetInt(0 + KeyHash, (int)KeyCode.K);
             keyBoardJump = KeyCode.Space;
             PlayerPrefs.SetInt(1 + KeyHash, (int)KeyCode.Space);
 			keyBoardCycleLeft = KeyCode.Q;
@@ -700,8 +700,8 @@ namespace Assets.Scripts.Util
             PlayerPrefs.SetInt(4 + KeyHash, (int)KeyCode.A);
 			keyBoardRight = KeyCode.D;
 			PlayerPrefs.SetInt(5 + KeyHash, (int)KeyCode.D);
-			keyBoardBlock = KeyCode.Mouse1;
-            PlayerPrefs.SetInt(6 + KeyHash, (int)KeyCode.Mouse1);
+			keyBoardBlock = KeyCode.L;
+            PlayerPrefs.SetInt(6 + KeyHash, (int)KeyCode.L);
 			keyBoardChangeColor = KeyCode.Return;
 			PlayerPrefs.SetInt(7 + KeyHash, (int)KeyCode.Return);
 			keyBoardUp = KeyCode.W;
