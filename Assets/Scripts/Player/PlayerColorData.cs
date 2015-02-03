@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Enums;
+using Assets.Scripts.UI;
 
 /*
  * Class to control all of the player data
@@ -19,11 +20,11 @@ namespace Assets.Scripts.Player
         private PlayerArmor[] _armor;
 
         //red color meter
-        private UI.ColorMeter _r;
+        private ColorMeter _r;
         //green color meter
-        private UI.ColorMeter _g;
+        private ColorMeter _g;
         //blue color meter
-        private UI.ColorMeter _b;
+        private ColorMeter _b;
 
         //reference to the controller
         private PlayerController _controller;
@@ -71,9 +72,9 @@ namespace Assets.Scripts.Player
             _armor = GameObject.FindObjectsOfType<PlayerArmor>();
 
             //find UI meters
-            _r = GameObject.Find("R").GetComponent<UI.ColorMeter>();
-            _g = GameObject.Find("G").GetComponent<UI.ColorMeter>();
-            _b = GameObject.Find("B").GetComponent<UI.ColorMeter>();
+            _r = GameObject.Find("R").GetComponent<ColorMeter>();
+            _g = GameObject.Find("G").GetComponent<ColorMeter>();
+            _b = GameObject.Find("B").GetComponent<ColorMeter>();
         }
 
         void Update()
@@ -92,6 +93,10 @@ namespace Assets.Scripts.Player
             _spd = 0f;
 
             _controller.UpdateSpeed(Speed);
+
+			_r.UpdateSphereColor(ColorElement.White);
+			_g.UpdateSphereColor(ColorElement.White);
+			_b.UpdateSphereColor(ColorElement.White);
         }
 
         //updates the possible color of the player
