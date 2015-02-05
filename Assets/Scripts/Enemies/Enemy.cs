@@ -32,6 +32,9 @@ namespace Assets.Scripts.Enemies
         //reference to the player
         public GameObject _player;
 
+		//enemy parts that should be colored
+		public Renderer[] _coloredPieces;
+
         //knockback force
         public float _force = 75f;
 
@@ -73,9 +76,6 @@ namespace Assets.Scripts.Enemies
         //Initialize the enemy
         public void Init()
         {
-            //set the enemy color
-            renderer.material.color = CustomColor.GetColor(_color);
-
             //load the orb
             _orb = (GameObject)Resources.Load("Prefabs/orb");
 
@@ -84,6 +84,12 @@ namespace Assets.Scripts.Enemies
 
             ENEMY = LayerMask.NameToLayer("enemy");
             GHOSTING_ENEMY = LayerMask.NameToLayer("ghosting_enemy");
+
+			//color parts that are supposed to be toned
+			for(int i = 0; i < _coloredPieces.Length; i++)
+			{
+				_coloredPieces[i].material.color = CustomColor.GetColor(_color);
+			}
         }
 
         //what happens when hit
