@@ -136,22 +136,22 @@ namespace Assets.Scripts.Enemies
             if (_ghostTimer > _ghostDelay)
             {
                 _ghostTimer = 0f;
-                this.gameObject.layer = ENEMY;
+                //this.gameObject.layer = ENEMY;
             }
         }
 
         //Enemy ghost init by platform trigger
         public void InitGhost()
         {
-            this.gameObject.layer = GHOSTING_ENEMY;
-            _ghostTimer = 0;
+            //this.gameObject.layer = GHOSTING_ENEMY;
+            //_ghostTimer = 0;
         }
 
         //Enemt ghost exited by leaving platform trigger
         public void ExitGhost()
         {
-            this.gameObject.layer = ENEMY;
-            _ghostTimer = 0;
+            //this.gameObject.layer = ENEMY;
+            //_ghostTimer = 0;
         }
 
         //Gets or sets the color
