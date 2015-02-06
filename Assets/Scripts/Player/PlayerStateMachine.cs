@@ -58,7 +58,7 @@ namespace Assets.Scripts.Player
                 return State.hit;
             if (CustomInput.Block)
                 return State.block;
-            if(animDone)
+            if (animDone)
             {
                 if (CustomInput.AttackFreshPress)
                     return State.attack2;
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Player
             }
             return State.attack2;
         }
-        private static State Attack3( bool inAir, bool blockSuccess, bool hit, bool animDone)
+        private static State Attack3(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
                 return State.hit;
@@ -222,7 +222,7 @@ namespace Assets.Scripts.Player
                 return State.hit;
             if (CustomInput.AttackFreshPress)
                 return State.inAirAttack;
-            if(!doubleJumped&&CustomInput.JumpFreshPress&&!CustomInput.Down)
+            if (!doubleJumped && CustomInput.JumpFreshPress && !CustomInput.Down)
             {
                 doubleJumped = true;
                 return State.jump2;

@@ -67,12 +67,12 @@ namespace Assets.Scripts.Player
             {
                 if (temp++ > 3)
                     animDone = true;
-                //detect if in Air
-                TouchingSomething(ref inAir);
+                TouchingSomething();
                 //get next state
                 Player.PlayerStateMachine.State currState = machine.update(inAir, false, false, animDone);
                 //run state
                 doState[(int)currState]();
+                Debug.Log(inAir);
                 //state clean up
                 if (prevState != currState)
                 {
@@ -91,13 +91,16 @@ namespace Assets.Scripts.Player
 
         //detects if you are in the air
         //support for two feet is commented out
-        private void TouchingSomething(ref bool inAir)
+        private void TouchingSomething()
         {
-            RaycastHit2D temp = Physics2D.Raycast(foot.position, -Vector2.up, 0.05f);
+            int _layerMask = (1 << LayerMask.NameToLayer("player")) | (1 << LayerMask.NameToLayer("orb_collector") | (1 << LayerMask.NameToLayer("Default")));
+            //compliment to collide with all EXCEPT these layers
+            _layerMask = ~_layerMask;
+            RaycastHit2D temp = Physics2D.Raycast(foot.position, -Vector2.up, 0.05f, _layerMask);
             //RaycastHit2D temp2 = Physics2D.Raycast(frontFoot.position, -Vector2.up, 0.05f);
             if (temp != null && temp.collider != null)
             {
-                //allow falling through untagged objects
+                //allow falling through untagged triggers
                 inAir = temp.collider.tag == "Untagged";
                 if (temp.collider.tag == "enemy")
                 {
@@ -198,7 +201,7 @@ namespace Assets.Scripts.Player
             Vector3 _scale = _sprites.localScale;
             _scale.x *= -1;
             _sprites.localScale = _scale;
-             
+
         }
 
         //updating the max speed; this will control how fast the player moves
