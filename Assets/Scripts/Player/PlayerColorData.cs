@@ -43,7 +43,7 @@ namespace Assets.Scripts.Player
         //base stats
         private float _baseAtk = 1f;
         private float _baseDef = 0f;
-        private float _baseSpd = 3f;
+        private float _baseSpd = 4f;
 
         //changing stats (used as ratio with _primary, _secondary, etc)
         private float _atk = 0f;
