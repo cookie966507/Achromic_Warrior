@@ -28,12 +28,7 @@
 	//state of the player
 	public enum PlayerState
 	{
-		Attack,
-		Defend,
-		Jump,
-		Achromic,
-
-		NumTypes
+		idle = 0, move, jump, jump2, inAir, attack1, attack2, attack3, movingAttack, inAirAttack, parry, block, crouch, hit, dead, NumTypes
 	}
 
 	//state of the game

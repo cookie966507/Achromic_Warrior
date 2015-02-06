@@ -14,7 +14,8 @@ namespace Assets.Scripts.Player
         public Transform foot;
         public float JumpForce = 10;
         //reference to the attack
-        public PlayerAttack _attack;
+        public ObjectHider _attack;
+        public ObjectHider _block;
 
         //firection the player is facing
         [HideInInspector]
@@ -27,7 +28,8 @@ namespace Assets.Scripts.Player
 
 
         //reference to the attack
-        private static PlayerAttack attack;
+        private static ObjectHider attack;
+        private static ObjectHider block;
         //for ghosting through platforms
         private static float _ghostTimer = 0f;
         private static bool _ghost = false;
@@ -46,17 +48,21 @@ namespace Assets.Scripts.Player
         private int temp;
         private bool animDone = false;
         private bool inAir = false;
-        private bool hit;
+        private bool hit=false;
+        private static bool blocking = false;
+        private bool blockSucessful = false;
         private PlayerStateMachine machine;
         private delegate void state();
         private state[] doState;
-        private Player.PlayerStateMachine.State prevState = 0;
+        private PlayerState prevState = 0;
+        private PlayerState currState = 0;
 
         void Awake()
         {
             //find collider
             _playerCollider = this.GetComponent<BoxCollider2D>();
             attack = _attack;
+            block = _block;
             machine = new PlayerStateMachine();
             doState = new state[] { Idle, Move, Jump, Jump2, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
         }
@@ -67,21 +73,24 @@ namespace Assets.Scripts.Player
             {
                 if (temp++ > 3)
                     animDone = true;
-                //detect if in Air
-                TouchingSomething(ref inAir);
+                TouchingSomething();
                 //get next state
-                Player.PlayerStateMachine.State currState = machine.update(inAir, false, false, animDone);
+                currState = machine.update(inAir, false, false, animDone);
                 //run state
                 doState[(int)currState]();
                 //state clean up
+                if(blockSucessful)
+                    blockSucessful = false;
                 if (prevState != currState)
                 {
                     doOnce = false;
                     animDone = false;
                     temp = 0;
                     attack.Hide();
+                    block.Hide();
                     _jump = false;
-                    //change anim
+                    blocking = false;
+                    //TODO: change anim
                 }
                 prevState = currState;
 
@@ -89,15 +98,32 @@ namespace Assets.Scripts.Player
             }
         }
 
+        void OnCollisionEnter2D(Collision2D col)
+        {
+            if (GameManager.State != GameState.Pause)
+            {
+                if(col.gameObject.tag=="enemy")
+                {
+                    if (blocking)
+                        blockSucessful = true;
+                    else
+                        hit = true;
+                }
+            }
+        }
+
         //detects if you are in the air
         //support for two feet is commented out
-        private void TouchingSomething(ref bool inAir)
+        private void TouchingSomething()
         {
-            RaycastHit2D temp = Physics2D.Raycast(foot.position, -Vector2.up, 0.05f);
+            int _layerMask = (1 << LayerMask.NameToLayer("player")) | (1 << LayerMask.NameToLayer("orb_collector") | (1 << LayerMask.NameToLayer("Default")));
+            //compliment to collide with all EXCEPT these layers
+            _layerMask = ~_layerMask;
+            RaycastHit2D temp = Physics2D.Raycast(foot.position, -Vector2.up, 0.05f, _layerMask);
             //RaycastHit2D temp2 = Physics2D.Raycast(frontFoot.position, -Vector2.up, 0.05f);
             if (temp != null && temp.collider != null)
             {
-                //allow falling through untagged objects
+                //allow falling through untagged triggers
                 inAir = temp.collider.tag == "Untagged";
                 if (temp.collider.tag == "enemy")
                 {
@@ -148,34 +174,39 @@ namespace Assets.Scripts.Player
         {
             if (GameManager.State != GameState.Pause)
             {
-                //caching the horizontal input
-                float _h;
-
-                //assign value based on left or right input
-                if (CustomInput.Left) _h = -1f;
-                else if (CustomInput.Right) _h = 1f;
-                else _h = 0f;
-
-
-                // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-                if (_h * rigidbody2D.velocity.x < _maxSpeed)
+                if (currState == PlayerState.move ||
+                    currState == PlayerState.movingAttack ||
+                    currState == PlayerState.inAir ||
+                    currState == PlayerState.inAirAttack)
                 {
-                    //account for air control
-                    if (!inAir) rigidbody2D.AddForce(Vector2.right * _h * _moveForce);
-                    else rigidbody2D.AddForce(Vector2.right * _h * _moveForce * _airControl);
+                    //caching the horizontal input
+                    float _h;
+
+                    //assign value based on left or right input
+                    if (CustomInput.Left) _h = -1f;
+                    else if (CustomInput.Right) _h = 1f;
+                    else _h = 0f;
+
+
+                    // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
+                    if (_h * rigidbody2D.velocity.x < _maxSpeed)
+                    {
+                        //account for air control
+                        if (!inAir) rigidbody2D.AddForce(Vector2.right * _h * _moveForce);
+                        else rigidbody2D.AddForce(Vector2.right * _h * _moveForce * _airControl);
+                    }
+
+                    // If the player's horizontal velocity is greater than the maxSpeed...
+                    if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
+                        // ... set the player's velocity to the maxSpeed in the x axis.
+                        rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+
+                    //flippng based on direction and movement
+                    if (_h > 0 && !_facingRight)
+                        Flip();
+                    else if (_h < 0 && _facingRight)
+                        Flip();
                 }
-
-                // If the player's horizontal velocity is greater than the maxSpeed...
-                if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
-                    // ... set the player's velocity to the maxSpeed in the x axis.
-                    rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
-
-                //flippng based on direction and movement
-                if (_h > 0 && !_facingRight)
-                    Flip();
-                else if (_h < 0 && _facingRight)
-                    Flip();
-
                 //STATE MACHINE SAY JUMP NOW!!!
                 if (_jump)
                 {
@@ -198,7 +229,7 @@ namespace Assets.Scripts.Player
             Vector3 _scale = _sprites.localScale;
             _scale.x *= -1;
             _sprites.localScale = _scale;
-             
+
         }
 
         //updating the max speed; this will control how fast the player moves
@@ -272,6 +303,13 @@ namespace Assets.Scripts.Player
         }
         private static void Block()
         {
+            if (!doOnce)
+            {
+                doOnce = true;
+                blocking = true;
+                block.Show();
+                block.renderer.material.color = CustomColor.GetColor(FindObjectOfType<PlayerColorData>().Color);
+            }
         }
         private static void Crouch()
         {
@@ -316,6 +354,7 @@ namespace Assets.Scripts.Player
 
         private static void Hit()
         {
+            Debug.Log("I'M INVINCIBLE HAHAHAHAHAHAHAHAHAHAH!!!!!!!");
         }
 
         private static void Dead()

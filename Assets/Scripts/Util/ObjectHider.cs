@@ -4,12 +4,13 @@ using System.Collections;
 /*
  * Class handling the player's attack
  */
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Util
 {
-    public class PlayerAttack : MonoBehaviour
+    public class ObjectHider : MonoBehaviour
     {
-        void Start()
+        void Awake()
         {
+            Hide();
         }
 
         public void Show()
@@ -17,7 +18,6 @@ namespace Assets.Scripts.Player
             this.gameObject.SetActive(true);
         }
 
-        //hide the attack ring
         public void Hide()
         {
             this.gameObject.SetActive(false);
