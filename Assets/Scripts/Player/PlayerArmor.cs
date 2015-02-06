@@ -7,14 +7,18 @@ using Assets.Scripts.Enums;
  * Will probably contain more effects later
  * Just updates the color
  */
-public class PlayerArmor : MonoBehaviour {
+namespace Assets.Scripts.Player
+{
+    public class PlayerArmor : MonoBehaviour
+    {
 
-	public void UpdateArmor(ColorElement _color)
-	{
-		this.renderer.material.color = CustomColor.GetColor(_color);
-	}
-	public void UpdateArmor(Color _color)
-	{
-		this.renderer.material.color = _color;
-	}
+        public void UpdateArmor(ColorElement _color)
+        {
+            this.renderer.material.color = CustomColor.GetColor(_color);
+        }
+        public void UpdateArmor(Color _color)
+        {
+            this.renderer.material.color = _color;
+        }
+    }
 }

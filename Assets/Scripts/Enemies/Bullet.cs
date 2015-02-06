@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.Enemy
+namespace Assets.Scripts.Enemies
 {
     class Bullet : MonoBehaviour
     {
@@ -27,11 +27,14 @@ namespace Assets.Scripts.Enemy
 
         void Update()
         {
-            //move bullet
-            transform.Translate(dir * speed * Time.deltaTime);
-            //check if too old
-            if ((lifeTime -= Time.deltaTime) < 0)
-                Destroy(this.gameObject);
+            if (Data.GameManager.State != Enums.GameState.Pause)
+            {
+                //move bullet
+                transform.Translate(dir * speed * Time.deltaTime);
+                //check if too old
+                if ((lifeTime -= Time.deltaTime) < 0)
+                    Destroy(this.gameObject);
+            }
         }
 
         //standard destory self on collision
