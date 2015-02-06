@@ -38,6 +38,9 @@ namespace Assets.Scripts.Enemies
         //knockback force
         public float _force = 75f;
 
+        //Hack
+        bool ExitCatcher = true;
+
         void Start()
         {
             Init();
@@ -56,8 +59,8 @@ namespace Assets.Scripts.Enemies
 
         //subclasses should implement these instead of Start() and Update() 
         //so we can control enemy globals easily from this class
-        protected abstract void Run();
         protected abstract void StartUp();
+        protected abstract void Run();
 
         // Produces the orbs
         public void ProduceOrbs(int _num)
@@ -132,26 +135,30 @@ namespace Assets.Scripts.Enemies
         //Ghosting
         public void UpdateGhost()
         {
+            if (ExitCatcher)
+                ExitGhost();
             _ghostTimer += Time.deltaTime;
+            //small delay to let you fall
             if (_ghostTimer > _ghostDelay)
             {
-                _ghostTimer = 0f;
-                //this.gameObject.layer = ENEMY;
+                //Makes up for trigger exit not being called
+                ExitCatcher = true;
             }
         }
 
         //Enemy ghost init by platform trigger
-        public void InitGhost()
+        public void EnterGhost()
         {
-            //this.gameObject.layer = GHOSTING_ENEMY;
-            //_ghostTimer = 0;
+            this.gameObject.layer = GHOSTING_ENEMY;
+            ExitCatcher = false;
+            _ghostTimer = 0;
         }
 
         //Enemt ghost exited by leaving platform trigger
         public void ExitGhost()
         {
-            //this.gameObject.layer = ENEMY;
-            //_ghostTimer = 0;
+            this.gameObject.layer = ENEMY;
+            _ghostTimer = _ghostDelay+1;
         }
 
         //Gets or sets the color

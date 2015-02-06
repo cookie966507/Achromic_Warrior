@@ -16,7 +16,7 @@ namespace Assets.Scripts
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemies.Enemy>().InitGhost();
+			col.GetComponent<Enemies.Enemy>().EnterGhost();
 		}
 	}
 
@@ -28,7 +28,7 @@ namespace Assets.Scripts
 		}
 		else if(col.transform.tag.Equals("enemy"))
 		{
-			col.GetComponent<Enemies.Enemy>().InitGhost();
+			col.GetComponent<Enemies.Enemy>().EnterGhost();
 		}
 	}
 
