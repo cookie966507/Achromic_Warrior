@@ -7,7 +7,6 @@ namespace Assets.Scripts.Enemies
 	public class BumperEnemy : Enemy
 	{
 		private int _dir = 1;
-		private float _moveForce = 100f;
 		public float _maxSpeed = 4f;
 
 		public Transform _bumper;

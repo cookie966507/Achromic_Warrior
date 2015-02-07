@@ -121,7 +121,7 @@ namespace Assets.Scripts.Player
             _layerMask = ~_layerMask;
             RaycastHit2D temp = Physics2D.Raycast(foot.position, -Vector2.up, 0.05f, _layerMask);
             //RaycastHit2D temp2 = Physics2D.Raycast(frontFoot.position, -Vector2.up, 0.05f);
-            if (temp != null && temp.collider != null)
+            if (temp.collider != null)
             {
                 //allow falling through untagged triggers
                 inAir = temp.collider.tag == "Untagged";

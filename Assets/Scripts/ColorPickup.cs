@@ -26,13 +26,13 @@ namespace Assets.Scripts
         }
 
         //pickup collides with something
-        void OnTriggerEnter2D(Collider2D col)
+        void OnCollisionEnter2D(Collision2D col)
         {
             //if the pickup hits the ground
-            if (col.transform.tag.Equals("ground"))
+            if (col.transform.tag.Equals("ground") || col.transform.tag.Equals("platform"))
             {
                 //if falling down
-                if (rigidbody2D.velocity.y <= 0)
+                if (rigidbody2D.velocity.y <= 0 && col.transform.position.y < transform.position.y)
                 {
                     //stop velocity
                     rigidbody2D.velocity = Vector2.zero;
