@@ -40,7 +40,8 @@
 		Game,
 		Overworld,
 		Pause,
-		EndLevel,
+		Lose,
+		Win,
 		Credits,
 
 		NumTypes

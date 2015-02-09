@@ -12,7 +12,7 @@ namespace Assets.Scripts.Player
     public class PlayerController : MonoBehaviour
     {
         public Transform foot;
-        public float JumpForce = 10;
+        public float JumpForce = 13.5f;
         //reference to the attack
         public ObjectHider _attack;
         public ObjectHider _block;
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Player
         public bool _facingRight = true;
 
         //how quickly player accelerates
-        public float _moveForce = 100f;
+        public float _moveForce = 200f;
         //capping the speed of the player
         public float _maxSpeed = 4f;
 
@@ -121,7 +121,7 @@ namespace Assets.Scripts.Player
             _layerMask = ~_layerMask;
             RaycastHit2D temp = Physics2D.Raycast(foot.position, -Vector2.up, 0.05f, _layerMask);
             //RaycastHit2D temp2 = Physics2D.Raycast(frontFoot.position, -Vector2.up, 0.05f);
-            if (temp != null && temp.collider != null)
+            if (temp.collider != null)
             {
                 //allow falling through untagged triggers
                 inAir = temp.collider.tag == "Untagged";
@@ -130,19 +130,6 @@ namespace Assets.Scripts.Player
                     hit = true;
                 }
             }
-            /*lse if (temp2 != null && temp2.collider != null)
-            {
-                inAir = temp2.collider.tag == "Untagged";
-                if (temp2.collider.tag == "Pit")
-                {
-                    hit = true;
-                    health = 0;
-                }
-                if (temp2.collider.tag == "Enemy")
-                {
-                    hit = true;
-                }
-            }*/
             else
                 inAir = true;
         }
@@ -210,6 +197,7 @@ namespace Assets.Scripts.Player
                 //STATE MACHINE SAY JUMP NOW!!!
                 if (_jump)
                 {
+					rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
                     rigidbody2D.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
                     _jump = false;
                 }
