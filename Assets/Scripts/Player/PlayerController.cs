@@ -130,19 +130,6 @@ namespace Assets.Scripts.Player
                     hit = true;
                 }
             }
-            /*lse if (temp2 != null && temp2.collider != null)
-            {
-                inAir = temp2.collider.tag == "Untagged";
-                if (temp2.collider.tag == "Pit")
-                {
-                    hit = true;
-                    health = 0;
-                }
-                if (temp2.collider.tag == "Enemy")
-                {
-                    hit = true;
-                }
-            }*/
             else
                 inAir = true;
         }

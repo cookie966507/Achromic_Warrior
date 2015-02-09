@@ -4,7 +4,7 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.UI;
 
 /*
- * Class to control all of the player data
+ * Class to control all of the player data relating to color
  */
 namespace Assets.Scripts.Player
 {
