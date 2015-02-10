@@ -13,17 +13,17 @@ namespace Assets.Scripts.Player
 	public class PlayerLifeData : MonoBehaviour
 	{
 		//health of the player
-		private float _health = 100f;
+		private static float _health = 100f;
 		private const float _maxHealth = 100f;
 		//how many lives the player has
-		private int _lives = 3;
+		private static int _lives = 3;
 
 		//health bar
-		private Image _bar;
+		private static Image _bar;
 		//lives counter
-		private Image _lifeCounter;
+		private static Image _lifeCounter;
 
-		private Sprite[] _nums;
+		private static Sprite[] _nums;
 
 		void Awake()
 		{
@@ -35,15 +35,33 @@ namespace Assets.Scripts.Player
 			_nums = (Sprite[])Resources.LoadAll<Sprite>("Sprites/UI/Numbers");
 		}
 		
-		void Update ()
-		{
+        //void Update ()
+        //{
+        //    if(Input.GetKeyDown(KeyCode.DownArrow)){
+        //        Lives--;
+        //    }
+        //    if(Input.GetKeyDown(KeyCode.UpArrow)){
+        //        Lives++;
+        //    }
+        //    if(Input.GetKeyDown(KeyCode.LeftArrow)){
+        //        Health -= 10;
+        //    }
+        //    if(Input.GetKeyDown(KeyCode.RightArrow)){
+        //        Health += 10;
+        //    }
+        //}
 
-			//if all health is lost
+        public static void damageHealth(int damage)
+        {
+            _health -=damage;
 			if(_health <= 0)
 			{
 				//decrement lives and reset health
-				Lives--;
-				Health = 100f;
+				_lives--;
+                _lives = Mathf.Clamp(_lives, 0, 9);
+				_lifeCounter.sprite = _nums[_lives];
+				_health = 100f;
+                // transfer to death state?
 			}
 
 			//if all lives are lost enter Lose state
@@ -51,44 +69,21 @@ namespace Assets.Scripts.Player
 			{
 				GameManager.State = GameState.Lose;
 			}
-
-			if(Input.GetKeyDown(KeyCode.DownArrow)){
-				Lives--;
-			}
-			if(Input.GetKeyDown(KeyCode.UpArrow)){
-				Lives++;
-			}
-			if(Input.GetKeyDown(KeyCode.LeftArrow)){
-				Health -= 10;
-			}
-			if(Input.GetKeyDown(KeyCode.RightArrow)){
-				Health += 10;
-			}
-		}
+            
+			_health = Mathf.Clamp(_health, 0f, _maxHealth);
+			_bar.transform.localScale = new Vector3(_health/_maxHealth, 1f, 1f);//if all health is lost
+        }
 
 		// Gets or sets the health.
 		public float Health
 		{
 			get{return _health;}
-			set
-			{
-				_health = value;
-				_health = Mathf.Clamp(_health, 0f, _maxHealth);
-
-				_bar.transform.localScale = new Vector3(_health/_maxHealth, 1f, 1f);
-			}
 		}
 
 		// Gets or sets the lives.
 		public int Lives
 		{
 			get{return _lives;}
-			set
-			{
-				_lives = value;
-				_lives = Mathf.Clamp(_lives, 0, 9);
-				_lifeCounter.sprite = _nums[_lives];
-			}
 		}
 	}
 }
