@@ -104,6 +104,8 @@ namespace Assets.Scripts.Player
                     animDone = true;
 
                 TouchingSomething();
+                if (_ghost)
+                    inAir = true;
                 //get next state
                 currState = machine.update(inAir, blockSucessful, hit, animDone);
                 if (invunTimer > 0)
