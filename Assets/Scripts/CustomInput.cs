@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 
 namespace Assets.Scripts
@@ -31,15 +31,15 @@ namespace Assets.Scripts
         public const string RIGHT_STICK = "Right Stick Click";
 
         private const int ATTACK = 0x1;
-        private const int BLOCK = 0x2;
+		private const int BLOCK = 0x2;
         private const int JUMP = 0x4;
         private const int CYCLELEFT = 0x8;
-        private const int CYCLERIGHT = 0x10;
+		private const int CYCLERIGHT = 0x10;
         private const int LEFT = 0x20;
-        private const int RIGHT = 0x40;
-        private const int CHANGECOLOR = 0x80;
-        private const int UP = 0x100;
-        private const int DOWN = 0x200;
+		private const int RIGHT = 0x40;
+		private const int CHANGECOLOR = 0x80;
+		private const int UP = 0x100;
+		private const int DOWN = 0x200;
 
         private const int ACCEPT = 0x400;
         private const int CANCEL = 0x800;
@@ -65,34 +65,34 @@ namespace Assets.Scripts
         {
             get { return (bools & CYCLELEFT) != 0; }
         }
-        public static bool CycleRight
-        {
-            get { return (bools & CYCLERIGHT) != 0; }
-        }
-        public static bool Left
+		public static bool CycleRight
+		{
+			get { return (bools & CYCLERIGHT) != 0; }
+		}
+		public static bool Left
         {
             get { return (bools & LEFT) != 0; }
         }
-        public static bool Right
-        {
-            get { return (bools & RIGHT) != 0; }
-        }
-        public static bool Block
+		public static bool Right
+		{
+			get { return (bools & RIGHT) != 0; }
+		}
+		public static bool Block
         {
             get { return (bools & BLOCK) != 0; }
         }
-        public static bool ChangeColor
-        {
-            get { return (bools & CHANGECOLOR) != 0; }
-        }
-        public static bool Up
+		public static bool ChangeColor
+		{
+			get { return (bools & CHANGECOLOR) != 0; }
+		}
+		public static bool Up
         {
             get { return (bools & UP) != 0; }
         }
-        public static bool Down
-        {
-            get { return (bools & DOWN) != 0; }
-        }
+		public static bool Down
+		{
+			get { return (bools & DOWN) != 0; }
+		}
         public static bool Accept
         {
             get { return (bools & ACCEPT) != 0; }
@@ -119,34 +119,34 @@ namespace Assets.Scripts
         {
             get { return (boolsUp & CYCLELEFT) != 0; }
         }
-        public static bool CycleRightUp
-        {
-            get { return (boolsUp & CYCLERIGHT) != 0; }
-        }
-        public static bool LeftUp
+		public static bool CycleRightUp
+		{
+			get { return (boolsUp & CYCLERIGHT) != 0; }
+		}
+		public static bool LeftUp
         {
             get { return (boolsUp & LEFT) != 0; }
         }
-        public static bool RightUp
-        {
-            get { return (boolsUp & RIGHT) != 0; }
-        }
-        public static bool BlockUp
+		public static bool RightUp
+		{
+			get { return (boolsUp & RIGHT) != 0; }
+		}
+		public static bool BlockUp
         {
             get { return (boolsUp & BLOCK) != 0; }
         }
-        public static bool ChangeColorUp
-        {
-            get { return (boolsUp & CHANGECOLOR) != 0; }
-        }
-        public static bool UpUp
+		public static bool ChangeColorUp
+		{
+			get { return (boolsUp & CHANGECOLOR) != 0; }
+		}
+		public static bool UpUp
         {
             get { return (boolsUp & UP) != 0; }
         }
-        public static bool DownUp
-        {
-            get { return (boolsUp & DOWN) != 0; }
-        }
+		public static bool DownUp
+		{
+			get { return (boolsUp & DOWN) != 0; }
+		}
         public static bool AcceptUp
         {
             get { return (boolsUp & ACCEPT) != 0; }
@@ -173,34 +173,34 @@ namespace Assets.Scripts
         {
             get { return (boolsHeld & CYCLELEFT) != 0; }
         }
-        public static bool CycleRightHeld
-        {
-            get { return (boolsHeld & CYCLERIGHT) != 0; }
-        }
-        public static bool LeftHeld
+		public static bool CycleRightHeld
+		{
+			get { return (boolsHeld & CYCLERIGHT) != 0; }
+		}
+		public static bool LeftHeld
         {
             get { return (boolsHeld & LEFT) != 0; }
         }
-        public static bool RightHeld
-        {
-            get { return (boolsHeld & RIGHT) != 0; }
-        }
-        public static bool BlockHeld
+		public static bool RightHeld
+		{
+			get { return (boolsHeld & RIGHT) != 0; }
+		}
+		public static bool BlockHeld
         {
             get { return (boolsHeld & BLOCK) != 0; }
         }
-        public static bool ChangeColorHeld
-        {
-            get { return (boolsHeld & CHANGECOLOR) != 0; }
-        }
-        public static bool UpHeld
+		public static bool ChangeColorHeld
+		{
+			get { return (boolsHeld & CHANGECOLOR) != 0; }
+		}
+		public static bool UpHeld
         {
             get { return (boolsHeld & UP) != 0; }
         }
-        public static bool DownHeld
-        {
-            get { return (boolsHeld & DOWN) != 0; }
-        }
+		public static bool DownHeld
+		{
+			get { return (boolsHeld & DOWN) != 0; }
+		}
         public static bool AcceptHeld
         {
             get { return (boolsHeld & ACCEPT) != 0; }
@@ -214,135 +214,70 @@ namespace Assets.Scripts
             get { return (boolsHeld & PAUSE) != 0; }
         }
 
-        //true as until the data is read or the key is released
+        //true as long as the button is held
         public static bool AttackFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & ATTACK) != 0;
-                boolsFreshPress = boolsFreshPress & ~ATTACK;
-                return temp;
-            }
+            get { return (boolsFreshPress & ATTACK) != 0; }
         }
         public static bool JumpFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & JUMP) != 0;
-                boolsFreshPress = boolsFreshPress & ~JUMP;
-                return temp;
-            }
+            get { return (boolsFreshPress & JUMP) != 0; }
         }
         public static bool CycleLeftFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & CYCLELEFT) != 0;
-                boolsFreshPress = boolsFreshPress & ~CYCLELEFT;
-                return temp;
-            }
+            get { return (boolsFreshPress & CYCLELEFT) != 0; }
         }
-        public static bool CycleRightFreshPress
+		public static bool CycleRightFreshPress
+		{
+			get { return (boolsFreshPress & CYCLERIGHT) != 0; }
+		}
+		public static bool LeftFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & CYCLERIGHT) != 0;
-                boolsFreshPress = boolsFreshPress & ~CYCLERIGHT;
-                return temp;
-            }
+            get { return (boolsFreshPress & LEFT) != 0; }
         }
-        public static bool LeftFreshPress
+		public static bool RightFreshPress
+		{
+			get { return (boolsFreshPress & RIGHT) != 0; }
+		}
+		public static bool BlockFreshPress
+		{
+			get { return (boolsFreshPress & BLOCK) != 0; }
+		}
+		public static bool ChangeColorFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & LEFT) != 0;
-                boolsFreshPress = boolsFreshPress & ~LEFT;
-                return temp;
-            }
-        }
-        public static bool RightFreshPress
-        {
-            get
-            {
-                bool temp = (boolsFreshPress & RIGHT) != 0;
-                boolsFreshPress = boolsFreshPress & ~RIGHT;
-                return temp;
-            }
-        }
-        public static bool BlockFreshPress
-        {
-            get
-            {
-                bool temp = (boolsFreshPress & BLOCK) != 0;
-                boolsFreshPress = boolsFreshPress & ~BLOCK;
-                return temp;
-            }
-        }
-        public static bool ChangeColorFreshPress
-        {
-            get
-            {
-                bool temp = (boolsFreshPress & CHANGECOLOR) != 0;
-                boolsFreshPress = boolsFreshPress & ~CHANGECOLOR;
-                return temp;
-            }
+            get { return (boolsFreshPress & CHANGECOLOR) != 0; }
         }
         public static bool UpFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & UP) != 0;
-                boolsFreshPress = boolsFreshPress & ~UP;
-                return temp;
-            }
+            get { return (boolsFreshPress & UP) != 0; }
         }
-        public static bool DownFreshPress
-        {
-            get
-            {
-                bool temp = (boolsFreshPress & DOWN) != 0;
-                boolsFreshPress = boolsFreshPress & ~DOWN;
-                return temp;
-            }
-        }
+		public static bool DownFreshPress
+		{
+			get { return (boolsFreshPress & DOWN) != 0; }
+		}
         public static bool AcceptFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & ACCEPT) != 0;
-                boolsFreshPress = boolsFreshPress & ~ACCEPT;
-                return temp;
-            }
+            get { return (boolsFreshPress & ACCEPT) != 0; }
         }
         public static bool CancelFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & CANCEL) != 0;
-                boolsFreshPress = boolsFreshPress & ~CANCEL;
-                return temp;
-            }
+            get { return (boolsFreshPress & CANCEL) != 0; }
         }
         public static bool PauseFreshPress
         {
-            get
-            {
-                bool temp = (boolsFreshPress & PAUSE) != 0;
-                boolsFreshPress = boolsFreshPress & ~PAUSE;
-                return temp;
-            }
+            get { return (boolsFreshPress & PAUSE) != 0; }
         }
 
         private static KeyCode keyBoardAttack;
         private static KeyCode keyBoardJump;
         private static KeyCode keyBoardCycleLeft;
-        private static KeyCode keyBoardCycleRight;
+		private static KeyCode keyBoardCycleRight;
         private static KeyCode keyBoardLeft;
-        private static KeyCode keyBoardRight;
+		private static KeyCode keyBoardRight;
         private static KeyCode keyBoardBlock;
-        private static KeyCode keyBoardChangeColor;
+		private static KeyCode keyBoardChangeColor;
         private static KeyCode keyBoardUp;
-        private static KeyCode keyBoardDown;
+		private static KeyCode keyBoardDown;
         private static KeyCode keyBoardAccept;
         private static KeyCode keyBoardCancel;
         private static KeyCode keyBoardPause;
@@ -350,13 +285,13 @@ namespace Assets.Scripts
         private static string gamePadAttack;
         private static string gamePadJump;
         private static string gamePadCycleLeft;
-        private static string gamePadCycleRight;
+		private static string gamePadCycleRight;
         private static string gamePadLeft;
-        private static string gamePadRight;
+		private static string gamePadRight;
         private static string gamePadBlock;
-        private static string gamePadChangeColor;
+		private static string gamePadChangeColor;
         private static string gamePadUp;
-        private static string gamePadDown;
+		private static string gamePadDown;
         private static string gamePadAccept;
         private static string gamePadCancel;
         private static string gamePadPause;
@@ -397,69 +332,69 @@ namespace Assets.Scripts
                 PlayerPrefs.SetInt(2 + KeyHash, (int)value);
             }
         }
-        public static KeyCode KeyBoardCycleRight
-        {
-            get { return keyBoardCycleRight; }
-            set
-            {
-                keyBoardCycleRight = value;
-                PlayerPrefs.SetInt(3 + KeyHash, (int)value);
-            }
-        }
-        public static KeyCode KeyBoardLeft
-        {
-            get { return keyBoardLeft; }
-            set
+		public static KeyCode KeyBoardCycleRight
+		{
+			get { return keyBoardCycleRight; }
+			set
+			{
+				keyBoardCycleRight = value;
+				PlayerPrefs.SetInt(3 + KeyHash, (int)value);
+			}
+		}
+		public static KeyCode KeyBoardLeft
+		{
+			get { return keyBoardLeft; }
+			set
             {
                 keyBoardLeft = value;
                 PlayerPrefs.SetInt(4 + KeyHash, (int)value);
             }
         }
-        public static KeyCode KeyBoardRight
-        {
-            get { return keyBoardRight; }
-            set
-            {
-                keyBoardRight = value;
-                PlayerPrefs.SetInt(5 + KeyHash, (int)value);
-            }
-        }
-        public static KeyCode KeyBoardBlock
-        {
-            get { return keyBoardBlock; }
+		public static KeyCode KeyBoardRight
+		{
+			get { return keyBoardRight; }
+			set
+			{
+				keyBoardRight = value;
+				PlayerPrefs.SetInt(5 + KeyHash, (int)value);
+			}
+		}
+		public static KeyCode KeyBoardBlock
+		{
+			get { return keyBoardBlock; }
             set
             {
                 keyBoardBlock = value;
                 PlayerPrefs.SetInt(6 + KeyHash, (int)value);
             }
         }
-        public static KeyCode KeyBoardChangeColor
-        {
-            get { return keyBoardChangeColor; }
-            set
-            {
-                keyBoardChangeColor = value;
-                PlayerPrefs.SetInt(7 + KeyHash, (int)value);
-            }
-        }
-        public static KeyCode KeyBoardUp
-        {
-            get { return keyBoardUp; }
+		public static KeyCode KeyBoardChangeColor
+		{
+			get { return keyBoardChangeColor; }
+			set
+			{
+				keyBoardChangeColor = value;
+				PlayerPrefs.SetInt(7 + KeyHash, (int)value);
+			}
+		}
+		public static KeyCode KeyBoardUp
+		{
+			get { return keyBoardUp; }
             set
             {
                 keyBoardUp = value;
                 PlayerPrefs.SetInt(8 + KeyHash, (int)value);
             }
         }
-        public static KeyCode KeyBoardDown
-        {
-            get { return keyBoardDown; }
-            set
-            {
-                keyBoardDown = value;
-                PlayerPrefs.SetInt(9 + KeyHash, (int)value);
-            }
-        }
+		public static KeyCode KeyBoardDown
+		{
+			get { return keyBoardDown; }
+			set
+			{
+				keyBoardDown = value;
+				PlayerPrefs.SetInt(9 + KeyHash, (int)value);
+			}
+		}
         public static KeyCode KeyBoardAccept
         {
             get { return keyBoardAccept; }
@@ -514,45 +449,45 @@ namespace Assets.Scripts
                 PlayerPrefs.SetString(15 + KeyHash, value);
             }
         }
-        public static string GamePadCycleRight
-        {
-            get { return gamePadCycleRight; }
-            set
-            {
-                gamePadCycleRight = value;
-                PlayerPrefs.SetString(16 + KeyHash, value);
-            }
-        }
-        public static string GamePadLeft
-        {
-            get { return gamePadLeft; }
-            set
+		public static string GamePadCycleRight
+		{
+			get { return gamePadCycleRight; }
+			set
+			{
+				gamePadCycleRight = value;
+				PlayerPrefs.SetString(16 + KeyHash, value);
+			}
+		}
+		public static string GamePadLeft
+		{
+			get { return gamePadLeft; }
+			set
             {
                 gamePadLeft = value;
                 PlayerPrefs.SetString(17 + KeyHash, value);
             }
         }
-        public static string GamePadRight
-        {
-            get { return gamePadRight; }
-            set
-            {
-                gamePadRight = value;
-                PlayerPrefs.SetString(18 + KeyHash, value);
-            }
-        }
-        public static string GamePadBlock
-        {
-            get { return gamePadBlock; }
-            set
-            {
-                gamePadBlock = value;
-                PlayerPrefs.SetString(19 + KeyHash, value);
-            }
-        }
-        public static string GamePadChangeColor
-        {
-            get { return gamePadChangeColor; }
+		public static string GamePadRight
+		{
+			get { return gamePadRight; }
+			set
+			{
+				gamePadRight = value;
+				PlayerPrefs.SetString(18 + KeyHash, value);
+			}
+		}
+		public static string GamePadBlock
+		{
+			get { return gamePadBlock; }
+			set
+			{
+				gamePadBlock = value;
+				PlayerPrefs.SetString(19 + KeyHash, value);
+			}
+		}
+		public static string GamePadChangeColor
+		{
+			get { return gamePadChangeColor; }
             set
             {
                 gamePadChangeColor = value;
@@ -568,15 +503,15 @@ namespace Assets.Scripts
                 PlayerPrefs.SetString(21 + KeyHash, value);
             }
         }
-        public static string GamePadDown
-        {
-            get { return gamePadDown; }
-            set
-            {
-                gamePadDown = value;
-                PlayerPrefs.SetString(22 + KeyHash, value);
-            }
-        }
+		public static string GamePadDown
+		{
+			get { return gamePadDown; }
+			set
+			{
+				gamePadDown = value;
+				PlayerPrefs.SetString(22 + KeyHash, value);
+			}
+		}
         public static string GamePadAccept
         {
             get { return gamePadAccept; }
@@ -607,40 +542,39 @@ namespace Assets.Scripts
 
         void Start()
         {
-            /*
+			/*
             if (PlayerPrefs.HasKey(0 + KeyHash))
             {
                 keyBoardAttack = (KeyCode)PlayerPrefs.GetInt(0 + KeyHash);
                 keyBoardJump = (KeyCode)PlayerPrefs.GetInt(1 + KeyHash);
                 keyBoardCycleLeft = (KeyCode)PlayerPrefs.GetInt(2 + KeyHash);
-                keyBoardCycleRight = (KeyCode)PlayerPrefs.GetInt(3 + KeyHash);
+				keyBoardCycleRight = (KeyCode)PlayerPrefs.GetInt(3 + KeyHash);
                 keyBoardLeft = (KeyCode)PlayerPrefs.GetInt(4 + KeyHash);
-                keyBoardRight = (KeyCode)PlayerPrefs.GetInt(5 + KeyHash);
+				keyBoardRight = (KeyCode)PlayerPrefs.GetInt(5 + KeyHash);
                 keyBoardBlock = (KeyCode)PlayerPrefs.GetInt(6 + KeyHash);
-                keyBoardChangeColor = (KeyCode)PlayerPrefs.GetInt(7 + KeyHash);
+				keyBoardChangeColor = (KeyCode)PlayerPrefs.GetInt(7 + KeyHash);
                 keyBoardUp = (KeyCode)PlayerPrefs.GetInt(8 + KeyHash);
-                keyBoardDown = (KeyCode)PlayerPrefs.GetInt(9 + KeyHash);
+				keyBoardDown = (KeyCode)PlayerPrefs.GetInt(9 + KeyHash);
                 keyBoardAccept = (KeyCode)PlayerPrefs.GetInt(10 + KeyHash);
                 keyBoardCancel = (KeyCode)PlayerPrefs.GetInt(11 + KeyHash);
                 keyBoardPause = (KeyCode)PlayerPrefs.GetInt(12 + KeyHash);
-
                 gamePadAttack = PlayerPrefs.GetString(13 + KeyHash);
                 gamePadJump = PlayerPrefs.GetString(14 + KeyHash);
                 gamePadCycleLeft = PlayerPrefs.GetString(15 + KeyHash);
-                gamePadCycleRight = PlayerPrefs.GetString(16 + KeyHash);
+				gamePadCycleRight = PlayerPrefs.GetString(16 + KeyHash);
                 gamePadLeft = PlayerPrefs.GetString(17 + KeyHash);
-                gamePadRight = PlayerPrefs.GetString(18 + KeyHash);
+				gamePadRight = PlayerPrefs.GetString(18 + KeyHash);
                 gamePadBlock = PlayerPrefs.GetString(19 + KeyHash);
-                gamePadChangeColor = PlayerPrefs.GetString(20 + KeyHash);
+				gamePadChangeColor = PlayerPrefs.GetString(20 + KeyHash);
                 gamePadUp = PlayerPrefs.GetString(21 + KeyHash);
-                gamePadDown = PlayerPrefs.GetString(22 + KeyHash);
+				gamePadDown = PlayerPrefs.GetString(22 + KeyHash);
                 gamePadAccept = PlayerPrefs.GetString(23 + KeyHash);
                 gamePadCancel = PlayerPrefs.GetString(24 + KeyHash);
                 gamePadPause = PlayerPrefs.GetString(25 + KeyHash);
             }
             else
             */
-            Default();
+                Default();
         }
         void Update()
         {
@@ -653,13 +587,13 @@ namespace Assets.Scripts
                 updateKey(ATTACK, keyBoardAttack);
                 updateKey(JUMP, keyBoardJump);
                 updateKey(CYCLELEFT, keyBoardCycleLeft);
-                updateKey(CYCLERIGHT, keyBoardCycleRight);
+     			updateKey(CYCLERIGHT, keyBoardCycleRight);
                 updateKey(LEFT, keyBoardLeft);
-                updateKey(RIGHT, keyBoardRight);
+			    updateKey(RIGHT, keyBoardRight);
                 updateKey(BLOCK, keyBoardBlock);
-                updateKey(CHANGECOLOR, keyBoardChangeColor);
+			    updateKey(CHANGECOLOR, keyBoardChangeColor);
                 updateKey(UP, keyBoardUp);
-                updateKey(DOWN, keyBoardDown);
+			    updateKey(DOWN, keyBoardDown);
                 updateKey(ACCEPT, keyBoardAccept);
                 updateKey(CANCEL, keyBoardCancel);
                 updateKey(PAUSE, keyBoardPause);
@@ -669,13 +603,13 @@ namespace Assets.Scripts
                 updatePad(ATTACK, gamePadAttack);
                 updatePad(JUMP, gamePadJump);
                 updatePad(CYCLELEFT, gamePadCycleLeft);
-                updatePad(CYCLERIGHT, gamePadCycleRight);
+			    updatePad(CYCLERIGHT, gamePadCycleRight);
                 updatePad(LEFT, gamePadLeft);
-                updatePad(RIGHT, gamePadRight);
+			    updatePad(RIGHT, gamePadRight);
                 updatePad(BLOCK, gamePadBlock);
-                updatePad(CHANGECOLOR, gamePadChangeColor);
+			    updatePad(CHANGECOLOR, gamePadChangeColor);
                 updatePad(UP, gamePadUp);
-                updatePad(DOWN, gamePadDown);
+			    updatePad(DOWN, gamePadDown);
                 updatePad(ACCEPT, gamePadAccept);
                 updatePad(CANCEL, gamePadCancel);
                 updatePad(PAUSE, gamePadPause);
@@ -691,7 +625,9 @@ namespace Assets.Scripts
                 else if (Input.GetKeyUp(k))
                     keyUp = true;
             }
-            if (((bools & state) == 0) && key)
+            if ((bools & state) != 0)
+                boolsFreshPress = boolsFreshPress & ~state;
+            else if (key)
                 boolsFreshPress = boolsFreshPress | state;
             if (key)
             {
@@ -703,7 +639,6 @@ namespace Assets.Scripts
             {
                 bools = bools & ~state;
                 boolsHeld = boolsHeld & ~state;
-                boolsFreshPress = boolsFreshPress & ~state;
                 boolsUp = boolsUp | state;
             }
             else
@@ -724,7 +659,9 @@ namespace Assets.Scripts
                 key = true;
             else if ((bools & state) != 0)
                 keyUp = true;
-            if (((bools & state) == 0) && key)
+            if ((bools & state) != 0)
+                boolsFreshPress = boolsFreshPress & ~state;
+            else if (key)
                 boolsFreshPress = boolsFreshPress | state;
             if (key)
             {
@@ -736,7 +673,6 @@ namespace Assets.Scripts
             {
                 bools = bools & ~state;
                 boolsHeld = boolsHeld & ~state;
-                boolsFreshPress = boolsFreshPress & ~state;
                 boolsUp = boolsUp | state;
             }
             else
@@ -755,22 +691,22 @@ namespace Assets.Scripts
             PlayerPrefs.SetInt(0 + KeyHash, (int)KeyCode.K);
             keyBoardJump = KeyCode.Space;
             PlayerPrefs.SetInt(1 + KeyHash, (int)KeyCode.Space);
-            keyBoardCycleLeft = KeyCode.Q;
+			keyBoardCycleLeft = KeyCode.Q;
             PlayerPrefs.SetInt(2 + KeyHash, (int)KeyCode.Q);
-            keyBoardCycleRight = KeyCode.E;
-            PlayerPrefs.SetInt(3 + KeyHash, (int)KeyCode.E);
-            keyBoardLeft = KeyCode.A;
+			keyBoardCycleRight = KeyCode.E;
+			PlayerPrefs.SetInt(3 + KeyHash, (int)KeyCode.E);
+			keyBoardLeft = KeyCode.A;
             PlayerPrefs.SetInt(4 + KeyHash, (int)KeyCode.A);
-            keyBoardRight = KeyCode.D;
-            PlayerPrefs.SetInt(5 + KeyHash, (int)KeyCode.D);
-            keyBoardBlock = KeyCode.L;
+			keyBoardRight = KeyCode.D;
+			PlayerPrefs.SetInt(5 + KeyHash, (int)KeyCode.D);
+			keyBoardBlock = KeyCode.L;
             PlayerPrefs.SetInt(6 + KeyHash, (int)KeyCode.L);
-            keyBoardChangeColor = KeyCode.Return;
-            PlayerPrefs.SetInt(7 + KeyHash, (int)KeyCode.Return);
-            keyBoardUp = KeyCode.W;
+			keyBoardChangeColor = KeyCode.Return;
+			PlayerPrefs.SetInt(7 + KeyHash, (int)KeyCode.Return);
+			keyBoardUp = KeyCode.W;
             PlayerPrefs.SetInt(8 + KeyHash, (int)KeyCode.W);
-            keyBoardDown = KeyCode.S;
-            PlayerPrefs.SetInt(9 + KeyHash, (int)KeyCode.S);
+			keyBoardDown = KeyCode.S;
+			PlayerPrefs.SetInt(9 + KeyHash, (int)KeyCode.S);
             keyBoardAccept = KeyCode.Return;
             PlayerPrefs.SetInt(10 + KeyHash, (int)KeyCode.Return);
             keyBoardCancel = KeyCode.Backspace;
@@ -787,20 +723,20 @@ namespace Assets.Scripts
             PlayerPrefs.SetString(14 + KeyHash, A);
             gamePadCycleLeft = LB;
             PlayerPrefs.SetString(15 + KeyHash, LB);
-            gamePadCycleRight = RB;
-            PlayerPrefs.SetString(16 + KeyHash, RB);
-            gamePadLeft = LEFT_STICK_LEFT;
+			gamePadCycleRight = RB;
+			PlayerPrefs.SetString(16 + KeyHash, RB);
+			gamePadLeft = LEFT_STICK_LEFT;
             PlayerPrefs.SetString(17 + KeyHash, LEFT_STICK_LEFT);
-            gamePadRight = LEFT_STICK_RIGHT;
-            PlayerPrefs.SetString(18 + KeyHash, LEFT_STICK_RIGHT);
-            gamePadBlock = LEFT_TRIGGER;
+			gamePadRight = LEFT_STICK_RIGHT;
+			PlayerPrefs.SetString(18 + KeyHash, LEFT_STICK_RIGHT);
+			gamePadBlock = LEFT_TRIGGER;
             PlayerPrefs.SetString(19 + KeyHash, LEFT_TRIGGER);
-            gamePadChangeColor = Y;
-            PlayerPrefs.SetString(20 + KeyHash, Y);
-            gamePadUp = LEFT_STICK_UP;
+			gamePadChangeColor = Y;
+			PlayerPrefs.SetString(20 + KeyHash, Y);
+			gamePadUp = LEFT_STICK_UP;
             PlayerPrefs.SetString(21 + KeyHash, LEFT_STICK_UP);
-            gamePadDown = LEFT_STICK_DOWN;
-            PlayerPrefs.SetString(22 + KeyHash, LEFT_STICK_DOWN);
+			gamePadDown = LEFT_STICK_DOWN;
+			PlayerPrefs.SetString(22 + KeyHash, LEFT_STICK_DOWN);
             gamePadAccept = A;
             PlayerPrefs.SetString(23 + KeyHash, A);
             gamePadCancel = B;
