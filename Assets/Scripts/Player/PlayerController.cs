@@ -114,13 +114,19 @@ namespace Assets.Scripts.Player
                     {
                         render = !render;
                         renderTimer = 0;
-                        foreach(PlayerArmor pa in _armor)
+                        foreach (PlayerArmor pa in _armor)
                             pa.renderer.enabled = render;
                     }
                     hit = false;
                     renderTimer += Time.deltaTime;
                     invunTimer -= Time.deltaTime;
-                }                   
+                }
+                else
+                {
+                    foreach (PlayerArmor pa in _armor)
+                        pa.renderer.enabled = true;
+                    invun = false;
+                }
                 
                 //run state
                 doState[(int)currState]();
@@ -146,9 +152,6 @@ namespace Assets.Scripts.Player
                     blockSucessful = false;
                     parryTimer = 0;
                     hit = false;
-                    foreach (PlayerArmor pa in _armor)
-                        pa.renderer.enabled = true;
-                    invun = false;
                     //TODO: change anim
                 }
                 prevState = currState;
