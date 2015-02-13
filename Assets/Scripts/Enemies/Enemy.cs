@@ -70,7 +70,7 @@ namespace Assets.Scripts.Enemies
                 //create a new orb
                 GameObject _newOrb = (GameObject)GameObject.Instantiate(_orb, transform.position, Quaternion.identity);
                 //set the orb color
-                _newOrb.GetComponent<ColorPickup>().ColorType = _color;
+                _newOrb.GetComponent<ColorPickup>().ColorType = this.ResolveMultiColor(_color);
                 //throw it in the air
                 _newOrb.rigidbody2D.AddRelativeForce(new Vector2(Random.Range(-1f, 1f), Random.Range(5, 10)), ForceMode2D.Impulse);
             }
@@ -149,7 +149,8 @@ namespace Assets.Scripts.Enemies
         //Enemy ghost init by platform trigger
         public void EnterGhost()
         {
-            this.gameObject.layer = GHOSTING_ENEMY;
+            if (this.gameObject.layer != GHOSTING_ENEMY)
+                this.gameObject.layer = GHOSTING_ENEMY;
             ExitCatcher = false;
             _ghostTimer = 0;
         }
@@ -157,7 +158,8 @@ namespace Assets.Scripts.Enemies
         //Enemt ghost exited by leaving platform trigger
         public void ExitGhost()
         {
-            this.gameObject.layer = ENEMY;
+            if (this.gameObject.layer != ENEMY)
+                this.gameObject.layer = ENEMY;
             _ghostTimer = _ghostDelay+1;
         }
 
@@ -178,5 +180,10 @@ namespace Assets.Scripts.Enemies
                 }
             }
         }
+
+		public ColorElement ResolveMultiColor(ColorElement _color)
+		{
+			return CustomColor.Weights(_color);
+		}
     }
 }

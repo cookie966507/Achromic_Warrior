@@ -56,6 +56,64 @@ namespace Assets.Scripts
             return new Color(0f, 0f, 0f);
         }
 
+
+		//for determining weights of color
+		public static ColorElement Weights(ColorElement _color)
+		{
+			float _rand = 0;
+			switch (_color)
+			{
+			case ColorElement.Red:
+				return ColorElement.Red;
+				
+			case ColorElement.Green:
+				return ColorElement.Green;
+				
+			case ColorElement.Blue:
+				return ColorElement.Blue;
+				
+			case ColorElement.Yellow:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.5f ? ColorElement.Red : ColorElement.Green);
+
+			case ColorElement.Cyan:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.5f ? ColorElement.Green : ColorElement.Blue);
+				
+			case ColorElement.Magenta:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.5f ? ColorElement.Red : ColorElement.Blue);
+				
+			case ColorElement.Orange:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.25f ? ColorElement.Red : ColorElement.Green);
+				
+			case ColorElement.Chartreuse:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.75f ? ColorElement.Red : ColorElement.Green);
+				
+			case ColorElement.Spring:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.25f ? ColorElement.Green : ColorElement.Blue);
+				
+			case ColorElement.Azure:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.75f ? ColorElement.Green : ColorElement.Blue);
+				
+			case ColorElement.Rose:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.25f ? ColorElement.Red : ColorElement.Blue);
+
+			case ColorElement.Violet:
+				_rand = Random.Range(0f, 1f);
+				return (_rand >= 0.75f ? ColorElement.Red : ColorElement.Blue);
+				
+			case ColorElement.White:
+				return ColorElement.White;
+			}
+			return ColorElement.Black;
+		}
+
         //converting colors if using 0-255 instead of 0-1
         public static Color ConvertColor(float r, float g, float b)
         {

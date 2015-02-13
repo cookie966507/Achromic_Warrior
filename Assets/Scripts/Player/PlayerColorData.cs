@@ -4,7 +4,7 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.UI;
 
 /*
- * Class to control all of the player data
+ * Class to control all of the player data relating to color
  */
 namespace Assets.Scripts.Player
 {
@@ -55,9 +55,6 @@ namespace Assets.Scripts.Player
         private float _maxDef = 9f;
         private float _maxSpd = 11f;
 
-        //player health
-        private float _health = 20f;
-
         void Awake()
         {
             //init meter color
@@ -97,6 +94,11 @@ namespace Assets.Scripts.Player
 			_r.UpdateSphereColor(ColorElement.White);
 			_g.UpdateSphereColor(ColorElement.White);
 			_b.UpdateSphereColor(ColorElement.White);
+        }
+
+        public bool isfull()
+        {
+            return _r.transform.localScale.x == 1 && _g.transform.localScale.x == 1 && _b.transform.localScale.x == 1;
         }
 
         //updates the possible color of the player
@@ -363,13 +365,6 @@ namespace Assets.Scripts.Player
         public float Speed
         {
             get { return _baseSpd + _spd * _maxSpd; }
-        }
-
-        //health of the player
-        public float Health
-        {
-            get { return _health; }
-            set { _health = value; }
         }
     }
 }

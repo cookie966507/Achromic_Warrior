@@ -9,39 +9,39 @@ namespace Assets.Scripts
     public class PlatformGhoster : MonoBehaviour
     {
         void OnTriggerEnter2D(Collider2D col)
-	{
-		if(col.transform.tag.Equals("Player"))
-		{
-			col.GetComponent<Player.PlayerController>().Ghost = true;
-		}
-		else if(col.transform.tag.Equals("enemy"))
-		{
-			col.GetComponent<Enemies.Enemy>().EnterGhost();
-		}
-	}
+        {
+            if (col.transform.tag.Equals("Player"))
+            {
+                col.GetComponent<Player.PlayerController>().Ghost = true;
+            }
+            else if (col.transform.tag.Equals("enemy"))
+            {
+                col.GetComponent<Enemies.Enemy>().EnterGhost();
+            }
+        }
 
-	void OnTriggerStay2D(Collider2D col)
-	{
-		if(col.transform.tag.Equals("Player"))
-		{
-            col.GetComponent<Player.PlayerController>().Ghost = true;
-		}
-		else if(col.transform.tag.Equals("enemy"))
-		{
-			col.GetComponent<Enemies.Enemy>().EnterGhost();
-		}
-	}
+        void OnTriggerStay2D(Collider2D col)
+        {
+            if (col.transform.tag.Equals("Player"))
+            {
+                col.GetComponent<Player.PlayerController>().Ghost = true;
+            }
+            else if (col.transform.tag.Equals("enemy"))
+            {
+                col.GetComponent<Enemies.Enemy>().EnterGhost();
+            }
+        }
 
-	void OnTriggerExit2D(Collider2D col)
-	{
-		if(col.transform.tag.Equals("Player"))
-		{
-            col.GetComponent<Player.PlayerController>().Ghost = false;
-		}
-		else if(col.transform.tag.Equals("enemy"))
-		{
-			col.GetComponent<Enemies.Enemy>().ExitGhost();
-		}
-	}
+        void OnTriggerExit2D(Collider2D col)
+        {
+            if (col.transform.tag.Equals("Player"))
+            {
+                col.GetComponent<Player.PlayerController>().Ghost = false;
+            }
+            else if (col.transform.tag.Equals("enemy"))
+            {
+                col.GetComponent<Enemies.Enemy>().ExitGhost();
+            }
+        }
     }
 }

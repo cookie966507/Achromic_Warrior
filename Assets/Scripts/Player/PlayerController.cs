@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
+using Assets.Scripts.UI;
 using Assets.Scripts.Util;
 
 /*
@@ -12,17 +13,19 @@ namespace Assets.Scripts.Player
     public class PlayerController : MonoBehaviour
     {
         public Transform foot;
-        public float JumpForce = 10;
+        public float JumpForce = 13.5f;
         //reference to the attack
         public ObjectHider _attack;
         public ObjectHider _block;
+
+        public static bool invun = false;
 
         //firection the player is facing
         [HideInInspector]
         public bool _facingRight = true;
 
         //how quickly player accelerates
-        public float _moveForce = 100f;
+        public float _moveForce = 200f;
         //capping the speed of the player
         public float _maxSpeed = 4f;
 
@@ -45,22 +48,41 @@ namespace Assets.Scripts.Player
         private float _airControl = 0.3f;
         //for ghosting through platforms
         private float _ghostDelay = 0.5f;
-        private int temp;
+
+        private int temp;//delete when anim event is done
+
+        //state machine vars
+
+        private float parryTime = .2f;
+        private float renderTime = .002f;
+        private float renderTimer = 0;
+        private static float invunTime = .5f;
+        private static float invunTimer = 0;
+        private PlayerColorData colorData;
+        private static int damage = 0;
+        private float parryTimer = 0;
         private bool animDone = false;
         private bool inAir = false;
-        private bool hit=false;
-        private static bool blocking = false;
         private bool blockSucessful = false;
+        private bool hit = false;
+        private bool render = false;
+        private bool enemyOnRight=false;
+        private static bool blocking = false;
+        public static bool achromic = false;
         private PlayerStateMachine machine;
         private delegate void state();
         private state[] doState;
         private PlayerState prevState = 0;
         private PlayerState currState = 0;
+        private PlayerArmor[] _armor;
 
         void Awake()
         {
             //find collider
             _playerCollider = this.GetComponent<BoxCollider2D>();
+            colorData = this.gameObject.GetComponent<PlayerColorData>();
+            _armor = GameObject.FindObjectsOfType<PlayerArmor>();
+            //state machine init
             attack = _attack;
             block = _block;
             machine = new PlayerStateMachine();
@@ -71,16 +93,55 @@ namespace Assets.Scripts.Player
         {
             if (GameManager.State != GameState.Pause)
             {
+                if (Input.GetKey(KeyCode.UpArrow))
+                    colorData.AddColor(Color.white, 500f);
+
+                //going Achromic
+                if (CustomInput.CycleLeftFreshPress && CustomInput.CycleRightFreshPress && colorData.isfull())
+                {
+                    achromic = true;
+                }
+
                 if (temp++ > 3)
                     animDone = true;
+
                 TouchingSomething();
+                if (_ghost)
+                    inAir = true;
                 //get next state
-                currState = machine.update(inAir, false, false, animDone);
+                currState = machine.update(inAir, blockSucessful, hit, animDone);
+                if (invunTimer > 0)
+                {
+                    if (renderTimer > renderTime)
+                    {
+                        render = !render;
+                        renderTimer = 0;
+                        foreach (PlayerArmor pa in _armor)
+                            pa.renderer.enabled = render;
+                    }
+                    hit = false;
+                    renderTimer += Time.deltaTime;
+                    invunTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    foreach (PlayerArmor pa in _armor)
+                        pa.renderer.enabled = true;
+                    invun = false;
+                }
+
                 //run state
                 doState[(int)currState]();
                 //state clean up
-                if(blockSucessful)
-                    blockSucessful = false;
+                if (blockSucessful)
+                {
+                    parryTimer += Time.deltaTime;
+                    if (parryTimer > parryTime)
+                    {
+                        blockSucessful = false;
+                        parryTimer = 0;
+                    }
+                }
                 if (prevState != currState)
                 {
                     doOnce = false;
@@ -90,6 +151,9 @@ namespace Assets.Scripts.Player
                     block.Hide();
                     _jump = false;
                     blocking = false;
+                    blockSucessful = false;
+                    parryTimer = 0;
+                    hit = false;
                     //TODO: change anim
                 }
                 prevState = currState;
@@ -102,18 +166,34 @@ namespace Assets.Scripts.Player
         {
             if (GameManager.State != GameState.Pause)
             {
-                if(col.gameObject.tag=="enemy")
+                if (col.gameObject.tag == "enemy" && !invun)
                 {
                     if (blocking)
                         blockSucessful = true;
                     else
                         hit = true;
+                    if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
+                        enemyOnRight = false;
+                    else
+                        enemyOnRight = true;
+                    CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
+                    if (potentialDamage != null)
+                    {
+                        damage = potentialDamage.damage;
+                        damage -= (int)colorData.Defense;
+                        if (blockSucessful)
+                            damage -= (int)(colorData.Defense * .5f);
+                        if (damage < 0)
+                            damage = 0;
+                        DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+                    }
+                    else
+                        damage = 0;
                 }
             }
         }
 
         //detects if you are in the air
-        //support for two feet is commented out
         private void TouchingSomething()
         {
             int _layerMask = (1 << LayerMask.NameToLayer("player")) | (1 << LayerMask.NameToLayer("orb_collector") | (1 << LayerMask.NameToLayer("Default")));
@@ -121,35 +201,34 @@ namespace Assets.Scripts.Player
             _layerMask = ~_layerMask;
             RaycastHit2D temp = Physics2D.Raycast(foot.position, -Vector2.up, 0.05f, _layerMask);
             //RaycastHit2D temp2 = Physics2D.Raycast(frontFoot.position, -Vector2.up, 0.05f);
-            if (temp != null && temp.collider != null)
+            if (temp.collider != null)
             {
                 //allow falling through untagged triggers
                 inAir = temp.collider.tag == "Untagged";
-                if (temp.collider.tag == "enemy")
-                {
-                    hit = true;
-                }
+                //consider removing may be unneeded
+                //if (temp.collider.tag == "enemy")
+                //{
+                //    hit = true;
+                //    if (temp.collider.gameObject.transform.position.x < this.gameObject.transform.position.x)
+                //        enemyOnRight = false;
+                //    else
+                //        enemyOnRight = true;
+                //    CustomDamage potentialDamage = temp.collider.gameObject.GetComponent<CustomDamage>();
+                //    if (potentialDamage != null)
+                //    {
+                //        damage = potentialDamage.damage;
+                //        DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+                //    }
+                //    else
+                //        damage = 0;
+                //}
             }
-            /*lse if (temp2 != null && temp2.collider != null)
-            {
-                inAir = temp2.collider.tag == "Untagged";
-                if (temp2.collider.tag == "Pit")
-                {
-                    hit = true;
-                    health = 0;
-                }
-                if (temp2.collider.tag == "Enemy")
-                {
-                    hit = true;
-                }
-            }*/
             else
                 inAir = true;
         }
 
         private void Ghosting()
         {
-
             //if our cheat is on, out collider is off, so we need to tun it back on
             if (_colSwitch)
             {
@@ -198,8 +277,10 @@ namespace Assets.Scripts.Player
 
                     // If the player's horizontal velocity is greater than the maxSpeed...
                     if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
+                    {
                         // ... set the player's velocity to the maxSpeed in the x axis.
                         rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+                    }
 
                     //flippng based on direction and movement
                     if (_h > 0 && !_facingRight)
@@ -210,8 +291,32 @@ namespace Assets.Scripts.Player
                 //STATE MACHINE SAY JUMP NOW!!!
                 if (_jump)
                 {
+                    rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
                     rigidbody2D.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
                     _jump = false;
+                }
+                if (currState == PlayerState.hit)
+                {
+
+                    float _h;
+                    if (enemyOnRight) _h = -1f;
+                    else _h = 1f;
+
+
+                    // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
+                    if (_h * rigidbody2D.velocity.x < _maxSpeed)
+                    {
+                        //account for air control
+                        if (!inAir) rigidbody2D.AddForce(Vector2.right * _h * _moveForce);
+                        else rigidbody2D.AddForce(Vector2.right * _h * _moveForce * _airControl);
+                    }
+
+                    // If the player's horizontal velocity is greater than the maxSpeed...
+                    if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
+                    {
+                        // ... set the player's velocity to the maxSpeed in the x axis.
+                        rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+                    }
                 }
             }
         }
@@ -300,6 +405,7 @@ namespace Assets.Scripts.Player
         }
         private static void Parry()
         {
+
         }
         private static void Block()
         {
@@ -354,7 +460,14 @@ namespace Assets.Scripts.Player
 
         private static void Hit()
         {
-            Debug.Log("I'M INVINCIBLE HAHAHAHAHAHAHAHAHAHAH!!!!!!!");
+            if (!doOnce)
+            {
+                PlayerLifeData.damageHealth(damage);
+                damage = 0;
+                doOnce = true;
+                invunTimer = invunTime;
+                invun = true;
+            }
         }
 
         private static void Dead()

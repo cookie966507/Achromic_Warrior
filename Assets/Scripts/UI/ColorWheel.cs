@@ -88,15 +88,15 @@ namespace Assets.Scripts.UI
 				UpdateWheel(1);
 			}
 
-			//going Achromic ---- PUT IN PLAYER CLASS
-			if(CustomInput.CycleLeftFreshPress && CustomInput.CycleRightFreshPress && _r.transform.localScale.x == 1 && _g.transform.localScale.x == 1 && _b.transform.localScale.x == 1 )
-			{
-				_player.Color = ColorElement.Black;
-				_player.UpdateStats();
-				this.UpdateSpheres(ColorElement.Black);
-				_frame._achromic = true;
-				_frame.FrameColor = ColorElement.Black;
-			}
+            if (Player.PlayerController.achromic && _player.isfull())
+            {
+                _player.Color = ColorElement.Black;
+                _player.UpdateStats();
+                this.UpdateSpheres(ColorElement.Black);
+                _frame._achromic = true;
+                _frame.FrameColor = ColorElement.Black;
+                Player.PlayerController.achromic = false;
+            }
 
 			//changing color based on meter values and current color
 			if(CustomInput.ChangeColorFreshPress)
@@ -120,7 +120,7 @@ namespace Assets.Scripts.UI
 					if(_player.Color.Equals(_activeTab.Color))
 					{
 						//cancel color
-						_player.ResetToWhite();
+						_player.ResetToWhite();  
 					}
 					//different color tab
 					else

@@ -1,11 +1,15 @@
 fileFormatVersion: 2
-guid: ba134c3666f71fc4ca4be3a652d00c67
+guid: f8d9385fc29f1eb4c8cdc1915396d2b2
 TextureImporter:
   fileIDToRecycleName:
-    21300000: game_ui_atlas_0
+    21300000: triple_frame
     21300002: bar
-    21300004: sphere
-    21300006: meter
+    21300004: ui_sphere
+    21300006: single_frame
+    21300008: shield
+    21300010: bolt
+    21300012: sword
+    21300014: head_plate
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -47,15 +51,15 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: game_ui_atlas_0
+    - name: triple_frame
       rect:
         serializedVersion: 2
-        x: 3844
-        y: 3111
-        width: 221
-        height: 225
+        x: 40
+        y: 2969
+        width: 4171
+        height: 1246
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: bar
       rect:
@@ -67,7 +71,7 @@ TextureImporter:
       alignment: 4
       pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: sphere
+    - name: ui_sphere
       rect:
         serializedVersion: 2
         x: 3819
@@ -77,13 +81,53 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: meter
+    - name: single_frame
       rect:
         serializedVersion: 2
-        x: 46
-        y: 2969
-        width: 4165
-        height: 1240
+        x: 44
+        y: 1931
+        width: 4129
+        height: 509
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: shield
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 1161
+        width: 550
+        height: 566
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bolt
+      rect:
+        serializedVersion: 2
+        x: 1202
+        y: 1119
+        width: 363
+        height: 650
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sword
+      rect:
+        serializedVersion: 2
+        x: 2086
+        y: 1119
+        width: 366
+        height: 650
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: head_plate
+      rect:
+        serializedVersion: 2
+        x: 3340
+        y: 1040
+        width: 829
+        height: 829
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
