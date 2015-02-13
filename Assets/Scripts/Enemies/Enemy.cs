@@ -149,7 +149,8 @@ namespace Assets.Scripts.Enemies
         //Enemy ghost init by platform trigger
         public void EnterGhost()
         {
-            this.gameObject.layer = GHOSTING_ENEMY;
+            if (this.gameObject.layer != GHOSTING_ENEMY)
+                this.gameObject.layer = GHOSTING_ENEMY;
             ExitCatcher = false;
             _ghostTimer = 0;
         }
@@ -157,7 +158,8 @@ namespace Assets.Scripts.Enemies
         //Enemt ghost exited by leaving platform trigger
         public void ExitGhost()
         {
-            this.gameObject.layer = ENEMY;
+            if (this.gameObject.layer != ENEMY)
+                this.gameObject.layer = ENEMY;
             _ghostTimer = _ghostDelay+1;
         }
 
