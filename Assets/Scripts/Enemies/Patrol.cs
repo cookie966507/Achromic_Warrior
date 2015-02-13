@@ -15,7 +15,7 @@ namespace Assets.Scripts.Enemies
 		private int currentPoint;
 		private float damping = 3.0f;
 		private float jumpForceX = 30f;
-		private float jumpForceY = 200f;
+		private float jumpForceY = 100f;
 		private bool jumpMode = false;
 		private int patLen;
 		private int jumpLen;
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Enemies
 			target = patrolPoints [currentPoint];
 			patLen = patrolPoints.Length;
 			jumpLen = jumpPoints.Length;
-			this.gameObject.layer = LayerMask.NameToLayer("enemy");
+			//this.gameObject.layer = LayerMask.NameToLayer("enemy");
 		}
 		
 		protected override void Run()
@@ -82,7 +82,7 @@ namespace Assets.Scripts.Enemies
 					Vector2 vector = patrolPoints[currentPoint].position - target.position;
 					vector.y *= jumpForceY;
 					vector.x *= jumpForceX;
-					rigidbody2D.AddForce (vector); 
+                    rigidbody2D.AddForce(vector); 
 					jumpMode = false;
 					target = patrolPoints[currentPoint];
 				}
