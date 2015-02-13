@@ -1,0 +1,223 @@
+fileFormatVersion: 2
+guid: f2389e2ac826e1a44a99d2cb562b66db
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: derp_0
+    21300002: derp_1
+    21300004: derp_2
+    21300006: derp_3
+    21300008: derp_4
+    21300010: derp_5
+    21300012: derp_6
+    21300014: derp_7
+    21300016: derp_8
+    21300018: derp_9
+    21300020: derp_10
+    21300022: derp_11
+    21300024: derp_12
+    21300026: derp_13
+    21300028: derp_14
+    21300030: derp_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: derp_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2859
+        width: 195
+        height: 234
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 2315
+        width: 154
+        height: 345
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_2
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 1799
+        width: 181
+        height: 344
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_3
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 1895
+        width: 277
+        height: 768
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_4
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 2844
+        width: 223
+        height: 249
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_5
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 2901
+        width: 133
+        height: 187
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_6
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 2351
+        width: 147
+        height: 318
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_7
+      rect:
+        serializedVersion: 2
+        x: 1148
+        y: 1856
+        width: 189
+        height: 224
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_8
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 1427
+        width: 118
+        height: 200
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_9
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 1400
+        width: 175
+        height: 254
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_10
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 862
+        width: 172
+        height: 396
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_11
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 856
+        width: 154
+        height: 363
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_12
+      rect:
+        serializedVersion: 2
+        x: 970
+        y: 391
+        width: 109
+        height: 278
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_13
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 331
+        width: 129
+        height: 362
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_14
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 62
+        width: 112
+        height: 103
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: derp_15
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 169
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
