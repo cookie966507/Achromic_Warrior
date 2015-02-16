@@ -3,6 +3,10 @@ Achromic Warrior \Title
 Project Lead \Position
 Eric Cook
 
+UI Design \Position
+Christian Brice
+Eric Cook
+
 *
 *
 *
