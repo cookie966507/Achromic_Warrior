@@ -2,8 +2,9 @@ fileFormatVersion: 2
 guid: 60fcf1c49b1364740af4c8cca6be75fb
 TextureImporter:
   fileIDToRecycleName:
-    21300000: platforms_0
-    21300002: platforms_1
+    21300000: stone_platform
+    21300002: stone_background
+    21300004: stone_wall
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,7 +46,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: platforms_0
+    - name: stone_platform
       rect:
         serializedVersion: 2
         x: 61
@@ -55,13 +56,23 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: platforms_1
+    - name: stone_background
       rect:
         serializedVersion: 2
         x: 2148
         y: 3232
         width: 2075
         height: 895
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: stone_wall
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 1790
+        width: 1375
+        height: 1375
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
