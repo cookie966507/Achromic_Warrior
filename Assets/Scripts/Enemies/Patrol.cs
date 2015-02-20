@@ -21,6 +21,7 @@ namespace Assets.Scripts.Enemies
 		private int jumpLen;
 		private float changeInY = 0.0f; 
 		private float lastYPos = 0.0f;
+		private float noWait = 0;
 
 
 		protected override void StartUp()
@@ -43,12 +44,12 @@ namespace Assets.Scripts.Enemies
 			{
 				jumpMode = true;
 				//print ("Trueeeeeee: " + changeInY);
-				Transform current = null;
+				Transform current = jumpPoints[0];
 				for(int i = 0; i < jumpLen; i++)
 				{
 					// Find the shortest point from the next patrolto jump to for jump points
 					
-					if(jumpPoints[i].position.y - transform.position.y < 2)
+					if(Mathf.Abs (jumpPoints[i].position.y - transform.position.y) < 2)
 					{
 						// If no jump point is found, set the current one
 						if(!current)
@@ -65,7 +66,8 @@ namespace Assets.Scripts.Enemies
 					}
 				}
 				target = current;
-				//print (target.tag + " " + target.localPosition);
+				if(target != null)
+					print (target.tag + " " + target.localPosition);
 			}
 			/*
 			else if((target.position.y - transform.position.y) < 2 && jumpMode == true)
@@ -76,24 +78,33 @@ namespace Assets.Scripts.Enemies
 			
 			if(transform.position == target.position)
 			{
+				this.ExitGhost ();
 				if(jumpMode)
 				{
 					// Need to calculate jump vector
 					Vector2 vector = patrolPoints[currentPoint].position - target.position;
 					vector.y *= jumpForceY;
-					vector.x *= jumpForceX;
+					vector.x = 0; //vector.x *= jumpForceX;
                     rigidbody2D.AddForce(vector); 
 					jumpMode = false;
 					target = patrolPoints[currentPoint];
 				}
 				else
 				{
-					currentPoint++;
-					if(currentPoint >= patLen)
-						currentPoint = 0;
-					target = patrolPoints[currentPoint];
+					if(noWait > 0.25)
+					{
+						currentPoint++;
+						if(currentPoint >= patLen)
+							currentPoint = 0;
+						target = patrolPoints[currentPoint];
+						noWait = 0;
+					}
+					//if(noWait == 0)
+						//this.ExitGhost();
+					noWait += Time.deltaTime;
 				}
-				//print (target.tag + " " + target.localPosition);
+				if(target != null)
+					print (target.tag + " " + target.localPosition);
 			}
 			
 			transform.position = Vector2.MoveTowards (transform.position, target.position, moveSpeed * Time.deltaTime);
