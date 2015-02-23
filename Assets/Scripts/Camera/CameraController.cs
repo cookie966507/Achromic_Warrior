@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Player;
 
 /*
  * Class controlling the player's camera
@@ -9,10 +10,14 @@ namespace Assets.Scripts.Camera
     public class CameraController : MonoBehaviour
     {
         //target to follow
-        private Transform _target;
+        public Transform _target;
+
+		//reference to player
+		private Transform _player;
 
         //speed of the camera
         private float _speed = 0.1f;
+		private float _fovSpeed = 0.5f;
 
         //refs for smooth damp
         private float _xVel;
@@ -26,10 +31,18 @@ namespace Assets.Scripts.Camera
         private float _currX;
         private float _currY;
 
+		//for getting the camera fov
+		private float _distance = 0f;
+		private float _angleVel;
+		private float _angle = 10f;
+		private float _minAngle = 10f;
+		private float _maxAngle = 14f;
+		private float _ceilingHeight = 7f;
+
         void Start()
         {
-            //find target
-            _target = GameObject.Find("Player Camera Target").transform;
+            //find player
+            _player = GameObject.Find("player").transform;
         }
 
         void Update()
@@ -44,6 +57,12 @@ namespace Assets.Scripts.Camera
 
             //apply change
             this.transform.position = new Vector3(_currX, _currY, this.transform.position.z);
+
+			_distance = Mathf.Abs(_player.position.y - this.transform.position.y);
+			if(_distance > _ceilingHeight) _angle = Mathf.SmoothDamp(_angle, _maxAngle, ref _angleVel, _fovSpeed);
+			else _angle = Mathf.SmoothDamp(_angle, _minAngle, ref _angleVel, _fovSpeed);
+			camera.orthographicSize = _angle;
+
 
         }
 
