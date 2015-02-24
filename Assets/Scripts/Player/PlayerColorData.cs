@@ -57,6 +57,7 @@ namespace Assets.Scripts.Player
 
         void Awake()
         {
+            _color = ColorElement.White;
             //init meter color
             _meterColor = new Color(0f, 0f, 0f);
             //find controller
