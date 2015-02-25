@@ -47,6 +47,7 @@ namespace Assets.Scripts.Data
 
 		void Update()
 		{
+			List<AudioSource> _tempList = new List<AudioSource>();
 			//go through the audio sources
 			foreach(AudioSource _source in _sfxSources)
 			{
@@ -55,19 +56,33 @@ namespace Assets.Scripts.Data
 				{
 					//set the volume to be on just in case it was off
 					_source.volume = VOL_UP;
-					//remove the reference because we are done with it
-					_sfxSources.Remove(_source);
+					//remove the reference because we are done with it (tempList will remove it)
+					_tempList.Add(_source);
 				}
 			}
+			//avoiding collection errors related to foreach loops
+			foreach (AudioSource _source in _tempList)
+			{
+				_sfxSources.Remove(_source);
+			}
+			_tempList.Clear();
 
+
+			//same for the music
 			foreach(AudioSource _source in _musicSources)
 			{
 				if(!_source.isPlaying)
 				{
 					_source.volume = VOL_UP;
-					_musicSources.Remove(_source);
+					_tempList.Add(_source);
 				}
 			}
+
+			foreach (AudioSource _source in _tempList)
+			{
+				_musicSources.Remove(_source);
+			}
+			_tempList.Clear();
 		}
 
 		//function for playing sfx
