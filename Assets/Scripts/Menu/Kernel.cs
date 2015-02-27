@@ -36,7 +36,7 @@ namespace Assets.Scripts.Menu
                         Debug.Log("Attack!!!! left shouldn't be null!!!!");
                         return;
                     }
-                    if (child > 0 && child < left.children.Length)
+                    if (child >= 0 && child < left.children.Length)
                         next = left.children[child];
                     else
                     {
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Menu
                 }
                 else
                 {
-                    if (child > 0 && child < right.children.Length)
+                    if (child >= 0 && child < right.children.Length)
                         next = right.children[child];
                     else
                     {
@@ -92,15 +92,18 @@ namespace Assets.Scripts.Menu
                         right = left;
                         left = null;
                     }
-                    next = left.parent;
-                    //right exits right
-                    right.item.sleep(true, true);
-                    //left moves right
-                    left.item.sleep(true, true);
-                    //next enters from left
-                    next.item.wake(true, true);
-                    right = left;
-                    left = next;
+                    else
+                    {
+                        next = left.parent;
+                        //right exits right
+                        right.item.sleep(true, false);
+                        //left moves right
+                        left.item.sleep(true, false);
+                        //next enters from left
+                        next.item.wake(true, false);
+                        right = left;
+                        left = next;
+                    }
                 }
                 else
                 {
@@ -109,15 +112,28 @@ namespace Assets.Scripts.Menu
                         Debug.Log("Logic Erro tree incorrect");
                         return;
                     }
-                    next = left.parent;
-                    //right exits right
-                    right.item.sleep(true, true);
-                    //left moves right
-                    left.item.sleep(true, true);
-                    //next enters from left
-                    next.item.wake(true, true);
-                    right = left;
-                    left = next;
+                    if (left.parent == null)
+                    {
+                        //at root
+                        //right exits right
+                        right.item.sleep(true, false);
+                        //left moves right
+                        left.item.wake(true, false);
+                        right = left;
+                        left = null;
+                    }
+                    else
+                    {
+                        next = left.parent;
+                        //right exits right
+                        right.item.sleep(true, false);
+                        //left moves right
+                        left.item.wake(true, false);
+                        //next enters from left
+                        next.item.sleep(true, false);
+                        right = left;
+                        left = next;
+                    }
                 }
             }
         }
