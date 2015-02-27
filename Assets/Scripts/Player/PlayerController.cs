@@ -413,8 +413,8 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 blocking = true;
-                block.Show();
                 block.renderer.material.color = CustomColor.GetColor(FindObjectOfType<PlayerColorData>().Color);
+                block.Show();
             }
         }
         private static void Crouch()

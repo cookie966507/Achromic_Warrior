@@ -43,6 +43,7 @@ namespace Assets.Scripts.UI
 		{
 			//meters are full so we can flash
 			if(_r.transform.localScale.x == 1 && _g.transform.localScale.x == 1 && _b.transform.localScale.x == 1 ) Full = true;
+			else Full = false;
 
 			//if we can flash
 			if(_full && !_achromic)
