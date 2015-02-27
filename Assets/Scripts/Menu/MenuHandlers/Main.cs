@@ -12,6 +12,17 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private state[] doState;
         private MainStateMachine.main currState;
 
+        private static bool isLeft;
+        public override void setLeft()
+        {
+            isLeft = true;
+        }
+
+        public override void setRight()
+        {
+            isLeft = false;
+        }
+
         void Start()
         {
             doState = new state[] { Sleep, Play, Settings, Credits };
@@ -69,7 +80,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doSettings()
         {
-            Debug.Log("settings");
+            Kernel.transition(true, isLeft, 0);
         }
 
         private static void Credits()

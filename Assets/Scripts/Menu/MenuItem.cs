@@ -12,13 +12,14 @@ namespace Assets.Scripts.Menu
         [SerializeField]
         private RectTransform canvasPos;
 
-        internal int position = 4;
+        internal int position = 3;
 
         internal Node[] getChildren(Node parent)
         {
             Node[] arr=new Node[children.Length];
             for(int i=0;i<children.Length;i++)
             {
+                arr[i] = new Node();
                 arr[i].item = children[i];
                 arr[i].parent = parent;
                 if (children.Length!=0)
