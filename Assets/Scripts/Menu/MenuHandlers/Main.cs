@@ -59,7 +59,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doPlay()
         {
-            Application.LoadLevel(2);
+            Application.LoadLevel("credits");
         }
 
         private static void Settings()
@@ -79,7 +79,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doCredits()
         {
-            Application.LoadLevel(2);
+            Application.LoadLevel("credits");
         }
 
         public void PlayClick()
