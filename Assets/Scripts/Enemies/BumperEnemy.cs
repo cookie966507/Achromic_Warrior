@@ -54,16 +54,12 @@ namespace Assets.Scripts.Enemies
 			}
 
 			//mask for layers to collide with and turn around
-			int _mask = (1 << LayerMask.NameToLayer("player") | 1 << LayerMask.NameToLayer("wall") | 1 << LayerMask.NameToLayer("enemy"));
+			int _mask = (1 << LayerMask.NameToLayer("wall") | 1 << LayerMask.NameToLayer("enemy"));
 			//cast a ray to see if should turn around
 			RaycastHit2D _hit = Physics2D.Raycast(_bumper.position, _bumper.forward, 0.5f, _mask);
 			if(_hit.transform != null)
 			{
-				//turn sprites around, not actual gameobject
-				Transform _sprites = transform.Find("Sprites");
-				//change dir
-				_dir *= -1;
-				_sprites.localScale = new Vector2(_dir, _sprites.localScale.y);
+				Flip();
 			}
 		}
 
@@ -74,6 +70,24 @@ namespace Assets.Scripts.Enemies
 			//limit speed
 			if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
 				rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+		}
+
+		void OnCollisionEnter2D(Collision2D col)
+		{
+			if(col.gameObject.Equals(_player))
+			{
+				if(_dir > 0 && _player.transform.position.x > this.transform.position.x) Flip();
+				else if(_dir < 0 && _player.transform.position.x < this.transform.position.x) Flip();
+			}
+		}
+
+		public void Flip()
+		{
+			//turn sprites around, not actual gameobject
+			Transform _sprites = transform.Find("Sprites");
+			//change dir
+			_dir *= -1;
+			_sprites.localScale = new Vector2(_dir, _sprites.localScale.y);
 		}
 	}
 }
