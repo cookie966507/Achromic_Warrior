@@ -18,12 +18,12 @@ namespace Assets.Scripts.Enemies
         public bool _hit = false;
 
         //layers for ghosting/reverting
-        private int ENEMY;
-        private int GHOSTING_ENEMY;
+        protected int ENEMY;
+        protected int GHOSTING_ENEMY;
 
         //for ghosting through platforms
-        private float _ghostTimer = 0f;
-        private float _ghostDelay = 0.5f;
+        protected float _ghostTimer = 0f;
+        protected float _ghostDelay = 0.5f;
 
         //orbs to spawn when hit
         [HideInInspector]
@@ -155,8 +155,8 @@ namespace Assets.Scripts.Enemies
             _ghostTimer = 0;
         }
 
-        //Enemt ghost exited by leaving platform trigger
-        public void ExitGhost()
+        //Enemy ghost exited by leaving platform trigger
+        public virtual void ExitGhost()
         {
             if (this.gameObject.layer != ENEMY)
                 this.gameObject.layer = ENEMY;
