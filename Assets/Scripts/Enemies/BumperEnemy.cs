@@ -69,6 +69,8 @@ namespace Assets.Scripts.Enemies
 
 		protected override void Run ()
 		{
+
+			if(Input.GetKeyDown(KeyCode.P)) this.Attack();
 			//if not attacking
 			if(!_attacking)
 			{
@@ -116,6 +118,16 @@ namespace Assets.Scripts.Enemies
 				//do not keep rising if already launched attack
 				if(_launch) return;
 
+				//flip based on the player position
+				if(_player.transform.position.x > this.transform.position.x)
+				{
+					if(_dir < 0) this.Flip();
+				}
+				else if(_player.transform.position.x < this.transform.position.x)
+				{
+					if(_dir > 0) this.Flip();
+				}
+
 				//get the current height
 				float _y = this.transform.position.y;
 				//if we are not at the current height yet
@@ -156,14 +168,6 @@ namespace Assets.Scripts.Enemies
 				this.rigidbody2D.isKinematic = false;
 				//find the direction to travel to the player
 				Vector3 _rayToPlayer = Vector3.zero;
-				if(_player.transform.position.x > this.transform.position.x)
-				{
-					if(_dir < 0) this.Flip();
-				}
-				else if(_player.transform.position.x < this.transform.position.x)
-				{
-					if(_dir > 0) this.Flip();
-				}
 				_rayToPlayer = _player.transform.position - this.transform.position;
 				//fly into the player
 				rigidbody2D.AddRelativeForce(Vector3.Normalize(_rayToPlayer) * _attackForce, ForceMode2D.Impulse);
@@ -230,6 +234,9 @@ namespace Assets.Scripts.Enemies
 
 			//turn off attacking particles
 			_particles.emissionRate = 0f;
+
+			//reset the new attack time
+			_attackDelay = Random.Range(_attackMinDelay, _attackMaxDelay);
 
 			//return gravity to normal
 			this.rigidbody2D.gravityScale = _gravity;
