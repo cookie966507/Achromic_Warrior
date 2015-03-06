@@ -6,6 +6,8 @@ TextureImporter:
     21300002: cloud_close_base
     21300004: cloud_far
     21300006: cloud_far_base
+    21300008: clouds_close_flash
+    21300010: clouds_far_flash
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -84,6 +86,26 @@ TextureImporter:
         y: 3207
         width: 1446
         height: 149
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: clouds_close_flash
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 2761
+        width: 1454
+        height: 320
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: clouds_far_flash
+      rect:
+        serializedVersion: 2
+        x: 2398
+        y: 2757
+        width: 1454
+        height: 320
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
