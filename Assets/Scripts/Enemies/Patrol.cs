@@ -82,7 +82,7 @@ namespace Assets.Scripts.Enemies
 					Vector2 vector = patrolPoints[currentPoint].position - target.position;
 					vector.y *= jumpForceY;
 					vector.x *= jumpForceX;
-                    rigidbody2D.AddForce(vector); 
+                    GetComponent<Rigidbody2D>().AddForce(vector); 
 					jumpMode = false;
 					target = patrolPoints[currentPoint];
 				}
