@@ -12,7 +12,7 @@ namespace Assets.Scripts.Util
 
 		void Start()
 		{
-			SoundManager.PlayMusic(this.audio);
+			SoundManager.PlayMusic(this.GetComponent<AudioSource>());
 		}
 	}
 }

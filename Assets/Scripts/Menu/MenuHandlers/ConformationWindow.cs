@@ -6,8 +6,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
     class ConformationWindow
     {
         GameObject window;
-        delegate void func(bool);
-        func function;
+        public delegate void func(bool yesNo);
+        private static func function;
         public static void getConformation(func function)
         {
 
