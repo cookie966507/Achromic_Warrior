@@ -156,8 +156,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal void sleep()
         {
-            sleepState = currState;
-            currState = main.sleep;
+            if (currState != main.sleep)
+            {
+                sleepState = currState;
+                currState = main.sleep;
+            }
         }
 
         internal void goTo(main state)

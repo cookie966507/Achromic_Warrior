@@ -41,7 +41,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
                     cursors[cursor].SetActive(true);
             }
             doState[(int)currState]();
-
         }
 
         public override void wake()
@@ -70,7 +69,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doAudio()
         {
-            Debug.Log("audio");            
+            Kernel.transition(true, isLeft, 0);           
         }
 
         private static void Video()
@@ -142,7 +141,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             machine.goTo(SettingsStateMachine.setting.exit);
             foreach (GameObject g in cursors)
                 g.SetActive(false);
-            cursors[(int)SettingsStateMachine.setting.exit - 1].SetActive(true);
+            //cursors[(int)SettingsStateMachine.setting.exit - 1].SetActive(true);
             doExit();
         }
     }
@@ -176,8 +175,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal void sleep()
         {
-            sleepState = currState;
-            currState = setting.sleep;
+            if (currState != setting.sleep)
+            {
+                sleepState = currState;
+                currState = setting.sleep;
+            }
         }
 
         internal void goTo(setting state)
