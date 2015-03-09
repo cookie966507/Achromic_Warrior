@@ -75,14 +75,16 @@ namespace Assets.Scripts.Menu.MenuHandlers
             if (CustomInput.LeftHeld)
             {
                 float temp = musicBar.value;
-                temp -= .1f;
+                if (temp > 0)
+                    temp -= .1f;
                 musicBar.value = temp;
                 doMusic(temp);
             }
             if (CustomInput.RightHeld)
             {
                 float temp = musicBar.value;
-                temp += .1f;
+                if (temp < 1)
+                    temp += .1f;
                 musicBar.value = temp;
                 doMusic(temp);
             }
@@ -97,14 +99,16 @@ namespace Assets.Scripts.Menu.MenuHandlers
             if (CustomInput.LeftHeld)
             {
                 float temp = sfxBar.value;
-                temp -= .1f;
+                if (temp > 0)
+                    temp -= .1f;
                 sfxBar.value = temp;
                 doSFX(temp);
             }
             if (CustomInput.RightHeld)
             {
                 float temp = sfxBar.value;
-                temp += .1f;
+                if (temp < 1)
+                    temp += .1f;
                 sfxBar.value = temp;
                 doSFX(temp);
             }

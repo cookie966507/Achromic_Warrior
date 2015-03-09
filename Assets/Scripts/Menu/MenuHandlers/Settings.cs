@@ -69,7 +69,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doAudio()
         {
-            Kernel.transition(true, isLeft, 0);           
+            Kernel.transition(true, isLeft, 0);
         }
 
         private static void Video()
