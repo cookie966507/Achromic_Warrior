@@ -60,10 +60,10 @@ namespace Assets.Scripts.Enemies
 			_attackDelay = Random.Range(_attackMinDelay, _attackMaxDelay);
 
 			//store initial gravity
-			_gravity = this.rigidbody2D.gravityScale;
+			_gravity = this.GetComponent<Rigidbody2D>().gravityScale;
 
 			//find the particle system
-			_particles = transform.Find("blade_particles").particleSystem;
+			_particles = transform.Find("blade_particles").GetComponent<ParticleSystem>();
 			_particles.startColor = CustomColor.GetColor(_color);
 		}
 
@@ -86,9 +86,9 @@ namespace Assets.Scripts.Enemies
 					//enter ghosting mode
 					EnterGhost();
 					//zero out the y so it doesn't look weird
-					rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0f);
 					//jump
-					rigidbody2D.AddForce(new Vector2(0f, _jumpForce), ForceMode2D.Impulse);
+					GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, _jumpForce), ForceMode2D.Impulse);
 					//exit ghosting after 2 seconds
 					Invoke("ExitGhost", 2f);
 					//give a different random delay
@@ -150,12 +150,13 @@ namespace Assets.Scripts.Enemies
 		{
 			//if not attacking
 			if(!_attacking)
-			{
+            {
+                Rigidbody2D rgb2d = GetComponent<Rigidbody2D>();
 				//move in a direction
-				this.rigidbody2D.AddForce(new Vector2(_force * _dir, 0f));
+                rgb2d.AddForce(new Vector2(_force * _dir, 0f));
 				//limit speed
-				if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
-					rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+                if (Mathf.Abs(rgb2d.velocity.x) > _maxSpeed)
+                    rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * _maxSpeed, rgb2d.velocity.y);
 			}
 
 			//if it is time to launch into the player
@@ -165,12 +166,12 @@ namespace Assets.Scripts.Enemies
 				_launch = false;
 				_launched = true;
 				//remove kinematic so we can move
-				this.rigidbody2D.isKinematic = false;
+				this.GetComponent<Rigidbody2D>().isKinematic = false;
 				//find the direction to travel to the player
 				Vector3 _rayToPlayer = Vector3.zero;
 				_rayToPlayer = _player.transform.position - this.transform.position;
 				//fly into the player
-				rigidbody2D.AddRelativeForce(Vector3.Normalize(_rayToPlayer) * _attackForce, ForceMode2D.Impulse);
+				GetComponent<Rigidbody2D>().AddRelativeForce(Vector3.Normalize(_rayToPlayer) * _attackForce, ForceMode2D.Impulse);
 			}
 		}
 
@@ -213,9 +214,9 @@ namespace Assets.Scripts.Enemies
 			_particles.emissionRate = _emissionRate;
 
 			//remove gravity for flying into a straight line
-			this.rigidbody2D.gravityScale = 0;
+			this.GetComponent<Rigidbody2D>().gravityScale = 0;
 			//set to kinematic so other enemies do not knock this enemy away
-			this.rigidbody2D.isKinematic = true;
+			this.GetComponent<Rigidbody2D>().isKinematic = true;
 			_targetHeight = this.transform.position.y + _heightOffset;
 
 			//go through platforms
@@ -239,10 +240,10 @@ namespace Assets.Scripts.Enemies
 			_attackDelay = Random.Range(_attackMinDelay, _attackMaxDelay);
 
 			//return gravity to normal
-			this.rigidbody2D.gravityScale = _gravity;
+			this.GetComponent<Rigidbody2D>().gravityScale = _gravity;
 
 			//remove kinematic to move again
-			this.rigidbody2D.isKinematic = false;
+			this.GetComponent<Rigidbody2D>().isKinematic = false;
 
 			//stop going through platforms
 			this.ExitGhost();

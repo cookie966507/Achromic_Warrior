@@ -152,6 +152,22 @@ namespace Assets.Scripts.Menu
                 right.item.wake(false, false);
             }
         }
+
+        internal static void disalble()
+        {
+            if(left!=null)
+                left.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
+            if (right != null)
+                right.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
+        }
+
+        internal static void enalble()
+        {
+            if (left != null)
+                left.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+            if (right != null)
+                right.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+        }
     }
 
     class Node

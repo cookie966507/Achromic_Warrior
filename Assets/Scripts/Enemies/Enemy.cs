@@ -72,7 +72,7 @@ namespace Assets.Scripts.Enemies
                 //set the orb color
                 _newOrb.GetComponent<ColorPickup>().ColorType = this.ResolveMultiColor(_color);
                 //throw it in the air
-                _newOrb.rigidbody2D.AddRelativeForce(new Vector2(Random.Range(-1f, 1f), Random.Range(5, 10)), ForceMode2D.Impulse);
+                _newOrb.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(Random.Range(-1f, 1f), Random.Range(5, 10)), ForceMode2D.Impulse);
             }
         }
 
@@ -111,10 +111,10 @@ namespace Assets.Scripts.Enemies
                 UI.DamageDisplay.instance.ShowDamage(_damage, _hitPos, _color);
                 //apply knockback force based on position
                 if (_player.GetComponent<Player.PlayerController>()._facingRight)
-                    rigidbody2D.AddRelativeForce((new Vector2(1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
+                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
                 else
                 {
-                    rigidbody2D.AddRelativeForce((new Vector2(-1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
+                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(-1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
                 }
             }
         }

@@ -5,7 +5,7 @@ using Assets.Scripts.Player;
 /*
  * Class controlling the player's camera
  */
-namespace Assets.Scripts.Camera
+namespace Assets.Scripts.CameraController
 {
     public class CameraController : MonoBehaviour
     {
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Camera
 			_distance = Mathf.Abs(_player.position.y - this.transform.position.y);
 			if(_distance > _ceilingHeight) _angle = Mathf.SmoothDamp(_angle, _maxAngle, ref _angleVel, _fovSpeed);
 			else _angle = Mathf.SmoothDamp(_angle, _minAngle, ref _angleVel, _fovSpeed);
-			camera.orthographicSize = _angle;
+			GetComponent<Camera>().orthographicSize = _angle;
 
 
         }

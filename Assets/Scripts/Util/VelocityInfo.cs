@@ -29,21 +29,21 @@ public class VelocityInfo : MonoBehaviour
             if (!_kinematic && !_fixedAngle)
             {
                 //save velocity
-                _vel = this.rigidbody2D.velocity;
+                _vel = this.GetComponent<Rigidbody2D>().velocity;
                 //save angular velocity
-                _angVel = this.rigidbody2D.angularVelocity;
+                _angVel = this.GetComponent<Rigidbody2D>().angularVelocity;
 
                 //set fixed angle
-                this.rigidbody2D.fixedAngle = true;
+                this.GetComponent<Rigidbody2D>().fixedAngle = true;
                 //set to kinematic to pause
-                this.rigidbody2D.isKinematic = true;
+                this.GetComponent<Rigidbody2D>().isKinematic = true;
             }
             else if (!_kinematic)
             {
                 //save velocity
-                _vel = this.rigidbody2D.velocity;
+                _vel = this.GetComponent<Rigidbody2D>().velocity;
                 //set to kinematic to pause
-                this.rigidbody2D.isKinematic = true;
+                this.GetComponent<Rigidbody2D>().isKinematic = true;
             }
 
             //pause
@@ -55,14 +55,14 @@ public class VelocityInfo : MonoBehaviour
             if (!_kinematic && !_fixedAngle)
             {
                 //set to not kinematic to unpause
-                this.rigidbody2D.isKinematic = false;
+                this.GetComponent<Rigidbody2D>().isKinematic = false;
 
                 //set to not fixed angle
-                this.rigidbody2D.fixedAngle = false;
+                this.GetComponent<Rigidbody2D>().fixedAngle = false;
                 //reapply angular velocity
-                this.rigidbody2D.angularVelocity = _angVel;
+                this.GetComponent<Rigidbody2D>().angularVelocity = _angVel;
                 //reapply velocity
-                this.rigidbody2D.velocity = _vel;
+                this.GetComponent<Rigidbody2D>().velocity = _vel;
 
                 //reset reference
                 _angVel = 0f;
@@ -72,9 +72,9 @@ public class VelocityInfo : MonoBehaviour
             else if (!_kinematic)
             {
                 //set to not kinematic to unpause
-                this.rigidbody2D.isKinematic = false;
+                this.GetComponent<Rigidbody2D>().isKinematic = false;
                 //reapply velocity
-                this.rigidbody2D.velocity = _vel;
+                this.GetComponent<Rigidbody2D>().velocity = _vel;
                 //reset reference
                 _vel = Vector2.zero;
             }
