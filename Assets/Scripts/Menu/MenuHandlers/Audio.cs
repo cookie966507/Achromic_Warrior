@@ -6,11 +6,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
     class Audio : ButtonHandler
     {
         public GameObject[] cursors;
-        public UnityEngine.UI.Scrollbar music;
-        public UnityEngine.UI.Scrollbar sfx;
+        public UnityEngine.UI.Slider music;
+        public UnityEngine.UI.Slider sfx;
 
-        private static UnityEngine.UI.Scrollbar musicBar;
-        private static UnityEngine.UI.Scrollbar sfxBar;
+        private static UnityEngine.UI.Slider musicBar;
+        private static UnityEngine.UI.Slider sfxBar;
 
         private AudioStateMachine machine = new AudioStateMachine();
         private delegate void state();
@@ -18,6 +18,10 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private AudioStateMachine.audio currState;
 
         private static bool isLeft;
+        private static bool touchedMusic;
+        private static bool touchedSFX;
+
+        public static string audioHash = "Achromic audio";
         public override void setLeft()
         {
             isLeft = true;
@@ -33,6 +37,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
             doState = new state[] { Sleep, Music, SFX, Exit };
             musicBar = music;
             sfxBar = sfx;
+            touchedMusic = true;
+            touchedSFX = true;
+            if (PlayerPrefs.HasKey(audioHash + 0))
+            {
+                musicBar.value = PlayerPrefs.GetFloat(audioHash + 0);
+                sfxBar.value = PlayerPrefs.GetFloat(audioHash + 1);
+            }
+            else
+            {
+                musicBar.value = 1f;
+                sfxBar.value = 1f;
+                PlayerPrefs.SetFloat(audioHash + 0, 1f);
+                PlayerPrefs.SetFloat(audioHash + 1, 1f);
+            }
         }
 
         void Update()
@@ -74,6 +92,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.LeftHeld)
             {
+                touchedMusic = true;
                 float temp = musicBar.value;
                 if (temp > 0)
                     temp -= .1f;
@@ -82,6 +101,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             }
             if (CustomInput.RightHeld)
             {
+                touchedMusic = true;
                 float temp = musicBar.value;
                 if (temp < 1)
                     temp += .1f;
@@ -92,12 +112,14 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private static void doMusic(float val)
         {
             Data.SoundManager.SliderMusic(val);
+            PlayerPrefs.SetFloat(audioHash + 0, val);
         }
 
         private static void SFX()
         {
             if (CustomInput.LeftHeld)
             {
+                touchedSFX = true;
                 float temp = sfxBar.value;
                 if (temp > 0)
                     temp -= .1f;
@@ -106,6 +128,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             }
             if (CustomInput.RightHeld)
             {
+                touchedSFX = true;
                 float temp = sfxBar.value;
                 if (temp < 1)
                     temp += .1f;
@@ -116,6 +139,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private static void doSFX(float val)
         {
             Data.SoundManager.SliderSFX(val);
+            PlayerPrefs.SetFloat(audioHash + 1, val);
         }
 
         private static void Exit()
@@ -130,6 +154,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void MusicClick()
         {
+            if(touchedMusic)
+            {
+                touchedMusic = false;
+                return;
+            }
             if (currState == AudioStateMachine.audio.sleep)
                 Kernel.interrupt(isLeft);
             machine.goTo(AudioStateMachine.audio.music);
@@ -141,6 +170,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void SFXClick()
         {
+            if(touchedSFX)
+            {
+                touchedSFX = false;
+                return;
+            }
             if (currState == AudioStateMachine.audio.sleep)
                 Kernel.interrupt(isLeft);
             machine.goTo(AudioStateMachine.audio.sfx);
@@ -167,9 +201,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private delegate audio machine();//function pointer
         private machine[] getNextState;//array of function pointers
         private audio currState;
-        private static float hold = 0;//used for delays
-        private static bool die = false;
-        private static bool doubleJumped = false;
         private audio sleepState = audio.music;
 
         internal AudioStateMachine()
@@ -181,7 +212,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal audio update()
         {
-            return currState = getNextState[((int)currState)]();//gets te next Enums.PlayerState
+            return currState = getNextState[((int)currState)]();
         }
 
         internal void wake()

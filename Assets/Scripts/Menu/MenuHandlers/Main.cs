@@ -132,9 +132,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private delegate main machine();//function pointer
         private machine[] getNextState;//array of function pointers
         private main currState;
-        private static float hold = 0;//used for delays
-        private static bool die = false;
-        private static bool doubleJumped = false;
         private main sleepState = main.play;
 
         internal MainStateMachine()
@@ -146,7 +143,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal main update()
         {
-            return currState = getNextState[((int)currState)]();//gets te next Enums.PlayerState
+            return currState = getNextState[((int)currState)]();
         }
 
         internal void wake()

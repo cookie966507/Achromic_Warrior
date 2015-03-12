@@ -6,14 +6,14 @@ namespace Assets.Scripts.Menu.MenuHandlers
     class Video : ButtonHandler
     {
         public GameObject[] cursors;
-        public UnityEngine.UI.Scrollbar resolution;
+        public UnityEngine.UI.Slider resolution;
         public UnityEngine.UI.Text resolutionText;
-        public UnityEngine.UI.Scrollbar quality;
+        public UnityEngine.UI.Slider quality;
         public UnityEngine.UI.Text qualityText;
         public UnityEngine.UI.Toggle fullscreen;
 
-        private static UnityEngine.UI.Scrollbar resolutionBar;
-        private static UnityEngine.UI.Scrollbar qualityBar;
+        private static UnityEngine.UI.Slider resolutionBar;
+        private static UnityEngine.UI.Slider qualityBar;
         private static UnityEngine.UI.Toggle fullscreenButton;
         private static UnityEngine.UI.Text resText;
         private static UnityEngine.UI.Text qualText;
@@ -25,6 +25,12 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private static Resolution[] res;
 
         private static bool isLeft;
+        private static bool touchedResolution;
+        private static bool touchedFullscreen;
+        private static bool touchedQuality;
+
+
+        private static string videoHash = "Achromic video";
         public override void setLeft()
         {
             isLeft = true;
@@ -56,6 +62,36 @@ namespace Assets.Scripts.Menu.MenuHandlers
             if (temp.Count == 0)
                 temp.Add(Screen.resolutions[0]);
             res = temp.ToArray();
+            touchedResolution = true;
+            touchedFullscreen = true;
+            touchedQuality = true;
+            resolutionBar.minValue = 0;
+            resolutionBar.maxValue = res.Length - 1;
+            qualityBar.minValue = 0;
+            qualityBar.maxValue = QualitySettings.names.Length-1;
+            if(PlayerPrefs.HasKey(videoHash+0))
+            {
+                if (PlayerPrefs.GetInt(videoHash + 0) >= res.Length)
+                {
+                    resolutionBar.value = 0;
+                    PlayerPrefs.SetInt(videoHash + 0, 0);
+                }
+                else
+                    resolutionBar.value = PlayerPrefs.GetInt(videoHash + 0);
+                fullscreen.isOn=(PlayerPrefs.GetInt(videoHash+1) == 0) ? false : true;
+                qualityBar.value = PlayerPrefs.GetInt(videoHash + 2);
+            }
+            else
+            {
+                PlayerPrefs.SetInt(videoHash + 0, 0);
+                PlayerPrefs.SetInt(videoHash + 1, 0);
+                PlayerPrefs.SetInt(videoHash + 2, 0);
+                resolutionBar.value = 0;
+                fullscreen.isOn = false;
+                qualityBar.value = 0;
+            }
+            resText.text = res[(int)resolutionBar.value].width + "x" + res[(int)resolutionBar.value].height;
+            qualText.text = QualitySettings.names[(int)qualityBar.value];
         }
 
         void Update()
@@ -97,6 +133,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.LeftHeld)
             {
+                touchedResolution = true;
                 int temp = (int)resolutionBar.value;
                 temp --;
                 if (temp < 0)
@@ -106,6 +143,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             }
             if (CustomInput.RightHeld)
             {
+                touchedResolution = true;
                 int temp = (int)resolutionBar.value;
                 temp ++;
                 if (temp >= res.Length)
@@ -123,6 +161,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPress)
             {
+                touchedFullscreen = true;
                 fullscreenButton.isOn = !fullscreenButton.isOn;
                 doFullscreen();
             }
@@ -136,6 +175,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.LeftHeld)
             {
+                touchedQuality = true;
                 int temp = (int)qualityBar.value;
                 temp--;
                 if (temp < 0)
@@ -145,6 +185,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             }
             if (CustomInput.RightHeld)
             {
+                touchedQuality = true;
                 int temp = (int)qualityBar.value;
                 temp++;
                 if (temp >= QualitySettings.names.Length)
@@ -165,7 +206,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doAccept()
         {
-            
+            ConformationWindow.getConformation(updateSettings);
         }
 
         private static void Exit()
@@ -180,6 +221,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void ResolutionClick()
         {
+            if(touchedResolution)
+            {
+                touchedResolution = false;
+                return;
+            }
             if (currState == VidioStateMachine.video.sleep)
                 Kernel.interrupt(isLeft);
             machine.goTo(VidioStateMachine.video.resolutions);
@@ -191,17 +237,27 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void FullscreenClick()
         {
+            if(touchedFullscreen)
+            {
+                touchedFullscreen = false;
+                return;
+            }
             if (currState == VidioStateMachine.video.sleep)
                 Kernel.interrupt(isLeft);
-            machine.goTo(VidioStateMachine.video.quality);
+            machine.goTo(VidioStateMachine.video.fullscreen);
             foreach (GameObject g in cursors)
                 g.SetActive(false);
-            cursors[(int)VidioStateMachine.video.quality - 1].SetActive(true);
+            cursors[(int)VidioStateMachine.video.fullscreen - 1].SetActive(true);
             doFullscreen();
         }
 
         public void QualityClick()
         {
+            if(touchedQuality)
+            {
+                touchedQuality = false;
+                return;
+            }
             if (currState == VidioStateMachine.video.sleep)
                 Kernel.interrupt(isLeft);
             machine.goTo(VidioStateMachine.video.quality);
@@ -215,10 +271,10 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (currState == VidioStateMachine.video.sleep)
                 Kernel.interrupt(isLeft);
-            machine.goTo(VidioStateMachine.video.exit);
+            machine.goTo(VidioStateMachine.video.accept);
             foreach (GameObject g in cursors)
                 g.SetActive(false);
-            cursors[(int)AudioStateMachine.audio.exit - 1].SetActive(true);
+            cursors[(int)VidioStateMachine.video.accept - 1].SetActive(true);
             doAccept();
         }
         public void ExitClick()
@@ -232,7 +288,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             doExit();
         }
 
-        void updateSettings(bool update)
+        static void updateSettings(bool update)
         {
             if (update)
             {
@@ -242,6 +298,9 @@ namespace Assets.Scripts.Menu.MenuHandlers
                         fullscreenButton.isOn);
                 FindObjectOfType<Camera>().ResetAspect();
                 QualitySettings.SetQualityLevel((int)qualityBar.value);
+                PlayerPrefs.SetInt(videoHash + 0, (int)resolutionBar.value);
+                PlayerPrefs.SetInt(videoHash + 1, fullscreenButton.isOn ? 1 : 0);
+                PlayerPrefs.SetInt(videoHash + 2, (int)qualityBar.value);
             }
         }
     }
@@ -251,9 +310,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private delegate video machine();//function pointer
         private machine[] getNextState;//array of function pointers
         private video currState;
-        private static float hold = 0;//used for delays
-        private static bool die = false;
-        private static bool doubleJumped = false;
         private video sleepState = video.resolutions;
 
         internal VidioStateMachine()
@@ -265,7 +321,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal video update()
         {
-            return currState = getNextState[((int)currState)]();//gets te next Enums.PlayerState
+            return currState = getNextState[((int)currState)]();
         }
 
         internal void wake()
