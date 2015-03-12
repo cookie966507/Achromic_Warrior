@@ -31,7 +31,6 @@ namespace Assets.Scripts.Data
 		//private const float VOL_UP = 1f;
 		//private const float VOL_DOWN = 0f;
 
-
 		void Awake()
 		{
 			//if the manager is null
@@ -43,6 +42,16 @@ namespace Assets.Scripts.Data
 				_sfxSources = new List<AudioSource>();
 				_musicSources = new List<AudioSource>();
 				_clips = new List<AudioClip>();
+                if(PlayerPrefs.HasKey(Menu.MenuHandlers.Audio.audioHash+0))
+                {
+                    _musicVol = PlayerPrefs.GetFloat(Menu.MenuHandlers.Audio.audioHash + 0);
+                    _sfxVol = PlayerPrefs.GetFloat(Menu.MenuHandlers.Audio.audioHash + 1);
+                }
+                else
+                {
+                    _musicVol = 1f;
+                    _sfxVol = 1f;
+                }
 			}
 			//too many sound managers
 			else if(_instance != this)

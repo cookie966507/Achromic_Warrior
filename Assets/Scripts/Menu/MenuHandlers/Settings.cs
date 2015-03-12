@@ -79,7 +79,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doVideo()
         {
-            Debug.Log("video");
+            Kernel.transition(true, isLeft, 1);
         }
 
         private static void Controls()
@@ -151,9 +151,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private delegate setting machine();//function pointer
         private machine[] getNextState;//array of function pointers
         private setting currState;
-        private static float hold = 0;//used for delays
-        private static bool die = false;
-        private static bool doubleJumped = false;
         private setting sleepState = setting.audio;
 
         internal SettingsStateMachine()
@@ -165,7 +162,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal setting update()
         {
-            return currState = getNextState[((int)currState)]();//gets te next Enums.PlayerState
+            return currState = getNextState[((int)currState)]();
         }
 
         internal void wake()
