@@ -9,7 +9,7 @@ namespace Assets.Scripts.Data
 	public class GameManager : MonoBehaviour
 	{
 		public static GameManager _instance;
-		private static GameState _state = GameState.Game;
+		private static GameState _state = GameState.Unpause;
 
 		void Awake()
 		{
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Data
 
 		void Update ()
 		{
-			if(CustomInput.PauseFreshPress && _state.Equals(GameState.Game))
+			if(CustomInput.PauseFreshPress && _state.Equals(GameState.Unpause))
 			{
 				Pause();
 			}
@@ -42,9 +42,8 @@ namespace Assets.Scripts.Data
 			}
 		}
 
-		public void Pause()
+		public static  void Pause()
 		{
-            Debug.Log("a");
 			VelocityInfo[] _bodies = GameObject.FindObjectsOfType<VelocityInfo>();
 			for(int i = 0; i < _bodies.Length; i++)
 			{
@@ -53,16 +52,30 @@ namespace Assets.Scripts.Data
 			}
 		}
 
-		public void Unpause()
+		public static void Unpause()
         {
-            Debug.Log("b");
 			VelocityInfo[] _bodies = GameObject.FindObjectsOfType<VelocityInfo>();
 			for(int i = 0; i < _bodies.Length; i++)
 			{
 				_bodies[i].UnpauseMotion();
-				_state = GameState.Game;
+				_state = GameState.Unpause;
 			}
 		}
+
+        public static void GotoLevel(string level)
+        {
+            if (_state.Equals(GameState.Pause))
+                Unpause();
+            try
+            {
+                Application.LoadLevel(level);
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log(e);
+                Application.LoadLevel("Menu");
+            }
+        }
 
 		public static GameState State
 		{

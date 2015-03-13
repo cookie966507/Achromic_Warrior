@@ -70,7 +70,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doPlay()
         {
-            Application.LoadLevel("credits");
+            Data.GameManager.GotoLevel("training");
         }
 
         private static void Settings()
@@ -90,7 +90,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doCredits()
         {
-            Application.LoadLevel("credits");
+            Data.GameManager.GotoLevel("credits");
         }
 
         public void PlayClick()

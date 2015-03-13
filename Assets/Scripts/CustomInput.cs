@@ -50,6 +50,7 @@ namespace Assets.Scripts
         private static int boolsUp = 0;
         private static int boolsHeld = 0;
         private static int boolsFreshPress = 0;
+        private static int boolsFreshPressAccessed = 0;
 
 
 
@@ -232,126 +233,112 @@ namespace Assets.Scripts
         {
             get
             {
-                bool temp = (boolsFreshPress & ATTACK) != 0;
-                boolsFreshPress = boolsFreshPress & ~ATTACK;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | ATTACK;
+                return (boolsFreshPress & ATTACK) != 0;
             }
         }
         public static bool JumpFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & JUMP) != 0;
-                boolsFreshPress = boolsFreshPress & ~JUMP;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | JUMP;
+                return (boolsFreshPress & JUMP) != 0;
             }
         }
         public static bool CycleLeftFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & CYCLELEFT) != 0;
-                boolsFreshPress = boolsFreshPress & ~CYCLELEFT;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | CYCLELEFT;
+                return (boolsFreshPress & CYCLELEFT) != 0;
             }
         }
         public static bool CycleRightFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & CYCLERIGHT) != 0;
-                boolsFreshPress = boolsFreshPress & ~CYCLERIGHT;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | CYCLERIGHT;
+                return (boolsFreshPress & CYCLERIGHT) != 0;
             }
         }
         public static bool LeftFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & LEFT) != 0;
-                boolsFreshPress = boolsFreshPress & ~LEFT;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | LEFT;
+                return (boolsFreshPress & LEFT) != 0;
             }
         }
         public static bool RightFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & RIGHT) != 0;
-                boolsFreshPress = boolsFreshPress & ~RIGHT;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | RIGHT;
+                return (boolsFreshPress & RIGHT) != 0;
             }
         }
         public static bool BlockFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & BLOCK) != 0;
-                boolsFreshPress = boolsFreshPress & ~BLOCK;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | BLOCK;
+                return (boolsFreshPress & BLOCK) != 0;
             }
         }
         public static bool ChangeColorFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & CHANGECOLOR) != 0;
-                boolsFreshPress = boolsFreshPress & ~CHANGECOLOR;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | CHANGECOLOR;
+                return (boolsFreshPress & CHANGECOLOR) != 0;
             }
         }
         public static bool UpFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & UP) != 0;
-                boolsFreshPress = boolsFreshPress & ~UP;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | UP;
+                return (boolsFreshPress & UP) != 0;
             }
         }
         public static bool DownFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & DOWN) != 0;
-                boolsFreshPress = boolsFreshPress & ~DOWN;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | DOWN;
+                return (boolsFreshPress & DOWN) != 0;
             }
         }
         public static bool SuperFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & SUPER) != 0;
-                boolsFreshPress = boolsFreshPress & ~SUPER;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | SUPER;
+                return (boolsFreshPress & SUPER) != 0;
             }
         }
         public static bool AcceptFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & ACCEPT) != 0;
-                boolsFreshPress = boolsFreshPress & ~ACCEPT;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | ACCEPT;
+                return (boolsFreshPress & ACCEPT) != 0;
             }
         }
         public static bool CancelFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & CANCEL) != 0;
-                boolsFreshPress = boolsFreshPress & ~CANCEL;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | CANCEL;
+                return (boolsFreshPress & CANCEL) != 0;
             }
         }
         public static bool PauseFreshPress
         {
             get
             {
-                bool temp = (boolsFreshPress & PAUSE) != 0;
-                boolsFreshPress = boolsFreshPress & ~PAUSE;
-                return temp;
+                boolsFreshPressAccessed = boolsFreshPressAccessed | PAUSE;
+                return (boolsFreshPress & PAUSE) != 0;
             }
         }
 
@@ -649,39 +636,7 @@ namespace Assets.Scripts
 
         void Start()
         {
-            /*
-            if (PlayerPrefs.HasKey(0 + KeyHash))
-            {
-                keyBoardAttack = (KeyCode)PlayerPrefs.GetInt(0 + KeyHash);
-                keyBoardJump = (KeyCode)PlayerPrefs.GetInt(1 + KeyHash);
-                keyBoardCycleLeft = (KeyCode)PlayerPrefs.GetInt(2 + KeyHash);
-                keyBoardCycleRight = (KeyCode)PlayerPrefs.GetInt(3 + KeyHash);
-                keyBoardLeft = (KeyCode)PlayerPrefs.GetInt(4 + KeyHash);
-                keyBoardRight = (KeyCode)PlayerPrefs.GetInt(5 + KeyHash);
-                keyBoardBlock = (KeyCode)PlayerPrefs.GetInt(6 + KeyHash);
-                keyBoardChangeColor = (KeyCode)PlayerPrefs.GetInt(7 + KeyHash);
-                keyBoardUp = (KeyCode)PlayerPrefs.GetInt(8 + KeyHash);
-                keyBoardDown = (KeyCode)PlayerPrefs.GetInt(9 + KeyHash);
-                keyBoardAccept = (KeyCode)PlayerPrefs.GetInt(10 + KeyHash);
-                keyBoardCancel = (KeyCode)PlayerPrefs.GetInt(11 + KeyHash);
-                keyBoardPause = (KeyCode)PlayerPrefs.GetInt(12 + KeyHash);
-
-                gamePadAttack = PlayerPrefs.GetString(13 + KeyHash);
-                gamePadJump = PlayerPrefs.GetString(14 + KeyHash);
-                gamePadCycleLeft = PlayerPrefs.GetString(15 + KeyHash);
-                gamePadCycleRight = PlayerPrefs.GetString(16 + KeyHash);
-                gamePadLeft = PlayerPrefs.GetString(17 + KeyHash);
-                gamePadRight = PlayerPrefs.GetString(18 + KeyHash);
-                gamePadBlock = PlayerPrefs.GetString(19 + KeyHash);
-                gamePadChangeColor = PlayerPrefs.GetString(20 + KeyHash);
-                gamePadUp = PlayerPrefs.GetString(21 + KeyHash);
-                gamePadDown = PlayerPrefs.GetString(22 + KeyHash);
-                gamePadAccept = PlayerPrefs.GetString(23 + KeyHash);
-                gamePadCancel = PlayerPrefs.GetString(24 + KeyHash);
-                gamePadPause = PlayerPrefs.GetString(25 + KeyHash);
-            }
-            else
-            */
+            //re-add key retrievel
             Default();
         }
         void Update()
@@ -735,6 +690,11 @@ namespace Assets.Scripts
                 else if (Input.GetKeyUp(k))
                     keyUp = true;
             }
+            if((boolsFreshPressAccessed & state) !=0)
+            {
+                boolsFreshPressAccessed = (boolsFreshPressAccessed & ~state);
+                boolsFreshPress = (boolsFreshPress & ~state);
+            }
             if (((bools & state) == 0) && key)
                 boolsFreshPress = boolsFreshPress | state;
             if (key)
@@ -768,6 +728,12 @@ namespace Assets.Scripts
                 key = true;
             else if ((bools & state) != 0)
                 keyUp = true;
+
+            if ((boolsFreshPressAccessed & state) != 0)
+            {
+                boolsFreshPressAccessed = (boolsFreshPressAccessed & ~state);
+                boolsFreshPress = (boolsFreshPress & ~state);
+            }
             if (((bools & state) == 0) && key)
                 boolsFreshPress = boolsFreshPress | state;
             if (key)

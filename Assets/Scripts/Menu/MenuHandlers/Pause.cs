@@ -39,6 +39,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             if(Data.GameManager.State==Enums.GameState.Pause)
             {
                 machine.goTo(PauseStateMachine.pause.resume);
+                win.enabled = true;
             }
         }
 
@@ -62,7 +63,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doQuit()
         {
-            Application.LoadLevel("Menu");
+            Data.GameManager.GotoLevel("Menu");
         }
 
         public void YesClick()
@@ -115,13 +116,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static pause Yes()
         {
-            if (CustomInput.LeftFreshPress || CustomInput.RightFreshPress)
+            if (CustomInput.UpFreshPress || CustomInput.DownFreshPress)
                 return pause.quit;
             return pause.resume;
         }
         private static pause No()
         {
-            if (CustomInput.LeftFreshPress || CustomInput.RightFreshPress)
+            if (CustomInput.UpFreshPress || CustomInput.DownFreshPress)
                 return pause.resume;
             return pause.quit;
         }
