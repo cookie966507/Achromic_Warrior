@@ -159,7 +159,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Fullscreen()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
             {
                 touchedFullscreen = true;
                 fullscreenButton.isOn = !fullscreenButton.isOn;
@@ -201,7 +201,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Accept()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAccept();
         }
         private static void doAccept()
@@ -211,7 +211,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Exit()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
         }
         private static void doExit()
@@ -351,46 +351,46 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static video Resolutions()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.exit;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.fullscreen;
             return video.resolutions;
         }
         private static video Fullscreen()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.resolutions;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.quality;
             return video.fullscreen;
         }
 
         private static video Quality()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.fullscreen;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.exit;
             return video.quality;
         }
         private static video Accept()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.quality;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.resolutions;
-            if (CustomInput.LeftFreshPress || CustomInput.RightFreshPress)
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
                 return video.exit;
             return video.accept;
         }
         private static video Exit()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.quality;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.resolutions;
-            if (CustomInput.LeftFreshPress || CustomInput.RightFreshPress)
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
                 return video.accept;
             return video.exit;
         }

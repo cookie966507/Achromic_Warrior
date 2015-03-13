@@ -52,12 +52,12 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Yes()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAnswer(true);
         }
         private static void No()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAnswer(false);
         }
         private static void doAnswer(bool yesNo)
@@ -118,13 +118,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static confirm Yes()
         {
-            if (CustomInput.LeftFreshPress || CustomInput.RightFreshPress)
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
                 return confirm.no;
             return confirm.yes;
         }
         private static confirm No()
         {
-            if (CustomInput.LeftFreshPress || CustomInput.RightFreshPress)
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
                 return confirm.yes;
             return confirm.no;
         }

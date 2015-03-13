@@ -65,7 +65,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Play()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doPlay();
         }
         private static void doPlay()
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Settings()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doSettings();
         }
         private static void doSettings()
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Credits()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doCredits();
         }
         private static void doCredits()
@@ -173,25 +173,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static main Play()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.credits;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.settings;
             return main.play;
         }
         private static main Settings()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.play;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.credits;
             return main.settings;
         }
         private static main Credits()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.settings;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.play;
             return main.credits;
         }

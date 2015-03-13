@@ -45,7 +45,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Continue()
         {
-            if (CustomInput.AcceptFreshPress||CustomInput.PauseFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead||CustomInput.PauseFreshPressDeleteOnRead)
                 doContinue();
         }
         private static void doContinue()
@@ -56,9 +56,9 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Quit()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doQuit();
-            if (CustomInput.PauseFreshPress)
+            if (CustomInput.PauseFreshPressDeleteOnRead)
                 doContinue();
         }
         private static void doQuit()
@@ -116,13 +116,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static pause Yes()
         {
-            if (CustomInput.UpFreshPress || CustomInput.DownFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead)
                 return pause.quit;
             return pause.resume;
         }
         private static pause No()
         {
-            if (CustomInput.UpFreshPress || CustomInput.DownFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead)
                 return pause.resume;
             return pause.quit;
         }

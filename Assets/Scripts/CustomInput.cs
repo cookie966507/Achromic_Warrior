@@ -51,6 +51,7 @@ namespace Assets.Scripts
         private static int boolsHeld = 0;
         private static int boolsFreshPress = 0;
         private static int boolsFreshPressAccessed = 0;
+        private static int boolsFreshPressDeleteOnRead = 0;
 
 
 
@@ -339,6 +340,134 @@ namespace Assets.Scripts
             {
                 boolsFreshPressAccessed = boolsFreshPressAccessed | PAUSE;
                 return (boolsFreshPress & PAUSE) != 0;
+            }
+        }
+
+        //true as until the data is read or the key is released
+        public static bool AttackFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & ATTACK) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~ATTACK;
+                return temp;
+            }
+        }
+        public static bool JumpFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & JUMP) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~JUMP;
+                return temp;
+            }
+        }
+        public static bool CycleLeftFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & CYCLELEFT) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~CYCLELEFT;
+                return temp;
+            }
+        }
+        public static bool CycleRightFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & CYCLERIGHT) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~CYCLERIGHT;
+                return temp;
+            }
+        }
+        public static bool LeftFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & LEFT) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~LEFT;
+                return temp;
+            }
+        }
+        public static bool RightFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & RIGHT) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~RIGHT;
+                return temp;
+            }
+        }
+        public static bool BlockFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & BLOCK) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~BLOCK;
+                return temp;
+            }
+        }
+        public static bool ChangeColorFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & CHANGECOLOR) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~CHANGECOLOR;
+                return temp;
+            }
+        }
+        public static bool UpFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & UP) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~UP;
+                return temp;
+            }
+        }
+        public static bool DownFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & DOWN) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~DOWN;
+                return temp;
+            }
+        }
+        public static bool SuperFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & SUPER) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~SUPER;
+                return temp;
+            }
+        }
+        public static bool AcceptFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & ACCEPT) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~ACCEPT;
+                return temp;
+            }
+        }
+        public static bool CancelFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & CANCEL) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~CANCEL;
+                return temp;
+            }
+        }
+        public static bool PauseFreshPressDeleteOnRead
+        {
+            get
+            {
+                bool temp = (boolsFreshPressDeleteOnRead & PAUSE) != 0;
+                boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~PAUSE;
+                return temp;
             }
         }
 
@@ -694,9 +823,13 @@ namespace Assets.Scripts
             {
                 boolsFreshPressAccessed = (boolsFreshPressAccessed & ~state);
                 boolsFreshPress = (boolsFreshPress & ~state);
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead & ~state);
             }
             if (((bools & state) == 0) && key)
+            {
                 boolsFreshPress = boolsFreshPress | state;
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead | state);
+            }
             if (key)
             {
                 bools = bools | state;
@@ -708,6 +841,8 @@ namespace Assets.Scripts
                 bools = bools & ~state;
                 boolsHeld = boolsHeld & ~state;
                 boolsFreshPress = boolsFreshPress & ~state;
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead & ~state);
+                boolsFreshPressAccessed = (boolsFreshPressAccessed & ~state);
                 boolsUp = boolsUp | state;
             }
             else
@@ -733,9 +868,13 @@ namespace Assets.Scripts
             {
                 boolsFreshPressAccessed = (boolsFreshPressAccessed & ~state);
                 boolsFreshPress = (boolsFreshPress & ~state);
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead & ~state);
             }
             if (((bools & state) == 0) && key)
+            {
                 boolsFreshPress = boolsFreshPress | state;
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead & ~state);
+            }
             if (key)
             {
                 bools = bools | state;
@@ -747,7 +886,9 @@ namespace Assets.Scripts
                 bools = bools & ~state;
                 boolsHeld = boolsHeld & ~state;
                 boolsFreshPress = boolsFreshPress & ~state;
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead & ~state);
                 boolsUp = boolsUp | state;
+                boolsFreshPressAccessed = (boolsFreshPressAccessed & ~state);
             }
             else
                 boolsUp = boolsUp & ~state;
