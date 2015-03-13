@@ -90,7 +90,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Music()
         {
-            if (CustomInput.LeftHeld)
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -99,7 +99,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 musicBar.value = temp;
                 doMusic(temp);
             }
-            if (CustomInput.RightHeld)
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -117,7 +117,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void SFX()
         {
-            if (CustomInput.LeftHeld)
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 sfxBar.value = temp;
                 doSFX(temp);
             }
-            if (CustomInput.RightHeld)
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;
@@ -144,7 +144,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Exit()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
         }
         private static void doExit()
@@ -242,25 +242,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static audio Music()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return audio.exit;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return audio.sfx;
             return audio.music;
         }
         private static audio SFX()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return audio.music;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return audio.exit;
             return audio.sfx;
         }
         private static audio Exit()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return audio.sfx;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return audio.music;
             return audio.exit;
         }

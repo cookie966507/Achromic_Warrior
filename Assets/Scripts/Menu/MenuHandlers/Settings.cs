@@ -64,7 +64,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Audio()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAudio();
         }
         private static void doAudio()
@@ -74,7 +74,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Video()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doVideo();
         }
         private static void doVideo()
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Controls()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doControls();
         }
         private static void doControls()
@@ -94,7 +94,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Exit()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
         }
         private static void doExit()
@@ -192,33 +192,33 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static setting Audio()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.exit;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.video;
             return setting.audio;
         }
         private static setting Video()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.audio;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.controls;
             return setting.video;
         }
         private static setting Controls()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.video;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.exit;
             return setting.controls;
         }
         private static setting Exit()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.controls;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.audio;
             return setting.exit;
         }

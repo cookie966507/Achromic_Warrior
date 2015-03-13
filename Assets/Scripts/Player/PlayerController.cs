@@ -97,7 +97,7 @@ namespace Assets.Scripts.Player
                     colorData.AddColor(Color.white, 500f);
 
                 //going Achromic
-                if (CustomInput.CycleLeftFreshPress && CustomInput.CycleRightFreshPress && colorData.isfull())
+                if (CustomInput.SuperFreshPress && colorData.isfull())
                 {
                     achromic = true;
                 }
