@@ -90,7 +90,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Music()
         {
-            if (CustomInput.LeftHeld)
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -99,7 +99,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 musicBar.value = temp;
                 doMusic(temp);
             }
-            if (CustomInput.RightHeld)
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -117,7 +117,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void SFX()
         {
-            if (CustomInput.LeftHeld)
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 sfxBar.value = temp;
                 doSFX(temp);
             }
-            if (CustomInput.RightHeld)
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;

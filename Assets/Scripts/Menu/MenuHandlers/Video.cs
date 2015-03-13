@@ -131,7 +131,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Resolutions()
         {
-            if (CustomInput.LeftHeld)
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedResolution = true;
                 int temp = (int)resolutionBar.value;
@@ -141,7 +141,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 resolutionBar.value = temp;
                 doResolutions(temp);
             }
-            if (CustomInput.RightHeld)
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedResolution = true;
                 int temp = (int)resolutionBar.value;
@@ -173,7 +173,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Quality()
         {
-            if (CustomInput.LeftHeld)
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedQuality = true;
                 int temp = (int)qualityBar.value;
@@ -183,7 +183,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 qualityBar.value = temp;
                 doQuality(temp);
             }
-            if (CustomInput.RightHeld)
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedQuality = true;
                 int temp = (int)qualityBar.value;
