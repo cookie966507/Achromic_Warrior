@@ -91,7 +91,7 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
-            if (GameManager.State != GameState.Pause)
+            if (!GameManager.Paused)
             {
                 if (Input.GetKey(KeyCode.UpArrow))
                     colorData.AddColor(Color.white, 500f);
