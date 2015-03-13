@@ -40,10 +40,11 @@ namespace Assets.Scripts
         private const int CHANGECOLOR = 0x80;
         private const int UP = 0x100;
         private const int DOWN = 0x200;
+        private const int SUPER = 0x400;
 
-        private const int ACCEPT = 0x400;
-        private const int CANCEL = 0x800;
-        private const int PAUSE = 0x1000;
+        private const int ACCEPT = 0x800;
+        private const int CANCEL = 0x1000;
+        private const int PAUSE = 0x2000;
 
         private static int bools = 0;
         private static int boolsUp = 0;
@@ -92,6 +93,10 @@ namespace Assets.Scripts
         public static bool Down
         {
             get { return (bools & DOWN) != 0; }
+        }
+        public static bool Super
+        {
+            get { return (bools & SUPER) != 0; }
         }
         public static bool Accept
         {
@@ -147,6 +152,10 @@ namespace Assets.Scripts
         {
             get { return (boolsUp & DOWN) != 0; }
         }
+        public static bool SuperUp
+        {
+            get { return (boolsUp & SUPER) != 0; }
+        }
         public static bool AcceptUp
         {
             get { return (boolsUp & ACCEPT) != 0; }
@@ -200,6 +209,10 @@ namespace Assets.Scripts
         public static bool DownHeld
         {
             get { return (boolsHeld & DOWN) != 0; }
+        }
+        public static bool SuperHeld
+        {
+            get { return (boolsHeld & SUPER) != 0; }
         }
         public static bool AcceptHeld
         {
@@ -305,6 +318,15 @@ namespace Assets.Scripts
                 return temp;
             }
         }
+        public static bool SuperFreshPress
+        {
+            get
+            {
+                bool temp = (boolsFreshPress & SUPER) != 0;
+                boolsFreshPress = boolsFreshPress & ~SUPER;
+                return temp;
+            }
+        }
         public static bool AcceptFreshPress
         {
             get
@@ -343,6 +365,7 @@ namespace Assets.Scripts
         private static KeyCode keyBoardChangeColor;
         private static KeyCode keyBoardUp;
         private static KeyCode keyBoardDown;
+        private static KeyCode keyBoardSuper;
         private static KeyCode keyBoardAccept;
         private static KeyCode keyBoardCancel;
         private static KeyCode keyBoardPause;
@@ -357,6 +380,7 @@ namespace Assets.Scripts
         private static string gamePadChangeColor;
         private static string gamePadUp;
         private static string gamePadDown;
+        private static string gamePadSuper;
         private static string gamePadAccept;
         private static string gamePadCancel;
         private static string gamePadPause;
@@ -460,13 +484,22 @@ namespace Assets.Scripts
                 PlayerPrefs.SetInt(9 + KeyHash, (int)value);
             }
         }
+        public static KeyCode KeyBoardSuper
+        {
+            get { return keyBoardPause; }
+            set
+            {
+                keyBoardSuper = value;
+                PlayerPrefs.SetInt(10 + KeyHash, (int)value);
+            }
+        }
         public static KeyCode KeyBoardAccept
         {
             get { return keyBoardAccept; }
             set
             {
                 keyBoardAccept = value;
-                PlayerPrefs.SetInt(10 + KeyHash, (int)value);
+                PlayerPrefs.SetInt(11 + KeyHash, (int)value);
             }
         }
         public static KeyCode KeyBoardCancel
@@ -475,7 +508,7 @@ namespace Assets.Scripts
             set
             {
                 keyBoardCancel = value;
-                PlayerPrefs.SetInt(11 + KeyHash, (int)value);
+                PlayerPrefs.SetInt(12 + KeyHash, (int)value);
             }
         }
         public static KeyCode KeyBoardPause
@@ -484,7 +517,7 @@ namespace Assets.Scripts
             set
             {
                 keyBoardPause = value;
-                PlayerPrefs.SetInt(12 + KeyHash, (int)value);
+                PlayerPrefs.SetInt(13 + KeyHash, (int)value);
             }
         }
         public static string GamePadAttack
@@ -493,7 +526,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadAttack = value;
-                PlayerPrefs.SetString(13 + KeyHash, value);
+                PlayerPrefs.SetString(14 + KeyHash, value);
             }
         }
         public static string GamePadJump
@@ -502,7 +535,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadJump = value;
-                PlayerPrefs.SetString(14 + KeyHash, value);
+                PlayerPrefs.SetString(15 + KeyHash, value);
             }
         }
         public static string GamePadCycleLeft
@@ -511,7 +544,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadCycleLeft = value;
-                PlayerPrefs.SetString(15 + KeyHash, value);
+                PlayerPrefs.SetString(16 + KeyHash, value);
             }
         }
         public static string GamePadCycleRight
@@ -520,7 +553,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadCycleRight = value;
-                PlayerPrefs.SetString(16 + KeyHash, value);
+                PlayerPrefs.SetString(17 + KeyHash, value);
             }
         }
         public static string GamePadLeft
@@ -529,7 +562,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadLeft = value;
-                PlayerPrefs.SetString(17 + KeyHash, value);
+                PlayerPrefs.SetString(18 + KeyHash, value);
             }
         }
         public static string GamePadRight
@@ -538,7 +571,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadRight = value;
-                PlayerPrefs.SetString(18 + KeyHash, value);
+                PlayerPrefs.SetString(19 + KeyHash, value);
             }
         }
         public static string GamePadBlock
@@ -547,7 +580,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadBlock = value;
-                PlayerPrefs.SetString(19 + KeyHash, value);
+                PlayerPrefs.SetString(20 + KeyHash, value);
             }
         }
         public static string GamePadChangeColor
@@ -556,7 +589,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadChangeColor = value;
-                PlayerPrefs.SetString(20 + KeyHash, value);
+                PlayerPrefs.SetString(21 + KeyHash, value);
             }
         }
         public static string GamePadUp
@@ -565,7 +598,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadUp = value;
-                PlayerPrefs.SetString(21 + KeyHash, value);
+                PlayerPrefs.SetString(22 + KeyHash, value);
             }
         }
         public static string GamePadDown
@@ -574,7 +607,16 @@ namespace Assets.Scripts
             set
             {
                 gamePadDown = value;
-                PlayerPrefs.SetString(22 + KeyHash, value);
+                PlayerPrefs.SetString(23 + KeyHash, value);
+            }
+        }
+        public static string GamePadSuper
+        {
+            get { return gamePadDown; }
+            set
+            {
+                gamePadSuper = value;
+                PlayerPrefs.SetString(24 + KeyHash, value);
             }
         }
         public static string GamePadAccept
@@ -583,7 +625,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadAccept = value;
-                PlayerPrefs.SetString(23 + KeyHash, value);
+                PlayerPrefs.SetString(25 + KeyHash, value);
             }
         }
         public static string GamePadCancel
@@ -592,7 +634,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadCancel = value;
-                PlayerPrefs.SetString(24 + KeyHash, value);
+                PlayerPrefs.SetString(26 + KeyHash, value);
             }
         }
         public static string GamePadPause
@@ -601,7 +643,7 @@ namespace Assets.Scripts
             set
             {
                 gamePadPause = value;
-                PlayerPrefs.SetString(25 + KeyHash, value);
+                PlayerPrefs.SetString(27 + KeyHash, value);
             }
         }
 
@@ -660,6 +702,7 @@ namespace Assets.Scripts
                 updateKey(CHANGECOLOR, keyBoardChangeColor);
                 updateKey(UP, keyBoardUp);
                 updateKey(DOWN, keyBoardDown);
+                updateKey(SUPER, keyBoardSuper);
                 updateKey(ACCEPT, keyBoardAccept);
                 updateKey(CANCEL, keyBoardCancel);
                 updateKey(PAUSE, keyBoardPause);
@@ -676,6 +719,7 @@ namespace Assets.Scripts
                 updatePad(CHANGECOLOR, gamePadChangeColor);
                 updatePad(UP, gamePadUp);
                 updatePad(DOWN, gamePadDown);
+                updatePad(SUPER, gamePadSuper);
                 updatePad(ACCEPT, gamePadAccept);
                 updatePad(CANCEL, gamePadCancel);
                 updatePad(PAUSE, gamePadPause);
@@ -771,42 +815,46 @@ namespace Assets.Scripts
             PlayerPrefs.SetInt(8 + KeyHash, (int)KeyCode.W);
             keyBoardDown = KeyCode.S;
             PlayerPrefs.SetInt(9 + KeyHash, (int)KeyCode.S);
+            keyBoardSuper = KeyCode.J;
+            PlayerPrefs.SetInt(10 + KeyHash, (int)KeyCode.J);
             keyBoardAccept = KeyCode.Return;
-            PlayerPrefs.SetInt(10 + KeyHash, (int)KeyCode.Return);
+            PlayerPrefs.SetInt(11 + KeyHash, (int)KeyCode.Return);
             keyBoardCancel = KeyCode.Backspace;
-            PlayerPrefs.SetInt(11 + KeyHash, (int)KeyCode.Backspace);
-            keyBoardPause = KeyCode.Backspace;
             PlayerPrefs.SetInt(12 + KeyHash, (int)KeyCode.Backspace);
+            keyBoardPause = KeyCode.Backspace;
+            PlayerPrefs.SetInt(13 + KeyHash, (int)KeyCode.Backspace);
         }
 
         public static void DefaultPad()
         {
             gamePadAttack = RIGHT_TRIGGER;
-            PlayerPrefs.SetString(13 + KeyHash, RIGHT_TRIGGER);
+            PlayerPrefs.SetString(14 + KeyHash, RIGHT_TRIGGER);
             gamePadJump = A;
-            PlayerPrefs.SetString(14 + KeyHash, A);
+            PlayerPrefs.SetString(15 + KeyHash, A);
             gamePadCycleLeft = LB;
-            PlayerPrefs.SetString(15 + KeyHash, LB);
+            PlayerPrefs.SetString(16 + KeyHash, LB);
             gamePadCycleRight = RB;
-            PlayerPrefs.SetString(16 + KeyHash, RB);
+            PlayerPrefs.SetString(17 + KeyHash, RB);
             gamePadLeft = LEFT_STICK_LEFT;
-            PlayerPrefs.SetString(17 + KeyHash, LEFT_STICK_LEFT);
+            PlayerPrefs.SetString(18 + KeyHash, LEFT_STICK_LEFT);
             gamePadRight = LEFT_STICK_RIGHT;
-            PlayerPrefs.SetString(18 + KeyHash, LEFT_STICK_RIGHT);
+            PlayerPrefs.SetString(19 + KeyHash, LEFT_STICK_RIGHT);
             gamePadBlock = LEFT_TRIGGER;
-            PlayerPrefs.SetString(19 + KeyHash, LEFT_TRIGGER);
+            PlayerPrefs.SetString(20 + KeyHash, LEFT_TRIGGER);
             gamePadChangeColor = Y;
-            PlayerPrefs.SetString(20 + KeyHash, Y);
+            PlayerPrefs.SetString(21 + KeyHash, Y);
             gamePadUp = LEFT_STICK_UP;
-            PlayerPrefs.SetString(21 + KeyHash, LEFT_STICK_UP);
+            PlayerPrefs.SetString(22 + KeyHash, LEFT_STICK_UP);
             gamePadDown = LEFT_STICK_DOWN;
-            PlayerPrefs.SetString(22 + KeyHash, LEFT_STICK_DOWN);
+            PlayerPrefs.SetString(23 + KeyHash, LEFT_STICK_DOWN);
+            gamePadSuper = LEFT_STICK;
+            PlayerPrefs.SetString(24 + KeyHash, LEFT_STICK);
             gamePadAccept = A;
             PlayerPrefs.SetString(23 + KeyHash, A);
             gamePadCancel = B;
-            PlayerPrefs.SetString(24 + KeyHash, B);
+            PlayerPrefs.SetString(26 + KeyHash, B);
             gamePadPause = START;
-            PlayerPrefs.SetString(25 + KeyHash, START);
+            PlayerPrefs.SetString(27 + KeyHash, START);
         }
 
         public static bool AnyInput()

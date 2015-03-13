@@ -43,7 +43,8 @@ namespace Assets.Scripts.Data
 		}
 
 		public void Pause()
-		{		
+		{
+            Debug.Log("a");
 			VelocityInfo[] _bodies = GameObject.FindObjectsOfType<VelocityInfo>();
 			for(int i = 0; i < _bodies.Length; i++)
 			{
@@ -53,7 +54,8 @@ namespace Assets.Scripts.Data
 		}
 
 		public void Unpause()
-		{
+        {
+            Debug.Log("b");
 			VelocityInfo[] _bodies = GameObject.FindObjectsOfType<VelocityInfo>();
 			for(int i = 0; i < _bodies.Length; i++)
 			{
