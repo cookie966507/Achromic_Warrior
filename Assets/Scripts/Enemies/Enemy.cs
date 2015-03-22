@@ -12,6 +12,9 @@ namespace Assets.Scripts.Enemies
         //color element associated with the enemy
         public ColorElement _color;
 
+		//health
+		public int _health = 10;
+
         //time before enemy can be hit again
         public float _hitTime = 1f;
         private float _timer;
@@ -37,6 +40,8 @@ namespace Assets.Scripts.Enemies
 
         //knockback force
         public float _force = 75f;
+
+		private EnemySpawner _spawner;
 
         //Hack
         bool ExitCatcher = true;
@@ -109,6 +114,12 @@ namespace Assets.Scripts.Enemies
                     ProduceOrbs(1);
                 //show the damage taken
                 UI.DamageDisplay.instance.ShowDamage(_damage, _hitPos, _color);
+				//subtract health
+				_health -= _damage;
+				if(_health <= 0)
+				{
+					this.Die();
+				}
                 //apply knockback force based on position
                 if (_player.GetComponent<Player.PlayerController>()._facingRight)
                     GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
@@ -167,7 +178,15 @@ namespace Assets.Scripts.Enemies
         public ColorElement Color
         {
             get { return _color; }
-            set { _color = value; }
+            set
+			{ 
+				_color = value;
+				//color parts that are supposed to be toned
+				for(int i = 0; i < _coloredPieces.Length; i++)
+				{
+					_coloredPieces[i].material.color = CustomColor.GetColor(_color);
+				}
+			}
         }
 
         public void OnTriggerEnter2D(Collider2D col)
@@ -180,6 +199,17 @@ namespace Assets.Scripts.Enemies
                 }
             }
         }
+
+		public void Die()
+		{
+			_spawner.EnemyDestroyed();
+			Destroy(gameObject);
+		}
+
+		public void SaveSpawnerReference(EnemySpawner _spawner)
+		{
+			this._spawner = _spawner;
+		}
 
 		public ColorElement ResolveMultiColor(ColorElement _color)
 		{
