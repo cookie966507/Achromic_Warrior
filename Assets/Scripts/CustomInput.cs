@@ -602,7 +602,7 @@ namespace Assets.Scripts
         }
         public static KeyCode KeyBoardSuper
         {
-            get { return keyBoardPause; }
+            get { return keyBoardSuper; }
             set
             {
                 keyBoardSuper = value;
@@ -763,10 +763,42 @@ namespace Assets.Scripts
             }
         }
 
-        void Start()
+        void Awake()
         {
-            //re-add key retrievel
-            Default();
+            if(PlayerPrefs.HasKey(KeyHash+0))
+            {
+                keyBoardAttack = (KeyCode) PlayerPrefs.GetInt(0 + KeyHash);
+                keyBoardJump = (KeyCode) PlayerPrefs.GetInt(1 + KeyHash);
+                keyBoardCycleLeft = (KeyCode) PlayerPrefs.GetInt(2 + KeyHash);
+                keyBoardCycleRight = (KeyCode) PlayerPrefs.GetInt(3 + KeyHash);
+                keyBoardLeft = (KeyCode) PlayerPrefs.GetInt(4 + KeyHash);
+                keyBoardRight = (KeyCode) PlayerPrefs.GetInt(5 + KeyHash);
+                keyBoardBlock = (KeyCode) PlayerPrefs.GetInt(6 + KeyHash);
+                keyBoardChangeColor = (KeyCode) PlayerPrefs.GetInt(7 + KeyHash);
+                keyBoardUp = (KeyCode) PlayerPrefs.GetInt(8 + KeyHash);
+                keyBoardDown = (KeyCode )PlayerPrefs.GetInt(9 + KeyHash);
+                keyBoardSuper = (KeyCode) PlayerPrefs.GetInt(10 + KeyHash);
+                keyBoardAccept = (KeyCode) PlayerPrefs.GetInt(11 + KeyHash);
+                keyBoardCancel = (KeyCode) PlayerPrefs.GetInt(12 + KeyHash);
+                keyBoardPause = (KeyCode) PlayerPrefs.GetInt(13 + KeyHash);
+
+                gamePadAttack = PlayerPrefs.GetString(14 + KeyHash);
+                gamePadJump = PlayerPrefs.GetString(15 + KeyHash);
+                gamePadCycleLeft = PlayerPrefs.GetString(16 + KeyHash);
+                gamePadCycleRight = PlayerPrefs.GetString(17 + KeyHash);
+                gamePadLeft = PlayerPrefs.GetString(18 + KeyHash);
+                gamePadRight = PlayerPrefs.GetString(19 + KeyHash);
+                gamePadBlock = PlayerPrefs.GetString(20 + KeyHash);
+                gamePadChangeColor = PlayerPrefs.GetString(21 + KeyHash);
+                gamePadUp = PlayerPrefs.GetString(22 + KeyHash);
+                gamePadDown = PlayerPrefs.GetString(23 + KeyHash);
+                gamePadSuper = PlayerPrefs.GetString(24 + KeyHash);
+                gamePadAccept = PlayerPrefs.GetString(23 + KeyHash);
+                gamePadCancel = PlayerPrefs.GetString(26 + KeyHash);
+                gamePadPause = PlayerPrefs.GetString(27 + KeyHash);
+            }
+            else
+                Default();
         }
         void Update()
         {

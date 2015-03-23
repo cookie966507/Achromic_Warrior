@@ -89,7 +89,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doControls()
         {
-            Debug.Log("controls");
+            Kernel.transition(true, isLeft, 2);
         }
 
         private static void Exit()
