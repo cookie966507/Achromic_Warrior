@@ -12,7 +12,7 @@ namespace Assets.Scripts.Enemies
         protected override void Run()
         {
             if (CustomInput.JumpFreshPress)
-                rigidbody2D.AddForce(new Vector2(0f, 10), ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 10), ForceMode2D.Impulse);
             if (CustomInput.AttackFreshPress)
                 EnterGhost();
         }

@@ -28,7 +28,7 @@ namespace Assets.Scripts.Util
 						_r[i].material.color = CustomColor.GetColor(_color);
 					}
 				}
-				else this.renderer.material.color = CustomColor.GetColor(_color);
+				else this.GetComponent<Renderer>().material.color = CustomColor.GetColor(_color);
 			}
 		}
 	}

@@ -97,7 +97,7 @@ namespace Assets.Scripts.Player
                     colorData.AddColor(Color.white, 500f);
 
                 //going Achromic
-                if (CustomInput.CycleLeftFreshPress && CustomInput.CycleRightFreshPress && colorData.isfull())
+                if (CustomInput.SuperFreshPress && colorData.isfull())
                 {
                     achromic = true;
                 }
@@ -117,7 +117,7 @@ namespace Assets.Scripts.Player
                         render = !render;
                         renderTimer = 0;
                         foreach (PlayerArmor pa in _armor)
-                            pa.renderer.enabled = render;
+                            pa.GetComponent<Renderer>().enabled = render;
                     }
                     hit = false;
                     renderTimer += Time.deltaTime;
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Player
                 else
                 {
                     foreach (PlayerArmor pa in _armor)
-                        pa.renderer.enabled = true;
+                        pa.GetComponent<Renderer>().enabled = true;
                     invun = false;
                 }
 
@@ -268,18 +268,18 @@ namespace Assets.Scripts.Player
 
 
                     // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-                    if (_h * rigidbody2D.velocity.x < _maxSpeed)
+                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxSpeed)
                     {
                         //account for air control
-                        if (!inAir) rigidbody2D.AddForce(Vector2.right * _h * _moveForce);
-                        else rigidbody2D.AddForce(Vector2.right * _h * _moveForce * _airControl);
+                        if (!inAir) GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce);
+                        else GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce * _airControl);
                     }
 
                     // If the player's horizontal velocity is greater than the maxSpeed...
-                    if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
+                    if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxSpeed)
                     {
                         // ... set the player's velocity to the maxSpeed in the x axis.
-                        rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
                     }
 
                     //flippng based on direction and movement
@@ -291,8 +291,8 @@ namespace Assets.Scripts.Player
                 //STATE MACHINE SAY JUMP NOW!!!
                 if (_jump)
                 {
-                    rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-                    rigidbody2D.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0f);
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
                     _jump = false;
                 }
                 if (currState == PlayerState.hit)
@@ -304,18 +304,18 @@ namespace Assets.Scripts.Player
 
 
                     // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-                    if (_h * rigidbody2D.velocity.x < _maxSpeed)
+                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxSpeed)
                     {
                         //account for air control
-                        if (!inAir) rigidbody2D.AddForce(Vector2.right * _h * _moveForce);
-                        else rigidbody2D.AddForce(Vector2.right * _h * _moveForce * _airControl);
+                        if (!inAir) GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce);
+                        else GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce * _airControl);
                     }
 
                     // If the player's horizontal velocity is greater than the maxSpeed...
-                    if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
+                    if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxSpeed)
                     {
                         // ... set the player's velocity to the maxSpeed in the x axis.
-                        rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
                     }
                 }
             }
@@ -413,7 +413,7 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 blocking = true;
-                block.renderer.material.color = CustomColor.GetColor(FindObjectOfType<PlayerColorData>().Color);
+                block.GetComponent<Renderer>().material.color = CustomColor.GetColor(FindObjectOfType<PlayerColorData>().Color);
                 block.Show();
             }
         }

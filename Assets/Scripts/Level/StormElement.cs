@@ -22,7 +22,7 @@ namespace Assets.Scripts.Level
 
 		void Awake()
 		{
-			_flashMat = this.renderer.material;
+			_flashMat = this.GetComponent<Renderer>().material;
 		}
 
 		void Start()

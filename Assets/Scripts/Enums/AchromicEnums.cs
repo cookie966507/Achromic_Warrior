@@ -34,15 +34,10 @@
 	//state of the game
 	public enum GameState
 	{
-		Sponsor,
-		Title,
-		Settings,
-		Game,
-		Overworld,
+		Unpause,
 		Pause,
 		Lose,
 		Win,
-		Credits,
 
 		NumTypes
 	}

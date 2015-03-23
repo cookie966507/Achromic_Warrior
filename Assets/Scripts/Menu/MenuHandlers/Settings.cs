@@ -41,7 +41,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
                     cursors[cursor].SetActive(true);
             }
             doState[(int)currState]();
-
         }
 
         public override void wake()
@@ -65,27 +64,27 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Audio()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAudio();
         }
         private static void doAudio()
         {
-            Debug.Log("audio");            
+            Kernel.transition(true, isLeft, 0);
         }
 
         private static void Video()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doVideo();
         }
         private static void doVideo()
         {
-            Debug.Log("video");
+            Kernel.transition(true, isLeft, 1);
         }
 
         private static void Controls()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doControls();
         }
         private static void doControls()
@@ -95,7 +94,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Exit()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
         }
         private static void doExit()
@@ -142,7 +141,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             machine.goTo(SettingsStateMachine.setting.exit);
             foreach (GameObject g in cursors)
                 g.SetActive(false);
-            cursors[(int)SettingsStateMachine.setting.exit - 1].SetActive(true);
+            //cursors[(int)SettingsStateMachine.setting.exit - 1].SetActive(true);
             doExit();
         }
     }
@@ -152,9 +151,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private delegate setting machine();//function pointer
         private machine[] getNextState;//array of function pointers
         private setting currState;
-        private static float hold = 0;//used for delays
-        private static bool die = false;
-        private static bool doubleJumped = false;
         private setting sleepState = setting.audio;
 
         internal SettingsStateMachine()
@@ -166,7 +162,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal setting update()
         {
-            return currState = getNextState[((int)currState)]();//gets te next Enums.PlayerState
+            return currState = getNextState[((int)currState)]();
         }
 
         internal void wake()
@@ -176,8 +172,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal void sleep()
         {
-            sleepState = currState;
-            currState = setting.sleep;
+            if (currState != setting.sleep)
+            {
+                sleepState = currState;
+                currState = setting.sleep;
+            }
         }
 
         internal void goTo(setting state)
@@ -193,33 +192,33 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static setting Audio()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.exit;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.video;
             return setting.audio;
         }
         private static setting Video()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.audio;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.controls;
             return setting.video;
         }
         private static setting Controls()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.video;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.exit;
             return setting.controls;
         }
         private static setting Exit()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return setting.controls;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return setting.audio;
             return setting.exit;
         }

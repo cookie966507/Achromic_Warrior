@@ -65,17 +65,17 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Play()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doPlay();
         }
         private static void doPlay()
         {
-            Application.LoadLevel("credits");
+            Data.GameManager.GotoLevel("training");
         }
 
         private static void Settings()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doSettings();
         }
         private static void doSettings()
@@ -85,12 +85,12 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Credits()
         {
-            if (CustomInput.AcceptFreshPress)
+            if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doCredits();
         }
         private static void doCredits()
         {
-            Application.LoadLevel("credits");
+            Data.GameManager.GotoLevel("credits");
         }
 
         public void PlayClick()
@@ -132,9 +132,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private delegate main machine();//function pointer
         private machine[] getNextState;//array of function pointers
         private main currState;
-        private static float hold = 0;//used for delays
-        private static bool die = false;
-        private static bool doubleJumped = false;
         private main sleepState = main.play;
 
         internal MainStateMachine()
@@ -146,7 +143,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal main update()
         {
-            return currState = getNextState[((int)currState)]();//gets te next Enums.PlayerState
+            return currState = getNextState[((int)currState)]();
         }
 
         internal void wake()
@@ -156,8 +153,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal void sleep()
         {
-            sleepState = currState;
-            currState = main.sleep;
+            if (currState != main.sleep)
+            {
+                sleepState = currState;
+                currState = main.sleep;
+            }
         }
 
         internal void goTo(main state)
@@ -173,25 +173,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static main Play()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.credits;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.settings;
             return main.play;
         }
         private static main Settings()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.play;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.credits;
             return main.settings;
         }
         private static main Credits()
         {
-            if (CustomInput.UpFreshPress)
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.settings;
-            if (CustomInput.DownFreshPress)
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.play;
             return main.credits;
         }

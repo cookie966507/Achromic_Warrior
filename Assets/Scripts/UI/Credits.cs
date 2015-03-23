@@ -97,14 +97,14 @@ namespace Assets.Scripts.UI
 					//don't include the position tag in the name
 					_text.GetComponent<TextMesh>().text = _c.Substring(0, _c.LastIndexOf(" \\Position"));
 					//change text color
-					_text.GetComponent<TextMesh>().color = new Color(0.1f, 0.1f, 0.1f);
+					_text.GetComponent<TextMesh>().color = new Color(0.05f, 0.05f, 0.05f);
 				}
 				//text is normal name
 				else
 				{
 					_text.GetComponent<TextMesh>().text = _c;
 					//change text color
-					_text.GetComponent<TextMesh>().color = new Color(0.2f, 0.2f, 0.2f);
+					_text.GetComponent<TextMesh>().color = new Color(0.7f, 0.7f, 0.7f);
 				}
 
 				//assign this handler to the individual object
