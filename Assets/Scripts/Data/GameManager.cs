@@ -82,5 +82,10 @@ namespace Assets.Scripts.Data
 			get{return _state;}
 			set{_state = value;}
 		}
+
+        public static bool Paused
+        {
+            get { return _state == GameState.Pause; }
+        }
 	}
 }

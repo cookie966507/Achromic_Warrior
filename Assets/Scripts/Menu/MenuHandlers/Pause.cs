@@ -52,6 +52,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             win.enabled = false;
             machine.goTo(PauseStateMachine.pause.sleep);
+            Data.GameManager.Unpause();
         }
 
         private static void Quit()

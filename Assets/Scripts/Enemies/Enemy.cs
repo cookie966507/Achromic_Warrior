@@ -54,7 +54,7 @@ namespace Assets.Scripts.Enemies
 
         void Update()
         {
-            if (Data.GameManager.State != GameState.Pause)
+            if (!Data.GameManager.Paused)
             {
                 UpdateHit();
                 if (this.gameObject.layer.Equals(GHOSTING_ENEMY)) UpdateGhost();
