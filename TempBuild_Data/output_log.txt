@@ -31,3 +31,9 @@ UnloadTime: 3.767219 ms
 Unloading 139 unused Assets to reduce memory usage. Loaded Objects now: 1606.
 Total: 2.218675 ms (FindLiveObjects: 0.180512 ms CreateObjectMapping: 0.201039 ms MarkObjects: 1.357768 ms  DeleteObjects: 0.478147 ms)
 
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 19.154861 ms
+
+Unloading 191 unused Assets to reduce memory usage. Loaded Objects now: 1206.
+Total: 4.263478 ms (FindLiveObjects: 0.188964 ms CreateObjectMapping: 1.572693 ms MarkObjects: 1.828067 ms  DeleteObjects: 0.671337 ms)
+

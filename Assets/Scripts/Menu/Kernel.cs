@@ -10,6 +10,7 @@ namespace Assets.Scripts.Menu
         private static Node root;
         private static Node left;
         private static Node right;
+        private static Node Controls;
 
         void Awake()
         {
@@ -138,6 +139,27 @@ namespace Assets.Scripts.Menu
             }
         }
 
+        internal static void controlsEnter(int child)
+        {
+            left.item.sleep(true, true);
+            right.item.sleep(true, true);
+            right.item.sleep(true, true);
+            Controls = right.children[child];
+            Controls.item.sleep(true, true);
+            Controls.item.wake(true, true);
+        }
+
+        internal static void controlsExit()
+        {
+            left.item.sleep(true, false);
+            right.item.sleep(true, false);
+            right.item.wake(true, false);
+            Controls.item.sleep(true, false);
+            Controls.item.sleep(true, false);
+            enalble();
+            Controls = null;
+        }
+
         internal static void interrupt(bool isleft)
         {
             //no movement
@@ -159,6 +181,8 @@ namespace Assets.Scripts.Menu
                 left.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
             if (right != null)
                 right.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
+            if (Controls != null)
+                Controls.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
         }
 
         internal static void enalble()
@@ -167,6 +191,8 @@ namespace Assets.Scripts.Menu
                 left.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
             if (right != null)
                 right.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+            if (Controls != null)
+                Controls.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
         }
     }
 
