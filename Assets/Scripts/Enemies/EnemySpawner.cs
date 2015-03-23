@@ -19,7 +19,7 @@ namespace Assets.Scripts.Enemies
 		public GameObject[] _enemyTypes;
 
 		private float _spawnTimer = 0f;
-		private float _spawnDelay = 5f;
+		public float _spawnDelay = 5f;
 
 		public bool _endless;
 
