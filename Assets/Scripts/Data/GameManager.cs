@@ -58,8 +58,8 @@ namespace Assets.Scripts.Data
 			for(int i = 0; i < _bodies.Length; i++)
 			{
 				_bodies[i].UnpauseMotion();
-				_state = GameState.Unpause;
 			}
+			_state = GameState.Unpause;
 		}
 
         public static void GotoLevel(string level)

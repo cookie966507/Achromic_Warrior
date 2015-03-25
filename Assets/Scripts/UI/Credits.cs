@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Assets.Scripts.Data;
 /*
  * 
  */
@@ -58,13 +59,16 @@ namespace Assets.Scripts.UI
 		
 		void Update () 
 		{
-			//if list is not empty
-			if (_creditObjects.Count > 0)
+			if(!GameManager.Paused)
 			{
-				//update the position upward
-				for (int i = 0; i < _creditObjects.Count; i++)
+				//if list is not empty
+				if (_creditObjects.Count > 0)
 				{
-					_creditObjects[i].transform.Translate(Vector2.up * _speed * Time.deltaTime);
+					//update the position upward
+					for (int i = 0; i < _creditObjects.Count; i++)
+					{
+						_creditObjects[i].transform.Translate(Vector2.up * _speed * Time.deltaTime);
+					}
 				}
 			}
 		}

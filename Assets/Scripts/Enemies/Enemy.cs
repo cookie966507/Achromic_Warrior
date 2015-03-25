@@ -200,7 +200,7 @@ namespace Assets.Scripts.Enemies
             }
         }
 
-		public void Die()
+		public virtual void Die()
 		{
 			_spawner.EnemyDestroyed();
 			Destroy(gameObject);

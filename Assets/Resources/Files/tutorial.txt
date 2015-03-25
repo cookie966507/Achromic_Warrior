@@ -1,0 +1,20 @@
+You may exit the tutorial at any time by pressing: Pause and Exit.
+\break/
+Press: 
+Attack \Input/
+ to attack.
+\break/
+Press: 
+Block \Input/
+ to block.
+\break/
+Press: 
+CycleLeft \Input/
+ or 
+CycleRight \Input/
+ to cycle between your colors.
+\break/
+Once you find the color you want to equip, press: 
+ChangeColor \Input/
+ to equip that color.
+\break/
