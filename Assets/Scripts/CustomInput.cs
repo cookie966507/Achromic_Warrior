@@ -906,7 +906,7 @@ namespace Assets.Scripts
             if (((bools & state) == 0) && key)
             {
                 boolsFreshPress = boolsFreshPress | state;
-                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead & ~state);
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead | state);
             }
             if (key)
             {
