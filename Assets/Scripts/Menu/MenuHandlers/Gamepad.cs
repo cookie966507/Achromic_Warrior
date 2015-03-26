@@ -71,7 +71,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                     foreach (GameObject g in cursors)
                         g.SetActive(false);
                     int cursor = (int)currState-1;
-                    if (cursor >= 0 && cursor<18)
+                    if (cursor >= 0 && cursor<16)
                         cursors[cursor].SetActive(true);
                     else if(currState==ControlBinderStateMachine.State.Prep)
                         Kernel.disalble();
@@ -102,8 +102,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
                         Kernel.controlsExit();
                 }
             }
-            if ((currState != ControlBinderStateMachine.State.Holding && currState != ControlBinderStateMachine.State.GettingKey) && CustomInput.CancelFreshPressDeleteOnRead)
-                Kernel.controlsExit();            
         }
 
         public override void wake()
@@ -121,6 +119,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             machine.sleep();
             running = false;
+            currState = ControlBinderStateMachine.State.Sleep;
         }
 
         private static void Sleep()
@@ -549,7 +548,10 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 {
                     prompt.enabled = true;
                     if (Input.GetKey(KeyCode.Escape))
+                    {
                         machine.Hold();
+                        Kernel.enalble();
+                    }
                     else
                         GetNewButton();
                 }
