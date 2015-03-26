@@ -21,6 +21,7 @@ namespace Assets.Scripts.Util
 
 		void Start()
 		{
+			if(_clips.Length == 1 && _loop) this.GetComponent<AudioSource>().loop = true;
 			SoundManager.PlayMusic(this.GetComponent<AudioSource>());
 		}
 
