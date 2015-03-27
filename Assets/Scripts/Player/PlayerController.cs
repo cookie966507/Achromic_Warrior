@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
@@ -172,25 +172,27 @@ namespace Assets.Scripts.Player
                     if (blocking)
                         blockSucessful = true;
                     else
+					{
                         hit = true;
+						CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
+						if (potentialDamage != null)
+						{
+							damage = potentialDamage.damage;
+							damage -= (int)colorData.Defense;
+							if (blockSucessful)
+								damage -= (int)(colorData.Defense * .5f);
+							if (damage < 0)
+								damage = 0;
+							DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+						}
+						else
+							damage = 0;
+					}
+					}
                     if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
                         enemyOnRight = false;
                     else
-                        enemyOnRight = true;
-                    CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
-                    if (potentialDamage != null)
-                    {
-                        damage = potentialDamage.damage;
-                        damage -= (int)colorData.Defense;
-                        if (blockSucessful)
-                            damage -= (int)(colorData.Defense * .5f);
-                        if (damage < 0)
-                            damage = 0;
-                        DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
-                    }
-                    else
-                        damage = 0;
-                }
+						enemyOnRight = true;
             }
         }
 
