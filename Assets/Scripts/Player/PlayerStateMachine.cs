@@ -40,7 +40,6 @@ namespace Assets.Scripts.Player
                 reset+=UnityEngine.Time.deltaTime;
                 if(reset>.5f)
                 {
-                    UnityEngine.Debug.Log("reset");
                     attack = 0;
                     reset = 0;
                 }
@@ -53,7 +52,6 @@ namespace Assets.Scripts.Player
                 return Enums.PlayerState.block;
             if (CustomInput.AttackFreshPress)
             {
-                UnityEngine.Debug.Log(attack);
                 if(attack==0)
                     return Enums.PlayerState.attack1;
                 if (attack == 1)
