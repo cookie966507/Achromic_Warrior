@@ -17,8 +17,8 @@ namespace Assets.Scripts.Player
         //reference to the attack
         public ObjectHider _attack;
         public ObjectHider _block;
+        public Animator anim;
 
-        public static bool invun = false;
 
         //firection the player is facing
         [HideInInspector]
@@ -56,6 +56,7 @@ namespace Assets.Scripts.Player
         private float parryTime = .2f;
         private float renderTime = .002f;
         private float renderTimer = 0;
+        private static bool invun = false;
         private static float invunTime = .5f;
         private static float invunTimer = 0;
         private PlayerColorData colorData;
@@ -154,7 +155,7 @@ namespace Assets.Scripts.Player
                     blockSucessful = false;
                     parryTimer = 0;
                     hit = false;
-                    //TODO: change anim
+                    anim.SetInteger("state", (int)currState);
                 }
                 prevState = currState;
 
@@ -191,6 +192,11 @@ namespace Assets.Scripts.Player
                         damage = 0;
                 }
             }
+        }
+
+        public void AnimDetector()
+        {
+            animDone = true;
         }
 
         //detects if you are in the air

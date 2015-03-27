@@ -15,6 +15,8 @@ namespace Assets.Scripts.Player
         private static float hold = 0;//used for delays
         private static bool die = false;
         private static bool doubleJumped = false;
+        private static int attack = 0;
+        private static float reset=0;
 
         public PlayerStateMachine()
         {
@@ -33,6 +35,16 @@ namespace Assets.Scripts.Player
 
         private static Enums.PlayerState Idle(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
+            if(attack>0)
+            {
+                reset+=UnityEngine.Time.deltaTime;
+                if(reset>.5f)
+                {
+                    UnityEngine.Debug.Log("reset");
+                    attack = 0;
+                    reset = 0;
+                }
+            }
             if (hit)
                 return Enums.PlayerState.hit; ;
             if (inAir)
@@ -40,7 +52,14 @@ namespace Assets.Scripts.Player
             if (CustomInput.BlockFreshPress)
                 return Enums.PlayerState.block;
             if (CustomInput.AttackFreshPress)
-                return Enums.PlayerState.attack1;
+            {
+                UnityEngine.Debug.Log(attack);
+                if(attack==0)
+                    return Enums.PlayerState.attack1;
+                if (attack == 1)
+                    return Enums.PlayerState.attack2;
+                return Enums.PlayerState.attack3;
+            }
             if (CustomInput.JumpFreshPress)
                 return Enums.PlayerState.jump;
             if (CustomInput.Left || CustomInput.Right)
@@ -59,8 +78,7 @@ namespace Assets.Scripts.Player
                 return Enums.PlayerState.block;
             if (animDone)
             {
-                if (CustomInput.AttackFreshPress)
-                    return Enums.PlayerState.attack2;
+                attack = 1;
                 return Enums.PlayerState.idle;
             }
             return Enums.PlayerState.attack1;
@@ -73,8 +91,8 @@ namespace Assets.Scripts.Player
                 return Enums.PlayerState.block;
             if (animDone)
             {
-                if (CustomInput.AttackFreshPress)
-                    return Enums.PlayerState.attack3;
+                attack = 2;
+                reset = 0;
                 return Enums.PlayerState.idle;
             }
             return Enums.PlayerState.attack2;
@@ -86,7 +104,11 @@ namespace Assets.Scripts.Player
             if (CustomInput.Block)
                 return Enums.PlayerState.block;
             if (animDone)
+            {
+                attack = 0;
+                reset = 0;
                 return Enums.PlayerState.idle;
+            }
             return Enums.PlayerState.attack3;
         }
 
