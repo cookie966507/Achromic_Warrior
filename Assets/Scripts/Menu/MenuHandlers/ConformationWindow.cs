@@ -26,6 +26,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Start()
         {
+            currState = ConformationStateMachine.confirm.sleep;
             win = this.gameObject.GetComponent<Canvas>();
             doState = new state[] { Sleep, Yes, No };
             win.enabled = false;
@@ -47,7 +48,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void Sleep()
         {
-            
         }
 
         private static void Yes()
@@ -95,7 +95,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal ConformationStateMachine()
         {
-            currState = confirm.yes;
+            currState = confirm.sleep;
             //fill array with functions
             getNextState = new machine[] { Sleep, Yes, No };
         }
