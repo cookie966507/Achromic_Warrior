@@ -18,7 +18,7 @@ namespace Assets.Scripts.Enemies
         //time before enemy can be hit again
         public float _hitTime = 1f;
         private float _timer;
-        public bool _hit = false;
+		public bool _hit = false;
 
         //layers for ghosting/reverting
         protected int ENEMY;
@@ -101,7 +101,7 @@ namespace Assets.Scripts.Enemies
         }
 
         //what happens when hit
-        public void Hit(int _damage, Vector3 _hitPos)
+        public virtual void Hit(int _damage, Vector3 _hitPos)
         {
             //if not already hit
             if (!_hit)
@@ -121,11 +121,13 @@ namespace Assets.Scripts.Enemies
 					this.Die();
 				}
                 //apply knockback force based on position
+				float _finalForce =  _force * _player.GetComponent<Player.PlayerColorData>().Attack;
+				_finalForce = Mathf.Clamp(_finalForce, 5f, 20f);
                 if (_player.GetComponent<Player.PlayerController>()._facingRight)
-                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
+                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(1f, 0.25f)) * _finalForce, ForceMode2D.Impulse);
                 else
                 {
-                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(-1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
+                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(-1f, 0.25f)) * _finalForce, ForceMode2D.Impulse);
                 }
             }
         }

@@ -47,6 +47,8 @@ namespace Assets.Scripts.Enemies
 		//for turning gravity on and off
 		private float _gravity;
 
+		public float _moveForce = 75f;
+
 		//reference to the particle system when attacking
 		private ParticleSystem _particles;
 		private float _emissionRate = 40f;
@@ -149,11 +151,11 @@ namespace Assets.Scripts.Enemies
 		void FixedUpdate()
 		{
 			//if not attacking
-			if(!_attacking)
+			if(!_attacking && !_hit)
             {
                 Rigidbody2D rgb2d = GetComponent<Rigidbody2D>();
 				//move in a direction
-                rgb2d.AddForce(new Vector2(_force * _dir, 0f));
+                rgb2d.AddForce(new Vector2(_moveForce * _dir, 0f));
 				//limit speed
                 if (Mathf.Abs(rgb2d.velocity.x) > _maxSpeed)
                     rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * _maxSpeed, rgb2d.velocity.y);
@@ -190,6 +192,12 @@ namespace Assets.Scripts.Enemies
 				//stop attacking if the player was not hit
 				StopAttack();
 			}
+		}
+
+		public override void Hit(int _damage, Vector3 _hitPos)
+		{
+			StopAttack();
+			base.Hit(_damage, _hitPos);
 		}
 
 		public void Flip()
