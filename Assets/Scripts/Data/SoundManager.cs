@@ -62,6 +62,7 @@ namespace Assets.Scripts.Data
 
 		void OnLevelWasLoaded(int i)
 		{
+			_clips.Clear();
 			_musicSources.Clear();
 			_sfxSources.Clear();
 		}
