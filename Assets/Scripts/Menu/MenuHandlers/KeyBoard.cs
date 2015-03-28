@@ -63,7 +63,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
         void Update()
         {
             ControlBinderStateMachine.State prevState = currState;
-            
             if (running)
             {
                 bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
@@ -104,8 +103,6 @@ namespace Assets.Scripts.Menu.MenuHandlers
                         Kernel.controlsExit();
                 }
             }
-            if ((currState != ControlBinderStateMachine.State.Holding && currState != ControlBinderStateMachine.State.GettingKey) && CustomInput.CancelFreshPressDeleteOnRead)
-                Kernel.controlsExit();
         }
 
         public override void wake()
@@ -123,6 +120,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             machine.sleep();
             running = false;
+            currState = ControlBinderStateMachine.State.Sleep;
         }
 
         private static void Sleep()
@@ -245,6 +243,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
             Event e = Event.current;
             if (e.isKey && e.keyCode != KeyCode.None)
                 setButton(e.keyCode);
+            else if (Input.GetKeyUp(KeyCode.Mouse0))
+                setButton(KeyCode.Mouse0);
+            else if (Input.GetKeyUp(KeyCode.Mouse1))
+                setButton(KeyCode.Mouse1);
+            else if (Input.GetKeyUp(KeyCode.Mouse2))
+                setButton(KeyCode.Mouse2);
+            else if (Input.GetKeyUp(KeyCode.Mouse3))
+                setButton(KeyCode.Mouse3);
+            else if (Input.GetKeyUp(KeyCode.Mouse4))
+                setButton(KeyCode.Mouse4);
+            else if (Input.GetKeyUp(KeyCode.Mouse5))
+                setButton(KeyCode.Mouse5);
+            else if (Input.GetKeyUp(KeyCode.Mouse6))
+                setButton(KeyCode.Mouse6);
         }
 
         private void setButton(KeyCode button)
@@ -505,12 +517,17 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 {
                     prompt.enabled = true;
                     if (Input.GetKey(KeyCode.Escape))
+                    {
                         machine.Hold();
+                        Kernel.enalble();
+                    }
                     else
                         GetNewButton();
                 }
                 else
+                {
                     prompt.enabled = false;
+                }
             }
         }
     }

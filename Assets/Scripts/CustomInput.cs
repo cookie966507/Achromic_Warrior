@@ -765,22 +765,23 @@ namespace Assets.Scripts
 
         void Awake()
         {
-            if(PlayerPrefs.HasKey(KeyHash+0))
+            DontDestroyOnLoad(this.gameObject);
+            if (PlayerPrefs.HasKey(KeyHash + 0))
             {
-                keyBoardAttack = (KeyCode) PlayerPrefs.GetInt(0 + KeyHash);
-                keyBoardJump = (KeyCode) PlayerPrefs.GetInt(1 + KeyHash);
-                keyBoardCycleLeft = (KeyCode) PlayerPrefs.GetInt(2 + KeyHash);
-                keyBoardCycleRight = (KeyCode) PlayerPrefs.GetInt(3 + KeyHash);
-                keyBoardLeft = (KeyCode) PlayerPrefs.GetInt(4 + KeyHash);
-                keyBoardRight = (KeyCode) PlayerPrefs.GetInt(5 + KeyHash);
-                keyBoardBlock = (KeyCode) PlayerPrefs.GetInt(6 + KeyHash);
-                keyBoardChangeColor = (KeyCode) PlayerPrefs.GetInt(7 + KeyHash);
-                keyBoardUp = (KeyCode) PlayerPrefs.GetInt(8 + KeyHash);
-                keyBoardDown = (KeyCode )PlayerPrefs.GetInt(9 + KeyHash);
-                keyBoardSuper = (KeyCode) PlayerPrefs.GetInt(10 + KeyHash);
-                keyBoardAccept = (KeyCode) PlayerPrefs.GetInt(11 + KeyHash);
-                keyBoardCancel = (KeyCode) PlayerPrefs.GetInt(12 + KeyHash);
-                keyBoardPause = (KeyCode) PlayerPrefs.GetInt(13 + KeyHash);
+                keyBoardAttack = (KeyCode)PlayerPrefs.GetInt(0 + KeyHash);
+                keyBoardJump = (KeyCode)PlayerPrefs.GetInt(1 + KeyHash);
+                keyBoardCycleLeft = (KeyCode)PlayerPrefs.GetInt(2 + KeyHash);
+                keyBoardCycleRight = (KeyCode)PlayerPrefs.GetInt(3 + KeyHash);
+                keyBoardLeft = (KeyCode)PlayerPrefs.GetInt(4 + KeyHash);
+                keyBoardRight = (KeyCode)PlayerPrefs.GetInt(5 + KeyHash);
+                keyBoardBlock = (KeyCode)PlayerPrefs.GetInt(6 + KeyHash);
+                keyBoardChangeColor = (KeyCode)PlayerPrefs.GetInt(7 + KeyHash);
+                keyBoardUp = (KeyCode)PlayerPrefs.GetInt(8 + KeyHash);
+                keyBoardDown = (KeyCode)PlayerPrefs.GetInt(9 + KeyHash);
+                keyBoardSuper = (KeyCode)PlayerPrefs.GetInt(10 + KeyHash);
+                keyBoardAccept = (KeyCode)PlayerPrefs.GetInt(11 + KeyHash);
+                keyBoardCancel = (KeyCode)PlayerPrefs.GetInt(12 + KeyHash);
+                keyBoardPause = (KeyCode)PlayerPrefs.GetInt(13 + KeyHash);
 
                 gamePadAttack = PlayerPrefs.GetString(14 + KeyHash);
                 gamePadJump = PlayerPrefs.GetString(15 + KeyHash);
@@ -851,7 +852,7 @@ namespace Assets.Scripts
                 else if (Input.GetKeyUp(k))
                     keyUp = true;
             }
-            if((boolsFreshPressAccessed & state) !=0)
+            if ((boolsFreshPressAccessed & state) != 0)
             {
                 boolsFreshPressAccessed = (boolsFreshPressAccessed & ~state);
                 boolsFreshPress = (boolsFreshPress & ~state);
@@ -905,7 +906,7 @@ namespace Assets.Scripts
             if (((bools & state) == 0) && key)
             {
                 boolsFreshPress = boolsFreshPress | state;
-                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead & ~state);
+                boolsFreshPressDeleteOnRead = (boolsFreshPressDeleteOnRead | state);
             }
             if (key)
             {
@@ -1048,6 +1049,31 @@ namespace Assets.Scripts
             boolsHeld = boolsHeld & ~PAUSE;
             boolsUp = boolsUp & ~PAUSE;
             boolsFreshPress = boolsFreshPress & ~PAUSE;
+        }
+
+        public static string GetText(string input)
+        {
+            string[] arr = input.Split(' ');
+            if (arr[arr.Length - 1] != "\\Input/")
+                return input;
+            switch (arr[0])
+            {
+                case "Attack": return usePad ? GamePadAttack : KeyBoardAttack.ToString();
+                case "Jump": return usePad ? GamePadJump : KeyBoardJump.ToString();
+                case "CycleLeft": return usePad ? GamePadCycleLeft : KeyBoardCycleLeft.ToString();
+                case "CycleRight": return usePad ? GamePadCycleRight : KeyBoardCycleRight.ToString();
+                case "Left": return usePad ? GamePadLeft : KeyBoardLeft.ToString();
+                case "Right": return usePad ? GamePadRight : KeyBoardRight.ToString();
+                case "Block": return usePad ? GamePadBlock : KeyBoardBlock.ToString();
+                case "ChangeColor": return usePad ? GamePadChangeColor : KeyBoardChangeColor.ToString();
+                case "Up": return usePad ? GamePadUp : KeyBoardUp.ToString();
+                case "Down": return usePad ? GamePadDown : KeyBoardDown.ToString();
+                case "Super": return usePad ? GamePadSuper : KeyBoardSuper.ToString();
+                case "Accept": return usePad ? GamePadAccept : KeyBoardAccept.ToString();
+                case "Cancel": return usePad ? GamePadCancel : KeyBoardCancel.ToString();
+                case "Pause": return usePad ? GamePadPause : KeyBoardPause.ToString();
+                default: return "invalid input";
+            }
         }
     }
 }

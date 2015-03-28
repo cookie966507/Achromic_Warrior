@@ -94,7 +94,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         internal PauseStateMachine()
         {
-            currState = pause.resume;
+            currState = pause.sleep;
             //fill array with functions
             getNextState = new machine[] { Sleep, Yes, No };
         }

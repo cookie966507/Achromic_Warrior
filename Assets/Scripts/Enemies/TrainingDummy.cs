@@ -49,5 +49,9 @@ namespace Assets.Scripts.Enemies
                 GetComponent<HingeJoint2D>().motor = motor;
             }
         }
+
+		public override void Die()
+		{
+		}
     }
 }

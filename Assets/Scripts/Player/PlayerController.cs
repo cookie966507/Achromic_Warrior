@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
@@ -17,8 +17,8 @@ namespace Assets.Scripts.Player
         //reference to the attack
         public ObjectHider _attack;
         public ObjectHider _block;
+        public Animator anim;
 
-        public static bool invun = false;
 
         //firection the player is facing
         [HideInInspector]
@@ -56,6 +56,7 @@ namespace Assets.Scripts.Player
         private float parryTime = .2f;
         private float renderTime = .002f;
         private float renderTimer = 0;
+        private static bool invun = false;
         private static float invunTime = .5f;
         private static float invunTimer = 0;
         private PlayerColorData colorData;
@@ -154,7 +155,7 @@ namespace Assets.Scripts.Player
                     blockSucessful = false;
                     parryTimer = 0;
                     hit = false;
-                    //TODO: change anim
+                    anim.SetInteger("state", (int)currState);
                 }
                 prevState = currState;
 
@@ -171,26 +172,33 @@ namespace Assets.Scripts.Player
                     if (blocking)
                         blockSucessful = true;
                     else
+					{
                         hit = true;
+						CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
+						if (potentialDamage != null)
+						{
+							damage = potentialDamage.damage;
+							damage -= (int)colorData.Defense;
+							if (blockSucessful)
+								damage -= (int)(colorData.Defense * .5f);
+							if (damage < 0)
+								damage = 0;
+							DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+						}
+						else
+							damage = 0;
+					}
+					}
                     if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
                         enemyOnRight = false;
                     else
-                        enemyOnRight = true;
-                    CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
-                    if (potentialDamage != null)
-                    {
-                        damage = potentialDamage.damage;
-                        damage -= (int)colorData.Defense;
-                        if (blockSucessful)
-                            damage -= (int)(colorData.Defense * .5f);
-                        if (damage < 0)
-                            damage = 0;
-                        DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
-                    }
-                    else
-                        damage = 0;
-                }
+						enemyOnRight = true;
             }
+        }
+
+        public void AnimDetector()
+        {
+            animDone = true;
         }
 
         //detects if you are in the air

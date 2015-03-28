@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 
 namespace Assets.Scripts.Enemies
@@ -38,30 +39,33 @@ namespace Assets.Scripts.Enemies
 		
 		void Update ()
 		{
-			if(_numInLevel > 0)
+			if(!GameManager.Paused)
 			{
-				_spawnTimer += Time.deltaTime;
-				if(_spawnTimer > _spawnDelay)
+				if(_numInLevel > 0)
 				{
-					_spawnTimer = 0f;
-
-					if(_numEnemies < _maxEnemiesOnScreen)
+					_spawnTimer += Time.deltaTime;
+					if(_spawnTimer > _spawnDelay)
 					{
-						SpawnEnemy();
-						_numEnemies++;
-						if(!_endless)
+						_spawnTimer = 0f;
+
+						if(_numEnemies < _maxEnemiesOnScreen)
 						{
-							_numInLevel--;
+							SpawnEnemy();
+							_numEnemies++;
+							if(!_endless)
+							{
+								_numInLevel--;
+							}
 						}
 					}
 				}
-			}
-			else
-			{
-				if(_numEnemies == 0)
+				else
 				{
-					//end level here
-					Debug.Log ("Won!");
+					if(_numEnemies == 0)
+					{
+						//end level here
+						Debug.Log ("Won!");
+					}
 				}
 			}
 		}

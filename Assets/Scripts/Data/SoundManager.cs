@@ -60,6 +60,12 @@ namespace Assets.Scripts.Data
 			}
 		}
 
+		void OnLevelWasLoaded(int i)
+		{
+			_musicSources.Clear();
+			_sfxSources.Clear();
+		}
+
 		void Update()
 		{
 			//List<AudioSource> _tempList = new List<AudioSource>();

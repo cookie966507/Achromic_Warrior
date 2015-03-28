@@ -97,54 +97,56 @@ namespace Assets.Scripts.UI
                     this.UpdateSpheres(ColorElement.Black);
                     _frame._achromic = true;
                     _frame.FrameColor = ColorElement.Black;
-                    Player.PlayerController.achromic = false;
                 }
 
-                //changing color based on meter values and current color
-                if (CustomInput.ChangeColorFreshPress)
-                {
-                    //player has no color
-                    if (_player.Color.Equals(ColorElement.White))
-                    {
-                        //active tab is available
-                        if (!_activeTab.GreyTab.activeSelf)
-                        {
-                            _player.Color = _activeTab.Color;
-                            _player.UpdateStats();
-                            this.UpdateSpheres(_activeTab.Color);
-                            //_frame.FrameColor = _activeTab.Color;
-                        }
-                    }
-                    //player has a color
-                    else
-                    {
-                        //on same tab as color
-                        if (_player.Color.Equals(_activeTab.Color))
-                        {
-                            //cancel color
-                            _player.ResetToWhite();
-                        }
-                        //different color tab
-                        else
-                        {
-                            //if tab is unavailable
-                            if (_activeTab.GreyTab.activeSelf)
-                            {
-                                //cancel color
-                                _player.ResetToWhite();
-                            }
-                            //tab is avaiable
-                            else
-                            {
-                                //change to that color
-                                _player.Color = _activeTab.Color;
-                                _player.UpdateStats();
-                                this.UpdateSpheres(_activeTab.Color);
-                                //_frame.FrameColor = _activeTab.Color;
-                            }
-                        }
-                    }
-                }
+				if(!Player.PlayerController.achromic)
+				{
+	                //changing color based on meter values and current color
+	                if (CustomInput.ChangeColorFreshPress)
+	                {
+	                    //player has no color
+	                    if (_player.Color.Equals(ColorElement.White))
+	                    {
+	                        //active tab is available
+	                        if (!_activeTab.GreyTab.activeSelf)
+	                        {
+	                            _player.Color = _activeTab.Color;
+	                            _player.UpdateStats();
+	                            this.UpdateSpheres(_activeTab.Color);
+	                            //_frame.FrameColor = _activeTab.Color;
+	                        }
+	                    }
+	                    //player has a color
+	                    else
+	                    {
+	                        //on same tab as color
+	                        if (_player.Color.Equals(_activeTab.Color))
+	                        {
+	                            //cancel color
+	                            _player.ResetToWhite();
+	                        }
+	                        //different color tab
+	                        else
+	                        {
+	                            //if tab is unavailable
+	                            if (_activeTab.GreyTab.activeSelf)
+	                            {
+	                                //cancel color
+	                                _player.ResetToWhite();
+	                            }
+	                            //tab is avaiable
+	                            else
+	                            {
+	                                //change to that color
+	                                _player.Color = _activeTab.Color;
+	                                _player.UpdateStats();
+	                                this.UpdateSpheres(_activeTab.Color);
+	                                //_frame.FrameColor = _activeTab.Color;
+	                            }
+	                        }
+	                    }
+	                }
+				}
 
                 //update the wheel spinning
                 _currZ = Mathf.SmoothDamp(_currZ, _z, ref _zVel, _speed);
