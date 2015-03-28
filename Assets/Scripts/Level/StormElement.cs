@@ -15,7 +15,6 @@ namespace Assets.Scripts.Level
 		private bool _reverse;
 
 		private float _vel;
-		private float _current = 0;
 		private float _speed = 0.1f;
 
 		public StormController _controller;
