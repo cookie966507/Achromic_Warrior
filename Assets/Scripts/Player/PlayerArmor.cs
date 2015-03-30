@@ -14,11 +14,11 @@ namespace Assets.Scripts.Player
 
         public void UpdateArmor(ColorElement _color)
         {
-            this.renderer.material.color = CustomColor.GetColor(_color);
+            this.GetComponent<Renderer>().material.color = CustomColor.GetColor(_color);
         }
         public void UpdateArmor(Color _color)
         {
-            this.renderer.material.color = _color;
+            this.GetComponent<Renderer>().material.color = _color;
         }
     }
 }

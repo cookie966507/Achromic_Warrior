@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using Assets.Scripts.Enums;
+using Assets.Scripts.Player;
 
 namespace Assets.Scripts.UI
 {
@@ -43,6 +44,7 @@ namespace Assets.Scripts.UI
 		{
 			//meters are full so we can flash
 			if(_r.transform.localScale.x == 1 && _g.transform.localScale.x == 1 && _b.transform.localScale.x == 1 ) Full = true;
+			else if(!_achromic) Full = false;
 
 			//if we can flash
 			if(_full && !_achromic)
@@ -66,7 +68,7 @@ namespace Assets.Scripts.UI
 			//stop flashing if activated
 			if(_achromic)
 			{
-				if(_r.transform.localScale.x == 0) Full = !_full;
+				if(_r.transform.localScale.x == 0) Full = false;
 			}
 		}
 
@@ -94,6 +96,7 @@ namespace Assets.Scripts.UI
 					_color = ColorElement.White;
 					this.GetComponent<Image>().color = CustomColor.GetColor(_color);
 					_achromic = false;
+					PlayerController.achromic = false;
 					_timer = 0f;
 					_increase = true;
 				}

@@ -13,11 +13,23 @@ namespace Assets.Scripts.Util
 	{
 		public ColorElement _color = ColorElement.White;
 		public bool _ui;
+		public bool onlyChildren;
 
 		void Awake()
 		{
 			if(_ui) this.GetComponent<Image>().color = CustomColor.GetColor(_color);
-			else this.renderer.material.color = CustomColor.GetColor(_color);
+			else
+			{
+				if(onlyChildren)
+				{
+					Renderer[] _r = this.GetComponentsInChildren<Renderer>();
+					for(int i = 0; i < _r.Length; i++)
+					{
+						_r[i].material.color = CustomColor.GetColor(_color);
+					}
+				}
+				else this.GetComponent<Renderer>().material.color = CustomColor.GetColor(_color);
+			}
 		}
 	}
 

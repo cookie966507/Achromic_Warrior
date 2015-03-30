@@ -83,9 +83,12 @@ namespace Assets.Scripts.Enemies
 				{
 					// Need to calculate jump vector
 					Vector2 vector = patrolPoints[currentPoint].position - target.position;
-					vector.y *= jumpForceY;
+					vector.y *= jumpForceY;					/*
 					vector.x = 0; //vector.x *= jumpForceX;
                     rigidbody2D.AddForce(vector); 
+					vector.x *= jumpForceX;
+                    GetComponent<Rigidbody2D>().AddForce(vector); 
+                    */
 					jumpMode = false;
 					target = patrolPoints[currentPoint];
 				}

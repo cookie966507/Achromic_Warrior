@@ -1,0 +1,56 @@
+You may exit the tutorial at any time by pressing: Pause and Exit.
+\break/
+Press: "
+Left \Input/
+" and "
+Right \Input/
+" to move left and right.
+\break/
+You can jump up through platforms. Press: "
+Jump \Input/
+" once to jump and a second time to perform a double jump.
+\break/
+You can fall through platforms by pressing: "
+Down \Input/
+" + "
+Jump \Input/
+" together.
+\break/
+Press: "
+Attack \Input/
+" to perform an attack.
+\break/
+Enemies will drop colored orbs that will fill your color meters when attacked.
+\break/
+Run over an orb to collect it.
+\break/
+Press: "
+Block \Input/
+" to block.
+\break/
+You cannot move or jump while you are blocking.
+\break/
+Press: "
+CycleLeft \Input/
+" and "
+CycleRight \Input/
+" to cycle between your colors.
+\break/
+Colors that are unavailable will be grayed out.
+\break/
+Once you find the color you want to equip, press: "
+ChangeColor \Input/
+" to equip that color.
+\break/
+Red will boost your attack. Green will boost your speed. Blue will boost your defense.
+\break/
+The colors in between will boost each of the two primary skills it falls between, but by less for each.
+\break/
+Once all your colors are full, you can enter Achromic mode by pressing: "
+Super \Input/
+".
+\break/
+Warning: You will not exit Achromic mode until all the colors run out once activated.
+\break/
+You have completed the tutorial.
+\break/
