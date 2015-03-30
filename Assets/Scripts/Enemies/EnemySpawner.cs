@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
+using Assets.Scripts.UI;
 
 namespace Assets.Scripts.Enemies
 {
@@ -10,6 +11,8 @@ namespace Assets.Scripts.Enemies
 	{
 		public string _spawnName = "Spawn";
 		public int _numSpawns = 0;
+
+		public EnemiesRemaining _remaining;
 
 		private List<Transform> _spawnNodes;
 
@@ -35,6 +38,11 @@ namespace Assets.Scripts.Enemies
 				Transform _node = GameObject.Find(_spawnName + i.ToString()).transform;
 				_spawnNodes.Add(_node);
 			}
+		}
+
+		void Start()
+		{
+			_remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
 		}
 		
 		void Update ()
@@ -94,6 +102,7 @@ namespace Assets.Scripts.Enemies
 		public void EnemyDestroyed()
 		{
 			_numEnemies--;
+			_remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
 		}
 	}
 }

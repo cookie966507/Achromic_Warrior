@@ -16,12 +16,12 @@ namespace Assets.Scripts.Player
 		private static float _health = 100f;
 		private const float _maxHealth = 100f;
 		//how many lives the player has
-		private static int _lives = 3;
+		//private static int _lives = 3;
 
 		//health bar
 		private static Image _bar;
 		//lives counter
-		private static Image _lifeCounter;
+		//private static Image _lifeCounter;
 
 		private static Sprite[] _nums;
 
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Player
 			//find reference to health bar
 			_bar = GameObject.Find("health").GetComponent<Image>();
 			//find reference to lives counter
-			_lifeCounter = GameObject.Find("LivesUI").GetComponent<Image>();
+			//_lifeCounter = GameObject.Find("LivesUI").GetComponent<Image>();
 			//load numbers
 			_nums = (Sprite[])Resources.LoadAll<Sprite>("Sprites/UI/Numbers");
 		}
@@ -57,18 +57,18 @@ namespace Assets.Scripts.Player
 			if(_health <= 0)
 			{
 				//decrement lives and reset health
-				_lives--;
-                _lives = Mathf.Clamp(_lives, 0, 9);
-				_lifeCounter.sprite = _nums[_lives];
-				_health = 100f;
+				//_lives--;
+                //_lives = Mathf.Clamp(_lives, 0, 9);
+				//_lifeCounter.sprite = _nums[_lives];
+				//_health = 100f;
                 // transfer to death state?
 			}
 
 			//if all lives are lost enter Lose state
-			if(_lives <= 0)
-			{
-				GameManager.State = GameState.Lose;
-			}
+			//if(_lives <= 0)
+			//{
+			//	GameManager.State = GameState.Lose;
+			//}
             
 			_health = Mathf.Clamp(_health, 0f, _maxHealth);
 			_bar.transform.localScale = new Vector3(_health/_maxHealth, 1f, 1f);//if all health is lost
@@ -81,9 +81,9 @@ namespace Assets.Scripts.Player
 		}
 
 		// Gets or sets the lives.
-		public int Lives
-		{
-			get{return _lives;}
-		}
+		//public int Lives
+		//{
+		//	get{return _lives;}
+		//}
 	}
 }
