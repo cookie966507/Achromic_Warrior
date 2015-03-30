@@ -42,7 +42,7 @@ namespace Assets.Scripts.Enemies
 
 		void Start()
 		{
-			_remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
+			if(!_endless) _remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
 		}
 		
 		void Update ()
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Enemies
 		public void EnemyDestroyed()
 		{
 			_numEnemies--;
-			_remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
+			if(!_endless) _remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
 		}
 	}
 }
