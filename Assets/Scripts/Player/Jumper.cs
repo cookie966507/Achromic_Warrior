@@ -29,7 +29,7 @@ namespace Assets.Scripts.Player
             if (_hit.collider != null)
             {
                 //if falling down
-                if (this.transform.parent.rigidbody2D.velocity.y <= 0f)
+                if (this.transform.parent.GetComponent<Rigidbody2D>().velocity.y <= 0f)
                 {
                     //character is able to jump
                     _grounded = true;

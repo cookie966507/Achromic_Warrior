@@ -52,7 +52,7 @@ namespace Assets.Scripts.UI
                 newNum.transform.parent = _display.transform;
                 //arrange position based on digit
                 newNum.transform.localPosition = new Vector2(_startX + i * _spacing, 0);
-                newNum.renderer.material.color = CustomColor.GetColor(_color);
+                newNum.GetComponent<Renderer>().material.color = CustomColor.GetColor(_color);
             }
         }
     }

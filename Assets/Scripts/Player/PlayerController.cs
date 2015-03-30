@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
@@ -17,8 +17,8 @@ namespace Assets.Scripts.Player
         //reference to the attack
         public ObjectHider _attack;
         public ObjectHider _block;
+        public Animator anim;
 
-        public static bool invun = false;
 
         //firection the player is facing
         [HideInInspector]
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Player
         //how much control you have in the air
         private float _airControl = 0.3f;
         //for ghosting through platforms
-        private float _ghostDelay = 0.5f;
+        private float _ghostDelay = 1f;
 
         private int temp;//delete when anim event is done
 
@@ -56,6 +56,7 @@ namespace Assets.Scripts.Player
         private float parryTime = .2f;
         private float renderTime = .002f;
         private float renderTimer = 0;
+        private static bool invun = false;
         private static float invunTime = .5f;
         private static float invunTimer = 0;
         private PlayerColorData colorData;
@@ -91,13 +92,13 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
-            if (GameManager.State != GameState.Pause)
+            if (!GameManager.Paused)
             {
                 if (Input.GetKey(KeyCode.UpArrow))
                     colorData.AddColor(Color.white, 500f);
 
                 //going Achromic
-                if (CustomInput.CycleLeftFreshPress && CustomInput.CycleRightFreshPress && colorData.isfull())
+                if (CustomInput.SuperFreshPress && colorData.isfull())
                 {
                     achromic = true;
                 }
@@ -117,7 +118,7 @@ namespace Assets.Scripts.Player
                         render = !render;
                         renderTimer = 0;
                         foreach (PlayerArmor pa in _armor)
-                            pa.renderer.enabled = render;
+                            pa.GetComponent<Renderer>().enabled = render;
                     }
                     hit = false;
                     renderTimer += Time.deltaTime;
@@ -126,7 +127,7 @@ namespace Assets.Scripts.Player
                 else
                 {
                     foreach (PlayerArmor pa in _armor)
-                        pa.renderer.enabled = true;
+                        pa.GetComponent<Renderer>().enabled = true;
                     invun = false;
                 }
 
@@ -154,7 +155,7 @@ namespace Assets.Scripts.Player
                     blockSucessful = false;
                     parryTimer = 0;
                     hit = false;
-                    //TODO: change anim
+                    anim.SetInteger("state", (int)currState);
                 }
                 prevState = currState;
 
@@ -171,26 +172,33 @@ namespace Assets.Scripts.Player
                     if (blocking)
                         blockSucessful = true;
                     else
+					{
                         hit = true;
+						CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
+						if (potentialDamage != null)
+						{
+							damage = potentialDamage.damage;
+							damage -= (int)colorData.Defense;
+							if (blockSucessful)
+								damage -= (int)(colorData.Defense * .5f);
+							if (damage < 0)
+								damage = 0;
+							DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+						}
+						else
+							damage = 0;
+					}
+					}
                     if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
                         enemyOnRight = false;
                     else
-                        enemyOnRight = true;
-                    CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
-                    if (potentialDamage != null)
-                    {
-                        damage = potentialDamage.damage;
-                        damage -= (int)colorData.Defense;
-                        if (blockSucessful)
-                            damage -= (int)(colorData.Defense * .5f);
-                        if (damage < 0)
-                            damage = 0;
-                        DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
-                    }
-                    else
-                        damage = 0;
-                }
+						enemyOnRight = true;
             }
+        }
+
+        public void AnimDetector()
+        {
+            animDone = true;
         }
 
         //detects if you are in the air
@@ -268,18 +276,18 @@ namespace Assets.Scripts.Player
 
 
                     // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-                    if (_h * rigidbody2D.velocity.x < _maxSpeed)
+                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxSpeed)
                     {
                         //account for air control
-                        if (!inAir) rigidbody2D.AddForce(Vector2.right * _h * _moveForce);
-                        else rigidbody2D.AddForce(Vector2.right * _h * _moveForce * _airControl);
+                        if (!inAir) GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce);
+                        else GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce * _airControl);
                     }
 
                     // If the player's horizontal velocity is greater than the maxSpeed...
-                    if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
+                    if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxSpeed)
                     {
                         // ... set the player's velocity to the maxSpeed in the x axis.
-                        rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
                     }
 
                     //flippng based on direction and movement
@@ -291,8 +299,9 @@ namespace Assets.Scripts.Player
                 //STATE MACHINE SAY JUMP NOW!!!
                 if (_jump)
                 {
-                    rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
-                    rigidbody2D.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0f);
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+					_ghost = true;
                     _jump = false;
                 }
                 if (currState == PlayerState.hit)
@@ -304,18 +313,18 @@ namespace Assets.Scripts.Player
 
 
                     // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-                    if (_h * rigidbody2D.velocity.x < _maxSpeed)
+                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxSpeed)
                     {
                         //account for air control
-                        if (!inAir) rigidbody2D.AddForce(Vector2.right * _h * _moveForce);
-                        else rigidbody2D.AddForce(Vector2.right * _h * _moveForce * _airControl);
+                        if (!inAir) GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce);
+                        else GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce * _airControl);
                     }
 
                     // If the player's horizontal velocity is greater than the maxSpeed...
-                    if (Mathf.Abs(rigidbody2D.velocity.x) > _maxSpeed)
+                    if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxSpeed)
                     {
                         // ... set the player's velocity to the maxSpeed in the x axis.
-                        rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * _maxSpeed, rigidbody2D.velocity.y);
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
                     }
                 }
             }
@@ -413,8 +422,8 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 blocking = true;
+                block.GetComponent<Renderer>().material.color = CustomColor.GetColor(FindObjectOfType<PlayerColorData>().Color);
                 block.Show();
-                block.renderer.material.color = CustomColor.GetColor(FindObjectOfType<PlayerColorData>().Color);
             }
         }
         private static void Crouch()
@@ -425,8 +434,8 @@ namespace Assets.Scripts.Player
                 _ghost = true;
                 _ghostTimer = 0f;
 
-                _colSwitch = true;
-                _playerCollider.enabled = false;
+				_colSwitch = true;
+				_playerCollider.enabled = false;
             }
         }
         private static void Jump()

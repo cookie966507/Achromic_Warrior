@@ -12,18 +12,21 @@ namespace Assets.Scripts.Enemies
         //color element associated with the enemy
         public ColorElement _color;
 
+		//health
+		public int _health = 10;
+
         //time before enemy can be hit again
         public float _hitTime = 1f;
         private float _timer;
-        public bool _hit = false;
+		public bool _hit = false;
 
         //layers for ghosting/reverting
-        private int ENEMY;
-        private int GHOSTING_ENEMY;
+        protected int ENEMY;
+        protected int GHOSTING_ENEMY;
 
         //for ghosting through platforms
-        private float _ghostTimer = 0f;
-        private float _ghostDelay = 0.5f;
+        protected float _ghostTimer = 0f;
+        protected float _ghostDelay = 0.5f;
 
         //orbs to spawn when hit
         [HideInInspector]
@@ -38,6 +41,8 @@ namespace Assets.Scripts.Enemies
         //knockback force
         public float _force = 75f;
 
+		private EnemySpawner _spawner;
+
         //Hack
         bool ExitCatcher = true;
 
@@ -49,7 +54,7 @@ namespace Assets.Scripts.Enemies
 
         void Update()
         {
-            if (Data.GameManager.State != GameState.Pause)
+            if (!Data.GameManager.Paused)
             {
                 UpdateHit();
                 if (this.gameObject.layer.Equals(GHOSTING_ENEMY)) UpdateGhost();
@@ -72,7 +77,7 @@ namespace Assets.Scripts.Enemies
                 //set the orb color
                 _newOrb.GetComponent<ColorPickup>().ColorType = this.ResolveMultiColor(_color);
                 //throw it in the air
-                _newOrb.rigidbody2D.AddRelativeForce(new Vector2(Random.Range(-1f, 1f), Random.Range(5, 10)), ForceMode2D.Impulse);
+                _newOrb.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(Random.Range(-1f, 1f), Random.Range(5, 10)), ForceMode2D.Impulse);
             }
         }
 
@@ -96,7 +101,7 @@ namespace Assets.Scripts.Enemies
         }
 
         //what happens when hit
-        public void Hit(int _damage, Vector3 _hitPos)
+        public virtual void Hit(int _damage, Vector3 _hitPos)
         {
             //if not already hit
             if (!_hit)
@@ -109,12 +114,20 @@ namespace Assets.Scripts.Enemies
                     ProduceOrbs(1);
                 //show the damage taken
                 UI.DamageDisplay.instance.ShowDamage(_damage, _hitPos, _color);
+				//subtract health
+				_health -= _damage;
+				if(_health <= 0)
+				{
+					this.Die();
+				}
                 //apply knockback force based on position
+				float _finalForce =  _force * _player.GetComponent<Player.PlayerColorData>().Attack;
+				_finalForce = Mathf.Clamp(_finalForce, 5f, 20f);
                 if (_player.GetComponent<Player.PlayerController>()._facingRight)
-                    rigidbody2D.AddRelativeForce((new Vector2(1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
+                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(1f, 0.25f)) * _finalForce, ForceMode2D.Impulse);
                 else
                 {
-                    rigidbody2D.AddRelativeForce((new Vector2(-1, 0)) * _force * _player.GetComponent<Player.PlayerColorData>().Attack);
+                    GetComponent<Rigidbody2D>().AddRelativeForce((new Vector2(-1f, 0.25f)) * _finalForce, ForceMode2D.Impulse);
                 }
             }
         }
@@ -155,8 +168,8 @@ namespace Assets.Scripts.Enemies
             _ghostTimer = 0;
         }
 
-        //Enemt ghost exited by leaving platform trigger
-        public void ExitGhost()
+        //Enemy ghost exited by leaving platform trigger
+        public virtual void ExitGhost()
         {
             if (this.gameObject.layer != ENEMY)
                 this.gameObject.layer = ENEMY;
@@ -167,7 +180,15 @@ namespace Assets.Scripts.Enemies
         public ColorElement Color
         {
             get { return _color; }
-            set { _color = value; }
+            set
+			{ 
+				_color = value;
+				//color parts that are supposed to be toned
+				for(int i = 0; i < _coloredPieces.Length; i++)
+				{
+					_coloredPieces[i].material.color = CustomColor.GetColor(_color);
+				}
+			}
         }
 
         public void OnTriggerEnter2D(Collider2D col)
@@ -180,6 +201,17 @@ namespace Assets.Scripts.Enemies
                 }
             }
         }
+
+		public virtual void Die()
+		{
+			_spawner.EnemyDestroyed();
+			Destroy(gameObject);
+		}
+
+		public void SaveSpawnerReference(EnemySpawner _spawner)
+		{
+			this._spawner = _spawner;
+		}
 
 		public ColorElement ResolveMultiColor(ColorElement _color)
 		{

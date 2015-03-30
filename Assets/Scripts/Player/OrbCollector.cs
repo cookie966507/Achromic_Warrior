@@ -21,14 +21,17 @@ namespace Assets.Scripts.Player
         //something enters collector trigger
         void OnTriggerEnter2D(Collider2D col)
         {
-            //if it is an orb
-            if (col.transform.tag.Equals("orb"))
-            {
-                //get the color and destroy the orb ----- ADD COLLECTING EFFECT LATER
-                ColorPickup _orb = col.transform.GetComponent<ColorPickup>();
-                _player.AddColor(CustomColor.GetColor(_orb.ColorType), _orb.Amount);
-                _orb.GetComponent<Util.Destroyer>().DestroyImmediate();
-            }
+			if(!Player.PlayerController.achromic)
+			{
+	            //if it is an orb
+	            if (col.transform.tag.Equals("orb"))
+	            {
+	                //get the color and destroy the orb ----- ADD COLLECTING EFFECT LATER
+	                ColorPickup _orb = col.transform.GetComponent<ColorPickup>();
+	                _player.AddColor(CustomColor.GetColor(_orb.ColorType), _orb.Amount);
+	                _orb.GetComponent<Util.Destroyer>().DestroyImmediate();
+	            }
+			}
         }
     }
 }

@@ -76,78 +76,83 @@ namespace Assets.Scripts.UI
 
 		void Update ()
 		{
-			//if cycling spin the wheel
-			if(CustomInput.CycleLeftFreshPress)
-			{
-				_z -= _angle;
-				UpdateWheel(-1);
-			}
-			if(CustomInput.CycleRightFreshPress)
-			{
-				_z += _angle;
-				UpdateWheel(1);
-			}
-
-            if (Player.PlayerController.achromic && _player.isfull())
+            if (!Data.GameManager.Paused)
             {
-                _player.Color = ColorElement.Black;
-                _player.UpdateStats();
-                this.UpdateSpheres(ColorElement.Black);
-                _frame._achromic = true;
-                _frame.FrameColor = ColorElement.Black;
-                Player.PlayerController.achromic = false;
+                //if cycling spin the wheel
+                if (CustomInput.CycleLeftFreshPress)
+                {
+                    _z -= _angle;
+                    UpdateWheel(-1);
+                }
+                if (CustomInput.CycleRightFreshPress)
+                {
+                    _z += _angle;
+                    UpdateWheel(1);
+                }
+
+                if (Player.PlayerController.achromic && _player.isfull())
+                {
+                    _player.Color = ColorElement.Black;
+                    _player.UpdateStats();
+                    this.UpdateSpheres(ColorElement.Black);
+                    _frame._achromic = true;
+                    _frame.FrameColor = ColorElement.Black;
+                }
+
+				if(!Player.PlayerController.achromic)
+				{
+	                //changing color based on meter values and current color
+	                if (CustomInput.ChangeColorFreshPress)
+	                {
+	                    //player has no color
+	                    if (_player.Color.Equals(ColorElement.White))
+	                    {
+	                        //active tab is available
+	                        if (!_activeTab.GreyTab.activeSelf)
+	                        {
+	                            _player.Color = _activeTab.Color;
+	                            _player.UpdateStats();
+	                            this.UpdateSpheres(_activeTab.Color);
+	                            //_frame.FrameColor = _activeTab.Color;
+	                        }
+	                    }
+	                    //player has a color
+	                    else
+	                    {
+	                        //on same tab as color
+	                        if (_player.Color.Equals(_activeTab.Color))
+	                        {
+	                            //cancel color
+	                            _player.ResetToWhite();
+	                        }
+	                        //different color tab
+	                        else
+	                        {
+	                            //if tab is unavailable
+	                            if (_activeTab.GreyTab.activeSelf)
+	                            {
+	                                //cancel color
+	                                _player.ResetToWhite();
+	                            }
+	                            //tab is avaiable
+	                            else
+	                            {
+	                                //change to that color
+	                                _player.Color = _activeTab.Color;
+	                                _player.UpdateStats();
+	                                this.UpdateSpheres(_activeTab.Color);
+	                                //_frame.FrameColor = _activeTab.Color;
+	                            }
+	                        }
+	                    }
+	                }
+				}
+
+                //update the wheel spinning
+                _currZ = Mathf.SmoothDamp(_currZ, _z, ref _zVel, _speed);
+
+                this.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _currZ));
             }
-
-			//changing color based on meter values and current color
-			if(CustomInput.ChangeColorFreshPress)
-			{
-				//player has no color
-				if(_player.Color.Equals(ColorElement.White))
-				{
-					//active tab is available
-					if(!_activeTab.GreyTab.activeSelf)
-					{
-						_player.Color = _activeTab.Color;
-						_player.UpdateStats();
-						this.UpdateSpheres(_activeTab.Color);
-						//_frame.FrameColor = _activeTab.Color;
-					}
-				}
-				//player has a color
-				else
-				{
-					//on same tab as color
-					if(_player.Color.Equals(_activeTab.Color))
-					{
-						//cancel color
-						_player.ResetToWhite();  
-					}
-					//different color tab
-					else
-					{
-						//if tab is unavailable
-						if(_activeTab.GreyTab.activeSelf)
-						{
-							//cancel color
-							_player.ResetToWhite();
-						}
-						//tab is avaiable
-						else
-						{
-							//change to that color
-							_player.Color = _activeTab.Color;
-							_player.UpdateStats();
-							this.UpdateSpheres(_activeTab.Color);
-							//_frame.FrameColor = _activeTab.Color;
-						}
-					}
-				}
-			}
-
-			//update the wheel spinning
-			_currZ = Mathf.SmoothDamp(_currZ, _z, ref _zVel, _speed);
-			
-			this.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _currZ));
 		}
 
 		//go through the tabs after spinning

@@ -18,9 +18,9 @@ namespace Assets.Scripts
         void Start()
         {
             //color the orb based on the assign color; stick with rgb for now
-            if (_color.Equals(ColorElement.Red)) renderer.material.color = Color.red;
-            else if (_color.Equals(ColorElement.Green)) renderer.material.color = Color.green;
-            else if (_color.Equals(ColorElement.Blue)) renderer.material.color = Color.blue;
+            if (_color.Equals(ColorElement.Red)) GetComponent<Renderer>().material.color = Color.red;
+            else if (_color.Equals(ColorElement.Green)) GetComponent<Renderer>().material.color = Color.green;
+            else if (_color.Equals(ColorElement.Blue)) GetComponent<Renderer>().material.color = Color.blue;
 
             else Debug.LogError("Colors for orbs should just be rgb");
         }
@@ -32,11 +32,11 @@ namespace Assets.Scripts
             if (col.transform.tag.Equals("ground") || col.transform.tag.Equals("platform"))
             {
                 //if falling down
-                if (rigidbody2D.velocity.y <= 0 && col.transform.position.y < transform.position.y)
+                if (GetComponent<Rigidbody2D>().velocity.y <= 0 && col.transform.position.y < transform.position.y)
                 {
                     //stop velocity
-                    rigidbody2D.velocity = Vector2.zero;
-                    rigidbody2D.gravityScale = 0;
+                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    GetComponent<Rigidbody2D>().gravityScale = 0;
                 }
             }
         }
