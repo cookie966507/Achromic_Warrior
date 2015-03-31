@@ -66,8 +66,8 @@ namespace Assets.Scripts.Enemies
 					}
 				}
 				target = current;
-				if(target != null)
-					print (target.tag + " " + target.localPosition);
+				//if(target != null)
+					//print (target.tag + " " + target.localPosition);
 			}
 			/*
 			else if((target.position.y - transform.position.y) < 2 && jumpMode == true)
@@ -83,12 +83,13 @@ namespace Assets.Scripts.Enemies
 				{
 					// Need to calculate jump vector
 					Vector2 vector = patrolPoints[currentPoint].position - target.position;
-					vector.y *= jumpForceY;					/*
+					vector.y *= jumpForceY;					
 					vector.x = 0; //vector.x *= jumpForceX;
-                    rigidbody2D.AddForce(vector); 
+                    //rigidbody2D.AddForce(vector); 
+
 					vector.x *= jumpForceX;
                     GetComponent<Rigidbody2D>().AddForce(vector); 
-                    */
+					EnterGhost();
 					jumpMode = false;
 					target = patrolPoints[currentPoint];
 				}
@@ -106,8 +107,8 @@ namespace Assets.Scripts.Enemies
 						//this.ExitGhost();
 					noWait += Time.deltaTime;
 				}
-				if(target != null)
-					print (target.tag + " " + target.localPosition);
+				//if(target != null)
+					//print (target.tag + " " + target.localPosition);
 			}
 			
 			transform.position = Vector2.MoveTowards (transform.position, target.position, moveSpeed * Time.deltaTime);
