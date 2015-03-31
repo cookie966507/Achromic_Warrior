@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Menu.MenuHanders
@@ -16,10 +17,37 @@ namespace Assets.Scripts.Menu.MenuHanders
 		private float _speed = 0.1f;
 
 		public GameObject _levelPanel;
+		private List<GameObject> _children;
+		private List<GameObject> _topInstructions;
 
+		void Awake()
+		{
+			_children = new List<GameObject>();
+			_topInstructions = new List<GameObject>();
+
+			_children.Add(GameObject.Find("Red_Preview"));
+			_children.Add(GameObject.Find("Green_Preview"));
+			_children.Add(GameObject.Find("Blue_Preview"));
+			
+			_children[1].SetActive(false);
+			_children[2].SetActive(false);
+
+			_topInstructions.Add(GameObject.Find("Exit_Instruction_Label"));
+			_topInstructions.Add(GameObject.Find("Tutorial_Instruction_Label"));
+		}
 		
 		void Update ()
 		{
+			if(CustomInput.UsePad)
+			{
+				_topInstructions[0].GetComponent<Text>().text = "Press: " + CustomInput.GamePadCancel + " Button";
+				_topInstructions[1].GetComponent<Text>().text = "Press: " + CustomInput.GamePadChangeColor + " Button";
+			}
+			else{
+				_topInstructions[0].GetComponent<Text>().text = "Press: " + CustomInput.KeyBoardCancel.ToString() + " Key";
+				_topInstructions[1].GetComponent<Text>().text = "Press: T Key";
+			}
+
 			if(CustomInput.LeftFreshPress || CustomInput.CycleLeftFreshPress)
 			{
 				if(_levelCounter != NUMLEVELS) UpdateSelector(-1);
@@ -32,6 +60,15 @@ namespace Assets.Scripts.Menu.MenuHanders
 			{
 				Data.GameManager.GotoLevel(_selectedLevel);
 			}
+			if(CustomInput.CancelFreshPress)
+			{
+				Data.GameManager.GotoLevel("Menu");
+			}
+
+			if(CustomInput.ChangeColorFreshPress || Input.GetKeyDown(KeyCode.T))
+			{
+				Data.GameManager.GotoLevel("training");
+			}
 		
 			_currZ = Mathf.SmoothDamp(_currZ, _z, ref _zVel, _speed);
 			
@@ -41,11 +78,13 @@ namespace Assets.Scripts.Menu.MenuHanders
 		private void UpdateSelector(int _dir)
 		{
 			_z += (120*_dir);
-
+			_children[_levelCounter].SetActive(false);
 			//increase index and reset if necessary
 			_levelCounter += _dir;
 			if(_levelCounter == NUMLEVELS) _levelCounter = 0;
 			else if(_levelCounter == -1) _levelCounter = NUMLEVELS-1;
+
+			_children[_levelCounter].SetActive(true);
 
 			switch(_levelCounter)
 			{
