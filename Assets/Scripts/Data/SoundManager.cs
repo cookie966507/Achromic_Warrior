@@ -154,6 +154,31 @@ namespace Assets.Scripts.Data
 				_musicSources[i].volume = _musicVol;
 			}
 		}
+//
+//		public static void PauseAudio()
+//		{
+//			for(int i = 0; i < _musicSources.Count; i++)
+//			{
+//				_musicSources[i].Pause();
+//			}
+//			for(int i = 0; i < _sfxSources.Count; i++)
+//			{
+//				_sfxSources[i].Pause();
+//			}
+//		}
+//
+//		public static void UnPauseAudio()
+//		{
+//			for(int i = 0; i < _musicSources.Count; i++)
+//			{
+//				_musicSources[i].Play();
+//			}
+//			for(int i = 0; i < _sfxSources.Count; i++)
+//			{
+//				_sfxSources[i].Play();
+//			}
+//			Debug.Log("AudioUnpaused");
+//		}
 
 		/* - not implemented
 		//muting/unmuting sfx
