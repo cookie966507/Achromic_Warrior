@@ -56,16 +56,16 @@ namespace Assets.Scripts.Menu.MenuHanders
 			{
 				if(_levelCounter != NUMLEVELS) UpdateSelector(1);
 			}
-			if(CustomInput.AcceptFreshPress)
+			if(CustomInput.AcceptFreshPressDeleteOnRead)
 			{
 				Data.GameManager.GotoLevel(_selectedLevel);
 			}
-			if(CustomInput.CancelFreshPress)
+			if(CustomInput.CancelFreshPressDeleteOnRead)
 			{
 				Data.GameManager.GotoLevel("Menu");
 			}
 
-			if(CustomInput.ChangeColorFreshPress || Input.GetKeyDown(KeyCode.T))
+			if((CustomInput.UsePad && CustomInput.ChangeColorFreshPressDeleteOnRead) || (!CustomInput.UsePad && Input.GetKeyDown(KeyCode.T)))
 			{
 				Data.GameManager.GotoLevel("training");
 			}

@@ -12,6 +12,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private state[] doState;
         private MainStateMachine.main currState;
 
+		private static bool _trainingPlayed = false;
+
         private static bool isLeft;
         public override void setLeft()
         {
@@ -70,7 +72,15 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doPlay()
         {
-            Data.GameManager.GotoLevel("training");
+			if(!_trainingPlayed)
+			{
+				_trainingPlayed = true;
+				Data.GameManager.GotoLevel("training");
+			}
+			else
+			{
+				Data.GameManager.GotoLevel("Level_Select");
+			}
         }
 
         private static void Settings()
