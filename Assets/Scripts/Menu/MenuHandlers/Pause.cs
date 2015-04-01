@@ -64,7 +64,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doQuit()
         {
-            Data.GameManager.GotoLevel("Menu");
+            Data.GameManager.GotoLevel("Level_Select");
         }
 
         public void YesClick()
