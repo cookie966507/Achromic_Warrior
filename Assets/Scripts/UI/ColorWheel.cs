@@ -72,6 +72,8 @@ namespace Assets.Scripts.UI
 			_g = GameObject.Find("G").GetComponent<ColorMeter>();
 			_b = GameObject.Find("B").GetComponent<ColorMeter>();
 			_frame = GameObject.Find("frame").GetComponent<MeterUI>();
+
+			UpdateTabs();
 		}
 
 		void Update ()

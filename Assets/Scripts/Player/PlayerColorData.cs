@@ -59,7 +59,7 @@ namespace Assets.Scripts.Player
         {
             _color = ColorElement.White;
             //init meter color
-            _meterColor = new Color(0f, 0f, 0f);
+            _meterColor = new Color(0.5f, 0.5f, 0.5f);
             //find controller
             _controller = this.GetComponent<PlayerController>();
         }
