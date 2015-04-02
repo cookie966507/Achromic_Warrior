@@ -24,12 +24,6 @@ namespace Assets.Scripts.Data
 			}
 		}
 
-		void Start ()
-		{
-	
-		}
-	
-
 		void Update ()
 		{
 			if(CustomInput.PauseFreshPress && _state.Equals(GameState.Unpause))
@@ -39,6 +33,11 @@ namespace Assets.Scripts.Data
 			else if(CustomInput.PauseFreshPress && _state.Equals(GameState.Pause))
 			{
 				Unpause();
+			}
+
+			if(Input.GetKeyDown(KeyCode.P))
+			{
+				State = GameState.Lose;
 			}
 		}
 
@@ -87,5 +86,15 @@ namespace Assets.Scripts.Data
         {
             get { return _state == GameState.Pause; }
         }
+
+		public static bool End
+		{
+			get{ return _state == GameState.Lose || _state == GameState.Win; }
+		}
+
+		public static bool Game
+		{
+			get { return _state == GameState.Unpause; }
+		}
 	}
 }
