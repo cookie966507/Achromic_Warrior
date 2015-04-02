@@ -3,26 +3,26 @@ using System.Collections;
 
 namespace Assets.Scripts.Menu.MenuHandlers
 {
-	class Lose : MonoBehaviour
+	class Win : MonoBehaviour
 	{
 		public GameObject[] cursors;
-		private static Canvas win;
+		private static Canvas window;
 		
-		private static LoseStateMachine machine = new LoseStateMachine();
+		private static WinStateMachine machine = new WinStateMachine();
 		private delegate void state();
 		private state[] doState;
-		private LoseStateMachine.lose currState;
-
-		void Start()
+		private WinStateMachine.win currState;
+		
+		void Awake()
 		{
-			win = this.gameObject.GetComponent<Canvas>();
+			window = this.gameObject.GetComponent<Canvas>();
 			doState = new state[] { Sleep, Restart, Quit };
-			win.enabled = false;
+			window.enabled = false;
 		}
 		
 		void Update()
 		{
-			LoseStateMachine.lose prevState = currState;
+			WinStateMachine.win prevState = currState;
 			currState = machine.update();
 			if (prevState != currState)
 			{
@@ -36,10 +36,10 @@ namespace Assets.Scripts.Menu.MenuHandlers
 		}
 		private static void Sleep()
 		{
-			if(Data.GameManager.State==Enums.GameState.Lose)
+			if(Data.GameManager.State==Enums.GameState.Win)
 			{
-				machine.goTo(LoseStateMachine.lose.restart);
-				win.enabled = true;
+				machine.goTo(WinStateMachine.win.restart);
+				window.enabled = true;
 			}
 		}
 		
@@ -50,9 +50,9 @@ namespace Assets.Scripts.Menu.MenuHandlers
 		}
 		private static void doRestart()
 		{
-
-			win.enabled = false;
-			machine.goTo(LoseStateMachine.lose.sleep);
+			
+			window.enabled = false;
+			machine.goTo(WinStateMachine.win.sleep);
 			Data.GameManager.GotoLevel(Application.loadedLevelName);
 			Data.GameManager.Unpause();
 		}
@@ -64,70 +64,70 @@ namespace Assets.Scripts.Menu.MenuHandlers
 		}
 		private static void doQuit()
 		{
-			win.enabled = false;
-			machine.goTo(LoseStateMachine.lose.sleep);
+			window.enabled = false;
+			machine.goTo(WinStateMachine.win.sleep);
 			Data.GameManager.GotoLevel("Level_Select");
 		}
 		
 		public void RestartClick()
 		{
-			machine.goTo(LoseStateMachine.lose.restart);
+			machine.goTo(WinStateMachine.win.restart);
 			foreach (GameObject g in cursors)
 				g.SetActive(false);
-			cursors[(int)LoseStateMachine.lose.restart - 1].SetActive(true);
+			cursors[(int)WinStateMachine.win.restart - 1].SetActive(true);
 			doRestart();
 		}
 		
 		public void QuitClick()
 		{
-			machine.goTo(LoseStateMachine.lose.quit);
+			machine.goTo(WinStateMachine.win.quit);
 			foreach (GameObject g in cursors)
 				g.SetActive(false);
-			cursors[(int)LoseStateMachine.lose.restart - 1].SetActive(true);
+			cursors[(int)WinStateMachine.win.restart - 1].SetActive(true);
 			doQuit();
 		}
 	}
-	class LoseStateMachine
+	class WinStateMachine
 	{
-		internal enum lose { sleep, restart, quit };
-		private delegate lose machine();//function pointer
+		internal enum win { sleep, restart, quit };
+		private delegate win machine();//function pointer
 		private machine[] getNextState;//array of function pointers
-		private lose currState;
+		private win currState;
 		
-		internal LoseStateMachine()
+		internal WinStateMachine()
 		{
-			currState = lose.sleep;
+			currState = win.sleep;
 			//fill array with functions
 			getNextState = new machine[] { Sleep, Restart, Quit };
 		}
 		
-		internal lose update()
+		internal win update()
 		{
 			return currState = getNextState[((int)currState)]();
 		}
 		
-		internal void goTo(lose state)
+		internal void goTo(win state)
 		{
 			currState = state;
 		}
 		
 		//The following methods control when and how you can transition between states
-		private static lose Sleep()
+		private static win Sleep()
 		{
-			return lose.sleep;
+			return win.sleep;
 		}
 		
-		private static lose Restart()
+		private static win Restart()
 		{
 			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
-					return lose.quit;
-			return lose.restart;
+				return win.quit;
+			return win.restart;
 		}
-		private static lose Quit()
+		private static win Quit()
 		{
 			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
-					return lose.restart;
-			return lose.quit;
+				return win.restart;
+			return win.quit;
 		}
 	}
 }

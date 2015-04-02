@@ -27,6 +27,7 @@ namespace Assets.Scripts.Player
 
 		void Awake()
 		{
+			_health = 100f;
 			//find reference to health bar
 			_bar = GameObject.Find("health").GetComponent<Image>();
 			//find reference to lives counter
@@ -62,6 +63,7 @@ namespace Assets.Scripts.Player
 				//_lifeCounter.sprite = _nums[_lives];
 				//_health = 100f;
                 // transfer to death state?
+				GameManager.State = GameState.Lose;
 			}
 
 			//if all lives are lost enter Lose state

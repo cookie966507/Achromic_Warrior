@@ -34,11 +34,6 @@ namespace Assets.Scripts.Data
 			{
 				Unpause();
 			}
-
-			if(Input.GetKeyDown(KeyCode.P))
-			{
-				State = GameState.Lose;
-			}
 		}
 
 		public static  void Pause()

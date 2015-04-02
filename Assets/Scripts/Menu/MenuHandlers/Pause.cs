@@ -64,6 +64,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doQuit()
         {
+			win.enabled = false;
+			machine.goTo(PauseStateMachine.pause.sleep);
             Data.GameManager.GotoLevel("Level_Select");
         }
 

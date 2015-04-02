@@ -72,7 +72,7 @@ namespace Assets.Scripts.Enemies
 					if(_numEnemies == 0)
 					{
 						//end level here
-						Debug.Log ("Won!");
+						GameManager.State = GameState.Win;
 					}
 				}
 			}
