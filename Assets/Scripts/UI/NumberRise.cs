@@ -21,8 +21,11 @@ namespace Assets.Scripts.UI
 
         void Update()
         {
-            //move object
-            transform.Translate(_dir * _speed * Time.deltaTime);
+			if(!Data.GameManager.Paused)
+			{
+				//move object
+				transform.Translate(_dir * _speed * Time.deltaTime);
+			}
         }
     }
 }

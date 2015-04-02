@@ -49,6 +49,10 @@ namespace Assets.Scripts.Enemies
 
 		public float _moveForce = 75f;
 
+		private float _stopTimer = 0f;
+		private float _stopDelay = 3f;
+		private bool _stopAttack = false;
+
 		//reference to the particle system when attacking
 		private ParticleSystem _particles;
 		private float _emissionRate = 40f;
@@ -71,7 +75,6 @@ namespace Assets.Scripts.Enemies
 
 		protected override void Run ()
 		{
-
 			if(Input.GetKeyDown(KeyCode.P)) this.Attack();
 			//if not attacking
 			if(!_attacking)
@@ -145,35 +148,44 @@ namespace Assets.Scripts.Enemies
 					//launch body into the player
 					_launch = true;
 				}
+				_stopTimer += Time.deltaTime;
+				if(_stopTimer > _stopDelay)
+				{
+					_stopAttack = false;
+					StopAttack();
+				}
 			}
 		}
 
 		void FixedUpdate()
 		{
-			//if not attacking
-			if(!_attacking && !_hit)
-            {
-                Rigidbody2D rgb2d = GetComponent<Rigidbody2D>();
-				//move in a direction
-                rgb2d.AddForce(new Vector2(_moveForce * _dir, 0f));
-				//limit speed
-                if (Mathf.Abs(rgb2d.velocity.x) > _maxSpeed)
-                    rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * _maxSpeed, rgb2d.velocity.y);
-			}
-
-			//if it is time to launch into the player
-			if(_launch)
+			if(!Data.GameManager.Paused)
 			{
-				//set states properly so we don't keep launching
-				_launch = false;
-				_launched = true;
-				//remove kinematic so we can move
-				this.GetComponent<Rigidbody2D>().isKinematic = false;
-				//find the direction to travel to the player
-				Vector3 _rayToPlayer = Vector3.zero;
-				_rayToPlayer = _player.transform.position - this.transform.position;
-				//fly into the player
-				GetComponent<Rigidbody2D>().AddRelativeForce(Vector3.Normalize(_rayToPlayer) * _attackForce, ForceMode2D.Impulse);
+				//if not attacking
+				if(!_attacking && !_hit)
+	            {
+	                Rigidbody2D rgb2d = GetComponent<Rigidbody2D>();
+					//move in a direction
+	                rgb2d.AddForce(new Vector2(_moveForce * _dir, 0f));
+					//limit speed
+	                if (Mathf.Abs(rgb2d.velocity.x) > _maxSpeed)
+	                    rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * _maxSpeed, rgb2d.velocity.y);
+				}
+
+				//if it is time to launch into the player
+				if(_launch)
+				{
+					//set states properly so we don't keep launching
+					_launch = false;
+					_launched = true;
+					//remove kinematic so we can move
+					this.GetComponent<Rigidbody2D>().isKinematic = false;
+					//find the direction to travel to the player
+					Vector3 _rayToPlayer = Vector3.zero;
+					_rayToPlayer = _player.transform.position - this.transform.position;
+					//fly into the player
+					GetComponent<Rigidbody2D>().AddRelativeForce(Vector3.Normalize(_rayToPlayer) * _attackForce, ForceMode2D.Impulse);
+				}
 			}
 		}
 
@@ -231,7 +243,8 @@ namespace Assets.Scripts.Enemies
 			this.EnterGhost();
 
 			//stop after a few seconds just in case
-			Invoke("StopAttack", 3f);
+			_stopAttack = true;
+			_stopTimer = 0f;
 		}
 
 		//set everything back after attack is complete

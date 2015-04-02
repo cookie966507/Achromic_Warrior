@@ -15,7 +15,6 @@ namespace Assets.Scripts.Level
 		private bool _reverse;
 
 		private float _vel;
-		private float _current = 0;
 		private float _speed = 0.1f;
 
 		public StormController _controller;
@@ -33,23 +32,22 @@ namespace Assets.Scripts.Level
 
 		void Update()
 		{
-			if(Input.GetKeyDown(KeyCode.P))
+			if(!Data.GameManager.Paused)
 			{
-				Flash ();
-			}
-			if(_flash)
-			{
-				_flashMat.SetFloat("_FlashAmount", Mathf.SmoothDamp(_flashMat.GetFloat("_FlashAmount"), _flashAmount, ref _vel, _speed));
-				if(_flashMat.GetFloat("_FlashAmount") >= _flashAmount - 0.01)
+				if(_flash)
 				{
-					_reverse = true;
-					_flash = false;
+					_flashMat.SetFloat("_FlashAmount", Mathf.SmoothDamp(_flashMat.GetFloat("_FlashAmount"), _flashAmount, ref _vel, _speed));
+					if(_flashMat.GetFloat("_FlashAmount") >= _flashAmount - 0.01)
+					{
+						_reverse = true;
+						_flash = false;
+					}
 				}
-			}
-			else if(_reverse)
-			{
-				_flashMat.SetFloat("_FlashAmount", Mathf.SmoothDamp(_flashMat.GetFloat("_FlashAmount"), 0f, ref _vel, _speed * 5f));
-				if(_flashMat.GetFloat("_FlashAmount") == 0f) _reverse = false;
+				else if(_reverse)
+				{
+					_flashMat.SetFloat("_FlashAmount", Mathf.SmoothDamp(_flashMat.GetFloat("_FlashAmount"), 0f, ref _vel, _speed * 5f));
+					if(_flashMat.GetFloat("_FlashAmount") == 0f) _reverse = false;
+				}
 			}
 		}
 

@@ -27,16 +27,19 @@ namespace Assets.Scripts.Level
 		
 		void Update ()
 		{
-			_time += Time.deltaTime;
-			if(_time > _lightningDelay)
+			if(!Data.GameManager.Paused)
 			{
-				_time = 0;
-				this.SetLightningDelay();
-				if(_lightningDelay < MINTIME + MINTIME * DOUBLECHANCE) _lightningDelay = DOUBLEDELAY;
-
-				for(int i = 0; i < _elements.Count; i++)
+				_time += Time.deltaTime;
+				if(_time > _lightningDelay)
 				{
-					_elements[i].Flash();
+					_time = 0;
+					this.SetLightningDelay();
+					if(_lightningDelay < MINTIME + MINTIME * DOUBLECHANCE) _lightningDelay = DOUBLEDELAY;
+
+					for(int i = 0; i < _elements.Count; i++)
+					{
+						_elements[i].Flash();
+					}
 				}
 			}
 		}
