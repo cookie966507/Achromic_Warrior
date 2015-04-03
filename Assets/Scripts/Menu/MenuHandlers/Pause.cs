@@ -53,6 +53,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
             win.enabled = false;
             machine.goTo(PauseStateMachine.pause.sleep);
             Data.GameManager.Unpause();
+			Data.GameManager.State = Assets.Scripts.Enums.GameState.Unpause;
+			CustomInput.UpdateChangeColor();
         }
 
         private static void Quit()
@@ -119,13 +121,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static pause Yes()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead)
                 return pause.quit;
             return pause.resume;
         }
         private static pause No()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead)
                 return pause.resume;
             return pause.quit;
         }

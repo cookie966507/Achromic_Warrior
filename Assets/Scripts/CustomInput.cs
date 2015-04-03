@@ -818,12 +818,12 @@ namespace Assets.Scripts
                 updateKey(JUMP, keyBoardJump);
                 updateKey(CYCLELEFT, keyBoardCycleLeft);
                 updateKey(CYCLERIGHT, keyBoardCycleRight);
-                updateKey(LEFT, keyBoardLeft);
-                updateKey(RIGHT, keyBoardRight);
+                updateKey(LEFT, keyBoardLeft, KeyCode.LeftArrow);
+                updateKey(RIGHT, keyBoardRight, KeyCode.RightArrow);
                 updateKey(BLOCK, keyBoardBlock);
                 updateKey(CHANGECOLOR, keyBoardChangeColor);
-                updateKey(UP, keyBoardUp);
-                updateKey(DOWN, keyBoardDown);
+                updateKey(UP, keyBoardUp, KeyCode.UpArrow);
+                updateKey(DOWN, keyBoardDown, KeyCode.DownArrow);
                 updateKey(SUPER, keyBoardSuper);
                 updateKey(ACCEPT, keyBoardAccept);
                 updateKey(CANCEL, keyBoardCancel);
@@ -1057,6 +1057,16 @@ namespace Assets.Scripts
             boolsFreshPressAccessed = boolsFreshPressAccessed & ~PAUSE;
             boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~PAUSE;
         }
+
+		public static void UpdateChangeColor()
+		{
+			bools = bools | CHANGECOLOR;
+			boolsHeld = boolsHeld & ~CHANGECOLOR;
+			boolsUp = boolsUp & ~CHANGECOLOR;
+			boolsFreshPress = boolsFreshPress & ~CHANGECOLOR;
+			boolsFreshPressAccessed = boolsFreshPressAccessed & ~CHANGECOLOR;
+			boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~CHANGECOLOR;
+		}
 
         public static string GetText(string input)
         {
