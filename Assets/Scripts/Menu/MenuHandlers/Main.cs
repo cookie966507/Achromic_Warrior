@@ -12,7 +12,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private state[] doState;
         private MainStateMachine.main currState;
 
-		private static bool _trainingPlayed = false;
+        private static bool _trainingPlayed = false;
 
         private static bool isLeft;
         public override void setLeft()
@@ -32,18 +32,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            MainStateMachine.main prevState = currState;
-            currState = machine.update();
-            if (prevState != currState)
+            if (Kernel.enabled)
             {
-                foreach (GameObject g in cursors)
-                    g.SetActive(false);
-                int cursor = (int)currState - 1;
-                if (cursor >= 0)
-                    cursors[cursor].SetActive(true);
+                MainStateMachine.main prevState = currState;
+                currState = machine.update();
+                if (prevState != currState)
+                {
+                    foreach (GameObject g in cursors)
+                        g.SetActive(false);
+                    int cursor = (int)currState - 1;
+                    if (cursor >= 0)
+                        cursors[cursor].SetActive(true);
+                }
+                doState[(int)currState]();
             }
-            doState[(int)currState]();
-
         }
 
         public override void wake()
@@ -72,15 +74,15 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doPlay()
         {
-			if(!_trainingPlayed)
-			{
-				_trainingPlayed = true;
-				Data.GameManager.GotoLevel("training");
-			}
-			else
-			{
-				Data.GameManager.GotoLevel("Level_Select");
-			}
+            if (!_trainingPlayed)
+            {
+                _trainingPlayed = true;
+                Data.GameManager.GotoLevel("training");
+            }
+            else
+            {
+                Data.GameManager.GotoLevel("Level_Select");
+            }
         }
 
         private static void Settings()
@@ -185,23 +187,23 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return main.credits;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return main.settings;
             return main.play;
         }
         private static main Settings()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return main.play;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return main.credits;
             return main.settings;
         }
         private static main Credits()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return main.settings;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return main.play;
             return main.credits;
         }

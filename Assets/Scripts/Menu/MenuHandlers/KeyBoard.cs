@@ -62,45 +62,48 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            ControlBinderStateMachine.State prevState = currState;
-            if (running)
+            if (Kernel.enabled)
             {
-                bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
-                currState = machine.update(accept);
-                if (prevState != currState)
+                ControlBinderStateMachine.State prevState = currState;
+                if (running)
                 {
-                    foreach (GameObject g in cursors)
-                        g.SetActive(false);
-                    int cursor = (int)currState - 1;
-                    if (cursor >= 0 && cursor < 16)
-                        cursors[cursor].SetActive(true);
-                    else if (currState == ControlBinderStateMachine.State.Prep)
-                        Kernel.disalble();
-                    else if (prevState == ControlBinderStateMachine.State.Holding)
-                        Kernel.enalble();
-                }
-                if (accept)
-                {
-                    if (currState == ControlBinderStateMachine.State.Default)
+                    bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
+                    currState = machine.update(accept);
+                    if (prevState != currState)
                     {
-                        CustomInput.DefaultKey();
-                        Attack.text = CustomInput.KeyBoardAttack.ToString();
-                        Block.text = CustomInput.KeyBoardBlock.ToString();
-                        Jump.text = CustomInput.KeyBoardJump.ToString();
-                        CycleLeft.text = CustomInput.KeyBoardCycleLeft.ToString();
-                        CycleRight.text = CustomInput.KeyBoardCycleRight.ToString();
-                        Left.text = CustomInput.KeyBoardLeft.ToString();
-                        Right.text = CustomInput.KeyBoardRight.ToString();
-                        ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString();
-                        Up.text = CustomInput.KeyBoardUp.ToString();
-                        Down.text = CustomInput.KeyBoardDown.ToString();
-                        Super.text = CustomInput.KeyBoardSuper.ToString();
-                        Accept.text = CustomInput.KeyBoardAccept.ToString();
-                        Cancel.text = CustomInput.KeyBoardCancel.ToString();
-                        Pause.text = CustomInput.KeyBoardPause.ToString();
+                        foreach (GameObject g in cursors)
+                            g.SetActive(false);
+                        int cursor = (int)currState - 1;
+                        if (cursor >= 0 && cursor < 16)
+                            cursors[cursor].SetActive(true);
+                        else if (currState == ControlBinderStateMachine.State.Prep)
+                            Kernel.disalble();
+                        else if (prevState == ControlBinderStateMachine.State.Holding)
+                            Kernel.enalble();
                     }
-                    if (currState == ControlBinderStateMachine.State.Exit)
-                        Kernel.controlsExit();
+                    if (accept)
+                    {
+                        if (currState == ControlBinderStateMachine.State.Default)
+                        {
+                            CustomInput.DefaultKey();
+                            Attack.text = CustomInput.KeyBoardAttack.ToString();
+                            Block.text = CustomInput.KeyBoardBlock.ToString();
+                            Jump.text = CustomInput.KeyBoardJump.ToString();
+                            CycleLeft.text = CustomInput.KeyBoardCycleLeft.ToString();
+                            CycleRight.text = CustomInput.KeyBoardCycleRight.ToString();
+                            Left.text = CustomInput.KeyBoardLeft.ToString();
+                            Right.text = CustomInput.KeyBoardRight.ToString();
+                            ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString();
+                            Up.text = CustomInput.KeyBoardUp.ToString();
+                            Down.text = CustomInput.KeyBoardDown.ToString();
+                            Super.text = CustomInput.KeyBoardSuper.ToString();
+                            Accept.text = CustomInput.KeyBoardAccept.ToString();
+                            Cancel.text = CustomInput.KeyBoardCancel.ToString();
+                            Pause.text = CustomInput.KeyBoardPause.ToString();
+                        }
+                        if (currState == ControlBinderStateMachine.State.Exit)
+                            Kernel.controlsExit();
+                    }
                 }
             }
         }

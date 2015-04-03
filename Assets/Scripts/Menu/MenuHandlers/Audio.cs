@@ -55,17 +55,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            AudioStateMachine.audio prevState = currState;
-            currState = machine.update();
-            if (prevState != currState)
+            if (Kernel.enabled)
             {
-                foreach (GameObject g in cursors)
-                    g.SetActive(false);
-                int cursor = (int)currState - 1;
-                if (cursor >= 0)
-                    cursors[cursor].SetActive(true);
+                AudioStateMachine.audio prevState = currState;
+                currState = machine.update();
+                if (prevState != currState)
+                {
+                    foreach (GameObject g in cursors)
+                        g.SetActive(false);
+                    int cursor = (int)currState - 1;
+                    if (cursor >= 0)
+                        cursors[cursor].SetActive(true);
+                }
+                doState[(int)currState]();
             }
-            doState[(int)currState]();
 
         }
 
@@ -90,7 +93,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Music()
         {
-			if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -99,7 +102,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 musicBar.value = temp;
                 doMusic(temp);
             }
-			if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -117,7 +120,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void SFX()
         {
-			if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;
@@ -126,7 +129,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 sfxBar.value = temp;
                 doSFX(temp);
             }
-			if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;
@@ -154,7 +157,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void MusicClick()
         {
-            if(touchedMusic)
+            if (touchedMusic)
             {
                 touchedMusic = false;
                 return;
@@ -170,7 +173,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void SFXClick()
         {
-            if(touchedSFX)
+            if (touchedSFX)
             {
                 touchedSFX = false;
                 return;
@@ -242,25 +245,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static audio Music()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return audio.exit;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return audio.sfx;
             return audio.music;
         }
         private static audio SFX()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return audio.music;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return audio.exit;
             return audio.sfx;
         }
         private static audio Exit()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return audio.sfx;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return audio.music;
             return audio.exit;
         }
