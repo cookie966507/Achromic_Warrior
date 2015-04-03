@@ -36,7 +36,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void Sleep()
         {
-            if(Data.GameManager.State==Enums.GameState.Pause)
+            if (Data.GameManager.State == Enums.GameState.Pause)
             {
                 machine.goTo(PauseStateMachine.pause.resume);
                 win.enabled = true;
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Continue()
         {
-            if (CustomInput.AcceptFreshPressDeleteOnRead||CustomInput.PauseFreshPressDeleteOnRead)
+            if (CustomInput.AcceptFreshPressDeleteOnRead || CustomInput.PauseFreshPressDeleteOnRead)
                 doContinue();
         }
         private static void doContinue()
@@ -64,8 +64,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doQuit()
         {
-			win.enabled = false;
-			machine.goTo(PauseStateMachine.pause.sleep);
+            win.enabled = false;
+            machine.goTo(PauseStateMachine.pause.sleep);
             Data.GameManager.GotoLevel("Level_Select");
         }
 
@@ -119,13 +119,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static pause Yes()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
                 return pause.quit;
             return pause.resume;
         }
         private static pause No()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
                 return pause.resume;
             return pause.quit;
         }
