@@ -22,12 +22,12 @@ namespace Assets.Scripts.Menu.MenuHandlers
         public UnityEngine.UI.Text Accept;
         public UnityEngine.UI.Text Cancel;
         public UnityEngine.UI.Text Pause;
-        
+
         private ControlBinderStateMachine machine = new ControlBinderStateMachine();
         private delegate void state();
         private ControlBinderStateMachine.State currState;
         private bool duplicate;
-        private bool running=false;
+        private bool running = false;
 
         private static bool isLeft;
 
@@ -61,45 +61,48 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            ControlBinderStateMachine.State prevState = currState;
-            if (running)
+            if (Kernel.enabled)
             {
-                bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
-                currState = machine.update(accept);
-                if (prevState != currState)
+                ControlBinderStateMachine.State prevState = currState;
+                if (running)
                 {
-                    foreach (GameObject g in cursors)
-                        g.SetActive(false);
-                    int cursor = (int)currState-1;
-                    if (cursor >= 0 && cursor<16)
-                        cursors[cursor].SetActive(true);
-                    else if(currState==ControlBinderStateMachine.State.Prep)
-                        Kernel.disalble();
-                    else if(prevState==ControlBinderStateMachine.State.Holding)
-                        Kernel.enalble();
-                }
-                if (accept)
-                {
-                    if (currState == ControlBinderStateMachine.State.Default)
+                    bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
+                    currState = machine.update(accept);
+                    if (prevState != currState)
                     {
-                        CustomInput.DefaultPad();
-                        Attack.text = CustomInput.GamePadAttack;
-                        Block.text = CustomInput.GamePadBlock;
-                        Jump.text = CustomInput.GamePadJump;
-                        CycleLeft.text = CustomInput.GamePadCycleLeft;
-                        CycleRight.text = CustomInput.GamePadCycleRight;
-                        Left.text = CustomInput.GamePadLeft;
-                        Right.text = CustomInput.GamePadRight;
-                        ChangeColor.text = CustomInput.GamePadChangeColor;
-                        Up.text = CustomInput.GamePadUp;
-                        Down.text = CustomInput.GamePadDown;
-                        Super.text = CustomInput.GamePadSuper;
-                        Accept.text = CustomInput.GamePadAccept;
-                        Cancel.text = CustomInput.GamePadCancel;
-                        Pause.text = CustomInput.GamePadPause;
+                        foreach (GameObject g in cursors)
+                            g.SetActive(false);
+                        int cursor = (int)currState - 1;
+                        if (cursor >= 0 && cursor < 16)
+                            cursors[cursor].SetActive(true);
+                        else if (currState == ControlBinderStateMachine.State.Prep)
+                            Kernel.disalble();
+                        else if (prevState == ControlBinderStateMachine.State.Holding)
+                            Kernel.enalble();
                     }
-                    if (currState == ControlBinderStateMachine.State.Exit)
-                        Kernel.controlsExit();
+                    if (accept)
+                    {
+                        if (currState == ControlBinderStateMachine.State.Default)
+                        {
+                            CustomInput.DefaultPad();
+                            Attack.text = CustomInput.GamePadAttack;
+                            Block.text = CustomInput.GamePadBlock;
+                            Jump.text = CustomInput.GamePadJump;
+                            CycleLeft.text = CustomInput.GamePadCycleLeft;
+                            CycleRight.text = CustomInput.GamePadCycleRight;
+                            Left.text = CustomInput.GamePadLeft;
+                            Right.text = CustomInput.GamePadRight;
+                            ChangeColor.text = CustomInput.GamePadChangeColor;
+                            Up.text = CustomInput.GamePadUp;
+                            Down.text = CustomInput.GamePadDown;
+                            Super.text = CustomInput.GamePadSuper;
+                            Accept.text = CustomInput.GamePadAccept;
+                            Cancel.text = CustomInput.GamePadCancel;
+                            Pause.text = CustomInput.GamePadPause;
+                        }
+                        if (currState == ControlBinderStateMachine.State.Exit)
+                            Kernel.controlsExit();
+                    }
                 }
             }
         }
@@ -315,7 +318,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                             if (button == CustomInput.GamePadBlock ||
                                 button == CustomInput.GamePadJump ||
                                 button == CustomInput.GamePadCycleLeft ||
-                                button == CustomInput.GamePadCycleRight||
+                                button == CustomInput.GamePadCycleRight ||
                                 button == CustomInput.GamePadChangeColor ||
                                 button == CustomInput.GamePadSuper ||
                                 button == CustomInput.GamePadUp ||

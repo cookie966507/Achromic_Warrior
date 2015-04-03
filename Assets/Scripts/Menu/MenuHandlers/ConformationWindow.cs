@@ -20,7 +20,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             ConformationWindow.function = function;
             Kernel.disalble();
-            win.enabled=true;
+            win.enabled = true;
             machine.goTo(ConformationStateMachine.confirm.yes);
         }
 
@@ -34,17 +34,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            ConformationStateMachine.confirm prevState = currState;
-            currState = machine.update();
-            if (prevState != currState)
+            if (!Kernel.enabled)
             {
-                foreach (GameObject g in cursors)
-                    g.SetActive(false);
-                int cursor = (int)currState - 1;
-                if (cursor >= 0)
-                    cursors[cursor].SetActive(true);
+                ConformationStateMachine.confirm prevState = currState;
+                currState = machine.update();
+                if (prevState != currState)
+                {
+                    foreach (GameObject g in cursors)
+                        g.SetActive(false);
+                    int cursor = (int)currState - 1;
+                    if (cursor >= 0)
+                        cursors[cursor].SetActive(true);
+                }
+                doState[(int)currState]();
             }
-            doState[(int)currState]();
         }
         private static void Sleep()
         {
@@ -67,13 +70,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
             win.enabled = false;
             machine.goTo(ConformationStateMachine.confirm.sleep);
         }
-        
+
         public void YesClick()
         {
             machine.goTo(ConformationStateMachine.confirm.yes);
             foreach (GameObject g in cursors)
                 g.SetActive(false);
-            cursors[(int)ConformationStateMachine.confirm.yes-1].SetActive(true);
+            cursors[(int)ConformationStateMachine.confirm.yes - 1].SetActive(true);
             doAnswer(true);
         }
 
@@ -82,7 +85,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             machine.goTo(ConformationStateMachine.confirm.no);
             foreach (GameObject g in cursors)
                 g.SetActive(false);
-            cursors[(int)ConformationStateMachine.confirm.yes-1].SetActive(true);
+            cursors[(int)ConformationStateMachine.confirm.yes - 1].SetActive(true);
             doAnswer(false);
         }
     }
@@ -118,13 +121,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static confirm Yes()
         {
-			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
                 return confirm.no;
             return confirm.yes;
         }
         private static confirm No()
         {
-			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
                 return confirm.yes;
             return confirm.no;
         }

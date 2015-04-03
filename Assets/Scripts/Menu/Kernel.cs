@@ -7,6 +7,8 @@ namespace Assets.Scripts.Menu
     {
         public MenuItem item;
 
+        internal static bool enabled = true;
+
         private static Node root;
         private static Node left;
         private static Node right;
@@ -177,6 +179,7 @@ namespace Assets.Scripts.Menu
 
         internal static void disalble()
         {
+            enabled = false;
             if(left!=null)
                 left.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
             if (right != null)
@@ -187,6 +190,7 @@ namespace Assets.Scripts.Menu
 
         internal static void enalble()
         {
+            enabled = true;
             if (left != null)
                 left.item.gameObject.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
             if (right != null)

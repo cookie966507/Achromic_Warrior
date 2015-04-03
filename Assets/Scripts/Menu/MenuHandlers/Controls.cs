@@ -30,18 +30,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            ControlsStateMachine.control prevState = currState;
-            currState = machine.update();
-            if (prevState != currState)
+            if (Kernel.enabled)
             {
-                foreach (GameObject g in cursors)
-                    g.SetActive(false);
-                int cursor = (int)currState - 1;
-                if (cursor >= 0)
-                    cursors[cursor].SetActive(true);
+                ControlsStateMachine.control prevState = currState;
+                currState = machine.update();
+                if (prevState != currState)
+                {
+                    foreach (GameObject g in cursors)
+                        g.SetActive(false);
+                    int cursor = (int)currState - 1;
+                    if (cursor >= 0)
+                        cursors[cursor].SetActive(true);
+                }
+                doState[(int)currState]();
             }
-            doState[(int)currState]();
-
         }
 
         public override void wake()
@@ -173,25 +175,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static control KeyBoard()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return control.exit;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return control.gamePad;
             return control.keyBoard;
         }
         private static control GamePad()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return control.keyBoard;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return control.exit;
             return control.gamePad;
         }
         private static control Exit()
         {
-			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return control.gamePad;
-			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return control.keyBoard;
             return control.exit;
         }
