@@ -192,33 +192,33 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static setting Audio()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return setting.exit;
-            if (CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return setting.video;
             return setting.audio;
         }
         private static setting Video()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return setting.audio;
-            if (CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return setting.controls;
             return setting.video;
         }
         private static setting Controls()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return setting.video;
-            if (CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return setting.exit;
             return setting.controls;
         }
         private static setting Exit()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return setting.controls;
-            if (CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return setting.audio;
             return setting.exit;
         }

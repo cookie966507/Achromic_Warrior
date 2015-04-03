@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
+using Assets.Scripts.UI;
 
 namespace Assets.Scripts.Enemies
 {
@@ -10,6 +11,8 @@ namespace Assets.Scripts.Enemies
 	{
 		public string _spawnName = "Spawn";
 		public int _numSpawns = 0;
+
+		public EnemiesRemaining _remaining;
 
 		private List<Transform> _spawnNodes;
 
@@ -36,10 +39,15 @@ namespace Assets.Scripts.Enemies
 				_spawnNodes.Add(_node);
 			}
 		}
+
+		void Start()
+		{
+			if(!_endless) _remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
+		}
 		
 		void Update ()
 		{
-			if(!GameManager.Paused)
+			if(!GameManager.SuspendedState)
 			{
 				if(_numInLevel > 0)
 				{
@@ -64,7 +72,7 @@ namespace Assets.Scripts.Enemies
 					if(_numEnemies == 0)
 					{
 						//end level here
-						Debug.Log ("Won!");
+						GameManager.State = GameState.Win;
 					}
 				}
 			}
@@ -94,6 +102,7 @@ namespace Assets.Scripts.Enemies
 		public void EnemyDestroyed()
 		{
 			_numEnemies--;
+			if(!_endless) _remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
 		}
 	}
 }

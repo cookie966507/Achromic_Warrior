@@ -173,25 +173,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static control KeyBoard()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return control.exit;
-            if (CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return control.gamePad;
             return control.keyBoard;
         }
         private static control GamePad()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return control.keyBoard;
-            if (CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return control.exit;
             return control.gamePad;
         }
         private static control Exit()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
                 return control.gamePad;
-            if (CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
                 return control.keyBoard;
             return control.exit;
         }

@@ -47,7 +47,7 @@ namespace Assets.Scripts.Player
         //how much control you have in the air
         private float _airControl = 0.3f;
         //for ghosting through platforms
-        private float _ghostDelay = 0.5f;
+        private float _ghostDelay = 1f;
 
         private int temp;//delete when anim event is done
 
@@ -92,7 +92,12 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
-            if (!GameManager.Paused)
+			if(GameManager.State == GameState.Lose)
+			{
+				Destroy(this.gameObject);
+				return;
+			}
+            if (!GameManager.SuspendedState)
             {
                 if (Input.GetKey(KeyCode.UpArrow))
                     colorData.AddColor(Color.white, 500f);
@@ -259,7 +264,7 @@ namespace Assets.Scripts.Player
         //fixed update runs on a timed cycle (for physics stuff)
         void FixedUpdate()
         {
-            if (GameManager.State != GameState.Pause)
+            if (!GameManager.SuspendedState)
             {
                 if (currState == PlayerState.move ||
                     currState == PlayerState.movingAttack ||
@@ -301,6 +306,7 @@ namespace Assets.Scripts.Player
                 {
                     GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0f);
                     GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+					_ghost = true;
                     _jump = false;
                 }
                 if (currState == PlayerState.hit)
@@ -433,8 +439,8 @@ namespace Assets.Scripts.Player
                 _ghost = true;
                 _ghostTimer = 0f;
 
-                _colSwitch = true;
-                _playerCollider.enabled = false;
+				_colSwitch = true;
+				_playerCollider.enabled = false;
             }
         }
         private static void Jump()
