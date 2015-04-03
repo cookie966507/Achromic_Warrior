@@ -12,6 +12,7 @@ namespace Assets.Scripts.Util
 
         void Update()
         {
+			if(_target)
             this.transform.position = _target.position;
         }
     }

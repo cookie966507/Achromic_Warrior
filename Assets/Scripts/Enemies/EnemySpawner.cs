@@ -47,7 +47,7 @@ namespace Assets.Scripts.Enemies
 		
 		void Update ()
 		{
-			if(!GameManager.Paused)
+			if(!GameManager.SuspendedState)
 			{
 				if(_numInLevel > 0)
 				{

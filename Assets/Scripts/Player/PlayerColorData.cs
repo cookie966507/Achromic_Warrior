@@ -77,9 +77,12 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
-            //if color meter should be decreasing
-            if (!_color.Equals(ColorElement.White))
-                DeductTime();
+			if(!Data.GameManager.SuspendedState)
+			{
+	            //if color meter should be decreasing
+	            if (!_color.Equals(ColorElement.White))
+	                DeductTime();
+			}
         }
 
         //revert all values

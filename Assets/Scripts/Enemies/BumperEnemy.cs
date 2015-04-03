@@ -159,7 +159,7 @@ namespace Assets.Scripts.Enemies
 
 		void FixedUpdate()
 		{
-			if(!Data.GameManager.Paused)
+			if(!Data.GameManager.SuspendedState)
 			{
 				//if not attacking
 				if(!_attacking && !_hit)

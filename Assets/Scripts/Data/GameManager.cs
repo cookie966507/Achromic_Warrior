@@ -24,25 +24,31 @@ namespace Assets.Scripts.Data
 			}
 		}
 
+		void OnLevelWasLoaded(int i)
+		{
+			_state = GameState.Unpause;
+		}
+
 		void Update ()
 		{
 			if(CustomInput.PauseFreshPress && _state.Equals(GameState.Unpause))
 			{
+				_state = GameState.Pause;
 				Pause();
 			}
 			else if(CustomInput.PauseFreshPress && _state.Equals(GameState.Pause))
 			{
+				_state = GameState.Unpause;
 				Unpause();
 			}
 		}
 
-		public static  void Pause()
+		public static void Pause()
 		{
 			VelocityInfo[] _bodies = GameObject.FindObjectsOfType<VelocityInfo>();
 			for(int i = 0; i < _bodies.Length; i++)
 			{
 				_bodies[i].PauseMotion();
-				_state = GameState.Pause;
 			}
 		}
 
@@ -53,7 +59,6 @@ namespace Assets.Scripts.Data
 			{
 				_bodies[i].UnpauseMotion();
 			}
-			_state = GameState.Unpause;
 		}
 
         public static void GotoLevel(string level)
@@ -85,6 +90,11 @@ namespace Assets.Scripts.Data
 		public static bool End
 		{
 			get{ return _state == GameState.Lose || _state == GameState.Win; }
+		}
+
+		public static bool SuspendedState
+		{
+			get{ return _state == GameState.Lose || _state == GameState.Win || _state == GameState.Pause; }
 		}
 
 		public static bool Game

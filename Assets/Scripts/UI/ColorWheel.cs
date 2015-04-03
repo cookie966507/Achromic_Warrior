@@ -78,7 +78,7 @@ namespace Assets.Scripts.UI
 
 		void Update ()
 		{
-            if (!Data.GameManager.Paused)
+            if (!Data.GameManager.SuspendedState)
             {
                 //if cycling spin the wheel
                 if (CustomInput.CycleLeftFreshPress)

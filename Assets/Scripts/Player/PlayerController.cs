@@ -92,7 +92,12 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
-            if (!GameManager.Paused)
+			if(GameManager.State == GameState.Lose)
+			{
+				Destroy(this.gameObject);
+				return;
+			}
+            if (!GameManager.SuspendedState)
             {
                 if (Input.GetKey(KeyCode.UpArrow))
                     colorData.AddColor(Color.white, 500f);
@@ -259,7 +264,7 @@ namespace Assets.Scripts.Player
         //fixed update runs on a timed cycle (for physics stuff)
         void FixedUpdate()
         {
-            if (GameManager.State != GameState.Pause)
+            if (!GameManager.SuspendedState)
             {
                 if (currState == PlayerState.move ||
                     currState == PlayerState.movingAttack ||

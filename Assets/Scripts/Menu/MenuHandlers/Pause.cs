@@ -119,13 +119,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static pause Yes()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
                 return pause.quit;
             return pause.resume;
         }
         private static pause No()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead)
+			if (CustomInput.UpFreshPressDeleteOnRead || CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
                 return pause.resume;
             return pause.quit;
         }
