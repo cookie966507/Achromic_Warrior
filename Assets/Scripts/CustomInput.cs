@@ -765,7 +765,12 @@ namespace Assets.Scripts
 
         void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
+            bools = 0;
+            boolsUp = 0;
+            boolsHeld = 0;
+            boolsFreshPress = 0;
+            boolsFreshPressAccessed = 0;
+            boolsFreshPressDeleteOnRead = 0;
             if (PlayerPrefs.HasKey(KeyHash + 0))
             {
                 keyBoardAttack = (KeyCode)PlayerPrefs.GetInt(0 + KeyHash);
@@ -1045,10 +1050,12 @@ namespace Assets.Scripts
 
         public static void UpdatePause()
         {
-            bools = bools & ~PAUSE;
+            bools = bools | PAUSE;
             boolsHeld = boolsHeld & ~PAUSE;
             boolsUp = boolsUp & ~PAUSE;
             boolsFreshPress = boolsFreshPress & ~PAUSE;
+            boolsFreshPressAccessed = boolsFreshPressAccessed & ~PAUSE;
+            boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~PAUSE;
         }
 
         public static string GetText(string input)
