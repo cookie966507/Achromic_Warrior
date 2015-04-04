@@ -1079,12 +1079,12 @@ namespace Assets.Scripts
                 case "Jump": return usePad ? GamePadJump : KeyBoardJump.ToString();
                 case "CycleLeft": return usePad ? GamePadCycleLeft : KeyBoardCycleLeft.ToString();
                 case "CycleRight": return usePad ? GamePadCycleRight : KeyBoardCycleRight.ToString();
-                case "Left": return usePad ? GamePadLeft : KeyBoardLeft.ToString();
-                case "Right": return usePad ? GamePadRight : KeyBoardRight.ToString();
+                case "Left": return usePad ? GamePadLeft : KeyBoardLeft.ToString() + "/Left Arrow";
+                case "Right": return usePad ? GamePadRight : KeyBoardRight.ToString() + "/Right Arrow";
                 case "Block": return usePad ? GamePadBlock : KeyBoardBlock.ToString();
                 case "ChangeColor": return usePad ? GamePadChangeColor : KeyBoardChangeColor.ToString();
-                case "Up": return usePad ? GamePadUp : KeyBoardUp.ToString();
-                case "Down": return usePad ? GamePadDown : KeyBoardDown.ToString();
+                case "Up": return usePad ? GamePadUp : KeyBoardUp.ToString() + "/Up Arrow";
+                case "Down": return usePad ? GamePadDown : KeyBoardDown.ToString() + "/Down Arrow";
                 case "Super": return usePad ? GamePadSuper : KeyBoardSuper.ToString();
                 case "Accept": return usePad ? GamePadAccept : KeyBoardAccept.ToString();
                 case "Cancel": return usePad ? GamePadCancel : KeyBoardCancel.ToString();

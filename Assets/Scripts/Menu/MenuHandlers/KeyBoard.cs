@@ -49,11 +49,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
             Jump.text = CustomInput.KeyBoardJump.ToString();
             CycleLeft.text = CustomInput.KeyBoardCycleLeft.ToString();
             CycleRight.text = CustomInput.KeyBoardCycleRight.ToString();
-            Left.text = CustomInput.KeyBoardLeft.ToString();
-            Right.text = CustomInput.KeyBoardRight.ToString();
+            Left.text = CustomInput.KeyBoardLeft.ToString() + "/Left Arrow";
+			Right.text = CustomInput.KeyBoardRight.ToString() + "/Right Arrow";
             ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString();
-            Up.text = CustomInput.KeyBoardUp.ToString();
-            Down.text = CustomInput.KeyBoardDown.ToString();
+			Up.text = CustomInput.KeyBoardUp.ToString() + "/Up Arrow";
+			Down.text = CustomInput.KeyBoardDown.ToString() + "/Down Arrow";
             Super.text = CustomInput.KeyBoardSuper.ToString();
             Accept.text = CustomInput.KeyBoardAccept.ToString();
             Cancel.text = CustomInput.KeyBoardCancel.ToString();
@@ -62,51 +62,48 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            if (Kernel.enabled)
-            {
-                ControlBinderStateMachine.State prevState = currState;
-                if (running)
-                {
-                    bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
-                    currState = machine.update(accept);
-                    if (prevState != currState)
-                    {
-                        foreach (GameObject g in cursors)
-                            g.SetActive(false);
-                        int cursor = (int)currState - 1;
-                        if (cursor >= 0 && cursor < 16)
-                            cursors[cursor].SetActive(true);
-                        else if (currState == ControlBinderStateMachine.State.Prep)
-                            Kernel.disalble();
-                        else if (prevState == ControlBinderStateMachine.State.Holding)
-                            Kernel.enalble();
-                    }
-                    if (accept)
-                    {
-                        if (currState == ControlBinderStateMachine.State.Default)
-                        {
-                            CustomInput.DefaultKey();
-                            Attack.text = CustomInput.KeyBoardAttack.ToString();
-                            Block.text = CustomInput.KeyBoardBlock.ToString();
-                            Jump.text = CustomInput.KeyBoardJump.ToString();
-                            CycleLeft.text = CustomInput.KeyBoardCycleLeft.ToString();
-                            CycleRight.text = CustomInput.KeyBoardCycleRight.ToString();
-                            Left.text = CustomInput.KeyBoardLeft.ToString();
-                            Right.text = CustomInput.KeyBoardRight.ToString();
-                            ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString();
-                            Up.text = CustomInput.KeyBoardUp.ToString();
-                            Down.text = CustomInput.KeyBoardDown.ToString();
-                            Super.text = CustomInput.KeyBoardSuper.ToString();
-                            Accept.text = CustomInput.KeyBoardAccept.ToString();
-                            Cancel.text = CustomInput.KeyBoardCancel.ToString();
-                            Pause.text = CustomInput.KeyBoardPause.ToString();
-                        }
-                        if (currState == ControlBinderStateMachine.State.Exit)
-                            Kernel.controlsExit();
-                    }
-                }
-            }
-        }
+	        ControlBinderStateMachine.State prevState = currState;
+	        if (running)
+	        {
+	            bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
+	            currState = machine.update(accept);
+	            if (prevState != currState)
+	            {
+	                foreach (GameObject g in cursors)
+	                    g.SetActive(false);
+	                int cursor = (int)currState - 1;
+	                if (cursor >= 0 && cursor < 16)
+	                    cursors[cursor].SetActive(true);
+	                else if (currState == ControlBinderStateMachine.State.Prep)
+	                    Kernel.disalble();
+	                else if (prevState == ControlBinderStateMachine.State.Holding)
+	                    Kernel.enalble();
+	            }
+	            if (accept)
+	            {
+	                if (currState == ControlBinderStateMachine.State.Default)
+	                {
+	                    CustomInput.DefaultKey();
+	                    Attack.text = CustomInput.KeyBoardAttack.ToString();
+	                    Block.text = CustomInput.KeyBoardBlock.ToString();
+	                    Jump.text = CustomInput.KeyBoardJump.ToString();
+	                    CycleLeft.text = CustomInput.KeyBoardCycleLeft.ToString();
+	                    CycleRight.text = CustomInput.KeyBoardCycleRight.ToString();
+	                    Left.text = CustomInput.KeyBoardLeft.ToString() + "/Left Arrow";
+							Right.text = CustomInput.KeyBoardRight.ToString() + "/Right Arrow";
+	                    ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString();
+							Up.text = CustomInput.KeyBoardUp.ToString() + "/Up Arrow";
+							Down.text = CustomInput.KeyBoardDown.ToString() + "/Down Arrow";
+	                    Super.text = CustomInput.KeyBoardSuper.ToString();
+	                    Accept.text = CustomInput.KeyBoardAccept.ToString();
+	                    Cancel.text = CustomInput.KeyBoardCancel.ToString();
+	                    Pause.text = CustomInput.KeyBoardPause.ToString();
+	                }
+	                if (currState == ControlBinderStateMachine.State.Exit)
+	                    Kernel.controlsExit();
+	            }
+	        }
+	    }
 
         public override void wake()
         {
@@ -222,11 +219,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
             Jump.text = CustomInput.KeyBoardJump.ToString();
             CycleLeft.text = CustomInput.KeyBoardCycleLeft.ToString();
             CycleRight.text = CustomInput.KeyBoardCycleRight.ToString();
-            Left.text = CustomInput.KeyBoardLeft.ToString();
-            Right.text = CustomInput.KeyBoardRight.ToString();
+            Left.text = CustomInput.KeyBoardLeft.ToString() + "/Left Arrow";
+			Right.text = CustomInput.KeyBoardRight.ToString() + "/Right Arrow";
             ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString();
-            Up.text = CustomInput.KeyBoardUp.ToString();
-            Down.text = CustomInput.KeyBoardDown.ToString();
+			Up.text = CustomInput.KeyBoardUp.ToString() + "/Up Arrow";
+			Down.text = CustomInput.KeyBoardDown.ToString() + "/Down Arrow";
             Super.text = CustomInput.KeyBoardSuper.ToString();
             Accept.text = CustomInput.KeyBoardAccept.ToString();
             Cancel.text = CustomInput.KeyBoardCancel.ToString();
@@ -264,7 +261,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private void setButton(KeyCode button)
         {
-            if (machine.getPrieviousState() == ControlBinderStateMachine.State.Accept)
+			if (button == KeyCode.Escape ||
+			    button == KeyCode.RightArrow ||
+			    button == KeyCode.LeftArrow ||
+			    button == KeyCode.UpArrow ||
+			    button == KeyCode.DownArrow)
+				duplicate = true;
+            else if (machine.getPrieviousState() == ControlBinderStateMachine.State.Accept)
             {
                 if (button == CustomInput.KeyBoardCancel)
                     duplicate = true;
@@ -500,10 +503,10 @@ namespace Assets.Scripts.Menu.MenuHandlers
                     case ControlBinderStateMachine.State.CycleRight: CustomInput.KeyBoardCycleRight = button; CycleRight.text = CustomInput.KeyBoardCycleRight.ToString(); break;
                     case ControlBinderStateMachine.State.ChangeColor: CustomInput.KeyBoardChangeColor = button; ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString(); break;
                     case ControlBinderStateMachine.State.Super: CustomInput.KeyBoardSuper = button; Super.text = CustomInput.KeyBoardSuper.ToString(); break;
-                    case ControlBinderStateMachine.State.Up: CustomInput.KeyBoardUp = button; Up.text = CustomInput.KeyBoardUp.ToString(); break;
-                    case ControlBinderStateMachine.State.Down: CustomInput.KeyBoardDown = button; Down.text = CustomInput.KeyBoardDown.ToString(); break;
-                    case ControlBinderStateMachine.State.Left: CustomInput.KeyBoardLeft = button; Left.text = CustomInput.KeyBoardLeft.ToString(); break;
-                    case ControlBinderStateMachine.State.Right: CustomInput.KeyBoardRight = button; Right.text = CustomInput.KeyBoardRight.ToString(); break;
+                    case ControlBinderStateMachine.State.Up: CustomInput.KeyBoardUp = button; Up.text = CustomInput.KeyBoardUp.ToString() + "/Up Arrow"; break;
+                    case ControlBinderStateMachine.State.Down: CustomInput.KeyBoardDown = button; Down.text = CustomInput.KeyBoardDown.ToString() + "/Down Arrow"; break;
+                    case ControlBinderStateMachine.State.Left: CustomInput.KeyBoardLeft = button; Left.text = CustomInput.KeyBoardLeft.ToString() + "/Left Arrow"; break;
+                    case ControlBinderStateMachine.State.Right: CustomInput.KeyBoardRight = button; Right.text = CustomInput.KeyBoardRight.ToString() + "/Right Arrow"; break;
                     case ControlBinderStateMachine.State.Accept: CustomInput.KeyBoardAccept = button; Accept.text = CustomInput.KeyBoardAccept.ToString(); break;
                     case ControlBinderStateMachine.State.Cancel: CustomInput.KeyBoardCancel = button; Cancel.text = CustomInput.KeyBoardCancel.ToString(); break;
                     default: CustomInput.KeyBoardPause = button; Pause.text = CustomInput.KeyBoardPause.ToString(); break;
