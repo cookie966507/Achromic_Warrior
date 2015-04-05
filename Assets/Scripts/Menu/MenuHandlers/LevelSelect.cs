@@ -48,11 +48,11 @@ namespace Assets.Scripts.Menu.MenuHanders
 				_topInstructions[1].GetComponent<Text>().text = "Press: T Key";
 			}
 
-			if(CustomInput.LeftFreshPress || CustomInput.CycleLeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+			if(CustomInput.LeftFreshPress || CustomInput.CycleLeftFreshPress)
 			{
 				if(_levelCounter != NUMLEVELS) UpdateSelector(-1);
 			}
-			if(CustomInput.RightFreshPress || CustomInput.CycleRightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+			if(CustomInput.RightFreshPress || CustomInput.CycleRightFreshPress)
 			{
 				if(_levelCounter != NUMLEVELS) UpdateSelector(1);
 			}

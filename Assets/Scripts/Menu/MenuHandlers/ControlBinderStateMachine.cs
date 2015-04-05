@@ -79,13 +79,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Attack;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Default;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Cancel;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Up;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Block;
             return State.Attack;
         }
@@ -96,13 +96,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.CycleLeft;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Cancel;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Down;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Block;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.CycleRight;
             return State.CycleLeft;
         }
@@ -113,13 +113,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.CycleRight;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.CycleLeft;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Left;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Jump;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.ChangeColor;
             return State.CycleRight;
         }
@@ -130,13 +130,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.ChangeColor;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.CycleRight;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Right;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Super;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Exit;
             return State.ChangeColor;
         }
@@ -147,13 +147,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Super;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Jump;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.ChangeColor;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Right;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Pause;
             return State.Super;
         }
@@ -164,13 +164,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Jump;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Block;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.CycleRight;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Left;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Super;
             return State.Jump;
         }
@@ -181,13 +181,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Block;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Attack;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.CycleLeft;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Down;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Jump;
             return State.Block;
         }
@@ -198,13 +198,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Pause;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Super;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Accept;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Accept;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Default;
             return State.Pause;
         }
@@ -215,13 +215,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Accept;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Right;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Pause;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Pause;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Exit;
             return State.Accept;
         }
@@ -232,13 +232,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Cancel;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Exit;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Up;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Attack;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.CycleLeft;
             return State.Cancel;
         }
@@ -249,13 +249,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Up;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Exit;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Attack;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Cancel;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Down;
             return State.Up;
         }
@@ -266,13 +266,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Down;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Up;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Block;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.CycleLeft;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Left;
             return State.Down;
         }
@@ -283,13 +283,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Left;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Down;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Jump;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.CycleRight;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Right;
             return State.Left;
         }
@@ -300,37 +300,37 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 prevState = State.Right;
                 return State.Prep;
             }
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Left;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Super;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.ChangeColor;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Accept;
             return State.Right;
         }
         private static State Default(bool accept)
         {
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Pause;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Exit;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Exit;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Attack;
             return State.Default;
         }
         private static State Exit(bool accept)
         {
-            if (CustomInput.UpFreshPress || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPress)
                 return State.Accept;
-            if (CustomInput.LeftFreshPress || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPress)
                 return State.Default;
-            if (CustomInput.RightFreshPress || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPress)
                 return State.Default;
-            if (CustomInput.DownFreshPress || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPress)
                 return State.Up;
             return State.Exit;
         }

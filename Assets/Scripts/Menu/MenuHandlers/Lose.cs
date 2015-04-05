@@ -119,13 +119,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 		
 		private static lose Restart()
 		{
-			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
 					return lose.quit;
 			return lose.restart;
 		}
 		private static lose Quit()
 		{
-			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+			if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
 					return lose.restart;
 			return lose.quit;
 		}

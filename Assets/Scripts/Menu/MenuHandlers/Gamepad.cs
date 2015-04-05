@@ -61,51 +61,48 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            if (Kernel.enabled)
-            {
-                ControlBinderStateMachine.State prevState = currState;
-                if (running)
-                {
-                    bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
-                    currState = machine.update(accept);
-                    if (prevState != currState)
-                    {
-                        foreach (GameObject g in cursors)
-                            g.SetActive(false);
-                        int cursor = (int)currState - 1;
-                        if (cursor >= 0 && cursor < 16)
-                            cursors[cursor].SetActive(true);
-                        else if (currState == ControlBinderStateMachine.State.Prep)
-                            Kernel.disalble();
-                        else if (prevState == ControlBinderStateMachine.State.Holding)
-                            Kernel.enalble();
-                    }
-                    if (accept)
-                    {
-                        if (currState == ControlBinderStateMachine.State.Default)
-                        {
-                            CustomInput.DefaultPad();
-                            Attack.text = CustomInput.GamePadAttack;
-                            Block.text = CustomInput.GamePadBlock;
-                            Jump.text = CustomInput.GamePadJump;
-                            CycleLeft.text = CustomInput.GamePadCycleLeft;
-                            CycleRight.text = CustomInput.GamePadCycleRight;
-                            Left.text = CustomInput.GamePadLeft;
-                            Right.text = CustomInput.GamePadRight;
-                            ChangeColor.text = CustomInput.GamePadChangeColor;
-                            Up.text = CustomInput.GamePadUp;
-                            Down.text = CustomInput.GamePadDown;
-                            Super.text = CustomInput.GamePadSuper;
-                            Accept.text = CustomInput.GamePadAccept;
-                            Cancel.text = CustomInput.GamePadCancel;
-                            Pause.text = CustomInput.GamePadPause;
-                        }
-                        if (currState == ControlBinderStateMachine.State.Exit)
-                            Kernel.controlsExit();
-                    }
-                }
-            }
-        }
+	        ControlBinderStateMachine.State prevState = currState;
+	        if (running)
+	        {
+	            bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
+	            currState = machine.update(accept);
+	            if (prevState != currState)
+	            {
+	                foreach (GameObject g in cursors)
+	                    g.SetActive(false);
+	                int cursor = (int)currState - 1;
+	                if (cursor >= 0 && cursor < 16)
+	                    cursors[cursor].SetActive(true);
+	                else if (currState == ControlBinderStateMachine.State.Prep)
+	                    Kernel.disalble();
+	                else if (prevState == ControlBinderStateMachine.State.Holding)
+	                    Kernel.enalble();
+	            }
+	            if (accept)
+	            {
+	                if (currState == ControlBinderStateMachine.State.Default)
+	                {
+	                    CustomInput.DefaultPad();
+	                    Attack.text = CustomInput.GamePadAttack;
+	                    Block.text = CustomInput.GamePadBlock;
+	                    Jump.text = CustomInput.GamePadJump;
+	                    CycleLeft.text = CustomInput.GamePadCycleLeft;
+	                    CycleRight.text = CustomInput.GamePadCycleRight;
+	                    Left.text = CustomInput.GamePadLeft;
+	                    Right.text = CustomInput.GamePadRight;
+	                    ChangeColor.text = CustomInput.GamePadChangeColor;
+	                    Up.text = CustomInput.GamePadUp;
+	                    Down.text = CustomInput.GamePadDown;
+	                    Super.text = CustomInput.GamePadSuper;
+	                    Accept.text = CustomInput.GamePadAccept;
+	                    Cancel.text = CustomInput.GamePadCancel;
+	                    Pause.text = CustomInput.GamePadPause;
+	                }
+	                if (currState == ControlBinderStateMachine.State.Exit)
+	                    Kernel.controlsExit();
+	            }
+	        }
+	    }
 
         public override void wake()
         {

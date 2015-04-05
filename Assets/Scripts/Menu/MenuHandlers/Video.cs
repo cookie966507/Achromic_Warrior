@@ -133,7 +133,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Resolutions()
         {
-            if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedResolution = true;
                 int temp = (int)resolutionBar.value;
@@ -143,7 +143,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 resolutionBar.value = temp;
                 doResolutions(temp);
             }
-            if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedResolution = true;
                 int temp = (int)resolutionBar.value;
@@ -175,7 +175,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Quality()
         {
-            if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedQuality = true;
                 int temp = (int)qualityBar.value;
@@ -185,7 +185,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 qualityBar.value = temp;
                 doQuality(temp);
             }
-            if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedQuality = true;
                 int temp = (int)qualityBar.value;
@@ -353,46 +353,46 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static video Resolutions()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.exit;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.fullscreen;
             return video.resolutions;
         }
         private static video Fullscreen()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.resolutions;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.quality;
             return video.fullscreen;
         }
 
         private static video Quality()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.fullscreen;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.exit;
             return video.quality;
         }
         private static video Accept()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.quality;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.resolutions;
-            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
                 return video.exit;
             return video.accept;
         }
         private static video Exit()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return video.quality;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return video.resolutions;
-            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead || CustomInput.RightFreshPressDeleteOnRead)
                 return video.accept;
             return video.exit;
         }

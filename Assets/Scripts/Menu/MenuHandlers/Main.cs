@@ -185,25 +185,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static main Play()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.credits;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.settings;
             return main.play;
         }
         private static main Settings()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.play;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.credits;
             return main.settings;
         }
         private static main Credits()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.settings;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.play;
             return main.credits;
         }

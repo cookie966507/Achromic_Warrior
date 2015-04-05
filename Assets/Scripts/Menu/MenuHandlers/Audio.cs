@@ -93,7 +93,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Music()
         {
-            if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 musicBar.value = temp;
                 doMusic(temp);
             }
-            if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedMusic = true;
                 float temp = musicBar.value;
@@ -120,7 +120,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void SFX()
         {
-            if (CustomInput.LeftFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.LeftArrow))
+            if (CustomInput.LeftFreshPressDeleteOnRead)
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;
@@ -129,7 +129,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 sfxBar.value = temp;
                 doSFX(temp);
             }
-            if (CustomInput.RightFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.RightArrow))
+            if (CustomInput.RightFreshPressDeleteOnRead)
             {
                 touchedSFX = true;
                 float temp = sfxBar.value;
@@ -245,25 +245,25 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static audio Music()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return audio.exit;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return audio.sfx;
             return audio.music;
         }
         private static audio SFX()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return audio.music;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return audio.exit;
             return audio.sfx;
         }
         private static audio Exit()
         {
-            if (CustomInput.UpFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.UpArrow))
+            if (CustomInput.UpFreshPressDeleteOnRead)
                 return audio.sfx;
-            if (CustomInput.DownFreshPressDeleteOnRead || Input.GetKeyDown(KeyCode.DownArrow))
+            if (CustomInput.DownFreshPressDeleteOnRead)
                 return audio.music;
             return audio.exit;
         }
