@@ -449,6 +449,7 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 _jump = true;
+				_ghost = true;
             }
         }
         private static void Jump2()
@@ -457,6 +458,7 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 _jump = true;
+				_ghost = true;
             }
         }
         private static void InAirNow()
