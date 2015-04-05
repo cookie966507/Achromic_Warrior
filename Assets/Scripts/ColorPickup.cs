@@ -14,6 +14,7 @@ namespace Assets.Scripts
         //what kind of color pickup
         private ColorElement _color;
 
+		public bool _isCollected = false;
 
         void Start()
         {
@@ -23,7 +24,21 @@ namespace Assets.Scripts
             else if (_color.Equals(ColorElement.Blue)) GetComponent<Renderer>().material.color = Color.blue;
 
             else Debug.LogError("Colors for orbs should just be rgb");
+
+			this.GetComponentInChildren<ParticleSystem>().startColor = CustomColor.GetColor(_color);
+
         }
+
+		void Update()
+		{
+			if(!Data.GameManager.SuspendedState)
+			{
+				if(!this.GetComponentInChildren<ParticleSystem>().isPlaying && _isCollected)
+				{
+					this.GetComponent<Util.Destroyer>().DestroyImmediate();
+				}
+			}
+		}
 
         //pickup collides with something
         void OnCollisionEnter2D(Collision2D col)
@@ -40,6 +55,15 @@ namespace Assets.Scripts
                 }
             }
         }
+
+		public void Collected()
+		{
+			_isCollected = true;
+			this.GetComponentInChildren<ParticleSystem>().Play();
+			Destroy (this.GetComponent<CircleCollider2D>());
+			Destroy (this.GetComponent<Rigidbody2D>());
+			this.GetComponent<Renderer>().enabled = false;
+		}
 
         public float Amount
         {

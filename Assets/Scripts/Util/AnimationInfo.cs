@@ -10,6 +10,8 @@ namespace Assets.Scripts.Util
 		//private float _time = 0f;
 		private float _speed = 0f;
 
+		public bool _playAtEnd = false;
+
 		void Update()
 		{
 			if(Data.GameManager.Paused && _doOnce)
@@ -17,14 +19,18 @@ namespace Assets.Scripts.Util
 				_doOnce = false;
 				_speed = this.GetComponent<Animator>().speed;
 				this.GetComponent<Animator>().speed = 0;
-				//_time = this.GetComponent<Animator>().playbackTime;
-				//this.GetComponent<Animator>().playbackTime = 0;
 			}
 			else if (!Data.GameManager.Paused && !_doOnce)
 			{
 				_doOnce = true;
 				this.GetComponent<Animator>().speed = _speed;
-				//this.GetComponent<Animator>().playbackTime = _time;
+			}
+
+			if(Data.GameManager.End && _doOnce && !_playAtEnd)
+			{
+				_doOnce = false;
+				_speed = this.GetComponent<Animator>().speed;
+				this.GetComponent<Animator>().speed = 0;
 			}
 		}
 	}
