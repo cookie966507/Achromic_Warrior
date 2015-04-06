@@ -22,12 +22,12 @@ namespace Assets.Scripts.Menu.MenuHandlers
         public UnityEngine.UI.Text Accept;
         public UnityEngine.UI.Text Cancel;
         public UnityEngine.UI.Text Pause;
-        
+
         private ControlBinderStateMachine machine = new ControlBinderStateMachine();
         private delegate void state();
         private ControlBinderStateMachine.State currState;
         private bool duplicate;
-        private bool running=false;
+        private bool running = false;
 
         private static bool isLeft;
 
@@ -61,48 +61,53 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            ControlBinderStateMachine.State prevState = currState;
-            if (running)
-            {
-                bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
-                currState = machine.update(accept);
-                if (prevState != currState)
-                {
-                    foreach (GameObject g in cursors)
-                        g.SetActive(false);
-                    int cursor = (int)currState-1;
-                    if (cursor >= 0 && cursor<16)
-                        cursors[cursor].SetActive(true);
-                    else if(currState==ControlBinderStateMachine.State.Prep)
-                        Kernel.disalble();
-                    else if(prevState==ControlBinderStateMachine.State.Holding)
-                        Kernel.enalble();
-                }
-                if (accept)
-                {
-                    if (currState == ControlBinderStateMachine.State.Default)
-                    {
-                        CustomInput.DefaultPad();
-                        Attack.text = CustomInput.GamePadAttack;
-                        Block.text = CustomInput.GamePadBlock;
-                        Jump.text = CustomInput.GamePadJump;
-                        CycleLeft.text = CustomInput.GamePadCycleLeft;
-                        CycleRight.text = CustomInput.GamePadCycleRight;
-                        Left.text = CustomInput.GamePadLeft;
-                        Right.text = CustomInput.GamePadRight;
-                        ChangeColor.text = CustomInput.GamePadChangeColor;
-                        Up.text = CustomInput.GamePadUp;
-                        Down.text = CustomInput.GamePadDown;
-                        Super.text = CustomInput.GamePadSuper;
-                        Accept.text = CustomInput.GamePadAccept;
-                        Cancel.text = CustomInput.GamePadCancel;
-                        Pause.text = CustomInput.GamePadPause;
-                    }
-                    if (currState == ControlBinderStateMachine.State.Exit)
-                        Kernel.controlsExit();
-                }
-            }
-        }
+	        ControlBinderStateMachine.State prevState = currState;
+	        if (running)
+	        {
+	            bool accept = CustomInput.AcceptFreshPressDeleteOnRead;
+	            currState = machine.update(accept);
+	            if (prevState != currState)
+	            {
+	                foreach (GameObject g in cursors)
+	                    g.SetActive(false);
+	                int cursor = (int)currState - 1;
+	                if (cursor >= 0 && cursor < 16)
+	                    cursors[cursor].SetActive(true);
+	                else if (currState == ControlBinderStateMachine.State.Prep)
+	                    Kernel.disalble();
+	                else if (prevState == ControlBinderStateMachine.State.Holding)
+	                    Kernel.enalble();
+	            }
+	            if (accept)
+	            {
+	                if (currState == ControlBinderStateMachine.State.Default)
+	                {
+	                    CustomInput.DefaultPad();
+	                    Attack.text = CustomInput.GamePadAttack;
+	                    Block.text = CustomInput.GamePadBlock;
+	                    Jump.text = CustomInput.GamePadJump;
+	                    CycleLeft.text = CustomInput.GamePadCycleLeft;
+	                    CycleRight.text = CustomInput.GamePadCycleRight;
+	                    Left.text = CustomInput.GamePadLeft;
+	                    Right.text = CustomInput.GamePadRight;
+	                    ChangeColor.text = CustomInput.GamePadChangeColor;
+	                    Up.text = CustomInput.GamePadUp;
+	                    Down.text = CustomInput.GamePadDown;
+	                    Super.text = CustomInput.GamePadSuper;
+	                    Accept.text = CustomInput.GamePadAccept;
+	                    Cancel.text = CustomInput.GamePadCancel;
+	                    Pause.text = CustomInput.GamePadPause;
+	                }
+	                if (currState == ControlBinderStateMachine.State.Exit)
+	                    Kernel.controlsExit();
+	            }
+				if(currState != ControlBinderStateMachine.State.GettingKey)
+				{
+					if(CustomInput.CancelFreshPressDeleteOnRead)
+						Kernel.controlsExit();
+				}
+	        }
+	    }
 
         public override void wake()
         {
@@ -315,7 +320,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                             if (button == CustomInput.GamePadBlock ||
                                 button == CustomInput.GamePadJump ||
                                 button == CustomInput.GamePadCycleLeft ||
-                                button == CustomInput.GamePadCycleRight||
+                                button == CustomInput.GamePadCycleRight ||
                                 button == CustomInput.GamePadChangeColor ||
                                 button == CustomInput.GamePadSuper ||
                                 button == CustomInput.GamePadUp ||
@@ -526,12 +531,12 @@ namespace Assets.Scripts.Menu.MenuHandlers
                     case ControlBinderStateMachine.State.Jump: CustomInput.GamePadJump = button; Jump.text = CustomInput.GamePadJump; break;
                     case ControlBinderStateMachine.State.CycleLeft: CustomInput.GamePadCycleLeft = button; CycleLeft.text = CustomInput.GamePadCycleLeft; break;
                     case ControlBinderStateMachine.State.CycleRight: CustomInput.GamePadCycleRight = button; CycleRight.text = CustomInput.GamePadCycleRight; break;
-                    case ControlBinderStateMachine.State.ChangeColor: CustomInput.GamePadChangeColor = button; Left.text = CustomInput.GamePadLeft; break;
-                    case ControlBinderStateMachine.State.Super: CustomInput.GamePadSuper = button; Right.text = CustomInput.GamePadRight; break;
-                    case ControlBinderStateMachine.State.Up: CustomInput.GamePadUp = button; ChangeColor.text = CustomInput.GamePadChangeColor; break;
-                    case ControlBinderStateMachine.State.Down: CustomInput.GamePadDown = button; Up.text = CustomInput.GamePadUp; break;
-                    case ControlBinderStateMachine.State.Left: CustomInput.GamePadLeft = button; Down.text = CustomInput.GamePadDown; break;
-                    case ControlBinderStateMachine.State.Right: CustomInput.GamePadRight = button; Super.text = CustomInput.GamePadSuper; break;
+				    case ControlBinderStateMachine.State.ChangeColor: CustomInput.GamePadChangeColor = button;  ChangeColor.text = CustomInput.GamePadChangeColor; break;
+				    case ControlBinderStateMachine.State.Super: CustomInput.GamePadSuper = button; Super.text = CustomInput.GamePadSuper; break;
+				    case ControlBinderStateMachine.State.Up: CustomInput.GamePadUp = button; Up.text = CustomInput.GamePadUp; break;
+				    case ControlBinderStateMachine.State.Down: CustomInput.GamePadDown = button; Down.text = CustomInput.GamePadDown; break;
+				    case ControlBinderStateMachine.State.Left: CustomInput.GamePadLeft = button; Left.text = CustomInput.GamePadLeft; break;
+				    case ControlBinderStateMachine.State.Right: CustomInput.GamePadRight = button; Right.text = CustomInput.GamePadRight; break;
                     case ControlBinderStateMachine.State.Accept: CustomInput.GamePadAccept = button; Accept.text = CustomInput.GamePadAccept; break;
                     case ControlBinderStateMachine.State.Cancel: CustomInput.GamePadCancel = button; Cancel.text = CustomInput.GamePadCancel; break;
                     default: CustomInput.GamePadPause = button; Pause.text = CustomInput.GamePadPause; break;

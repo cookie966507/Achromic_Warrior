@@ -728,7 +728,7 @@ namespace Assets.Scripts
         }
         public static string GamePadSuper
         {
-            get { return gamePadDown; }
+            get { return gamePadSuper; }
             set
             {
                 gamePadSuper = value;
@@ -765,7 +765,12 @@ namespace Assets.Scripts
 
         void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
+            bools = 0;
+            boolsUp = 0;
+            boolsHeld = 0;
+            boolsFreshPress = 0;
+            boolsFreshPressAccessed = 0;
+            boolsFreshPressDeleteOnRead = 0;
             if (PlayerPrefs.HasKey(KeyHash + 0))
             {
                 keyBoardAttack = (KeyCode)PlayerPrefs.GetInt(0 + KeyHash);
@@ -813,12 +818,12 @@ namespace Assets.Scripts
                 updateKey(JUMP, keyBoardJump);
                 updateKey(CYCLELEFT, keyBoardCycleLeft);
                 updateKey(CYCLERIGHT, keyBoardCycleRight);
-                updateKey(LEFT, keyBoardLeft);
-                updateKey(RIGHT, keyBoardRight);
+                updateKey(LEFT, keyBoardLeft, KeyCode.LeftArrow);
+                updateKey(RIGHT, keyBoardRight, KeyCode.RightArrow);
                 updateKey(BLOCK, keyBoardBlock);
                 updateKey(CHANGECOLOR, keyBoardChangeColor);
-                updateKey(UP, keyBoardUp);
-                updateKey(DOWN, keyBoardDown);
+                updateKey(UP, keyBoardUp, KeyCode.UpArrow);
+                updateKey(DOWN, keyBoardDown, KeyCode.DownArrow);
                 updateKey(SUPER, keyBoardSuper);
                 updateKey(ACCEPT, keyBoardAccept);
                 updateKey(CANCEL, keyBoardCancel);
@@ -885,7 +890,7 @@ namespace Assets.Scripts
         {
             float input = Input.GetAxis(axes);
             bool key = false, keyUp = false;
-            if (axes == LEFT_STICK_LEFT || axes == LEFT_STICK_UP || axes == RIGHT_STICK_LEFT || axes == RIGHT_STICK_UP || axes == DPAD_LEFT || axes == DPAD_DOWN)
+            if (axes == LEFT_STICK_LEFT || axes == LEFT_STICK_UP || axes == RIGHT_STICK_LEFT || axes == RIGHT_STICK_UP || axes == DPAD_LEFT || axes == DPAD_DOWN || axes == RIGHT_TRIGGER)
             {
                 if (input < 0)
                     key = true;
@@ -1045,11 +1050,23 @@ namespace Assets.Scripts
 
         public static void UpdatePause()
         {
-            bools = bools & ~PAUSE;
+            bools = bools | PAUSE;
             boolsHeld = boolsHeld & ~PAUSE;
             boolsUp = boolsUp & ~PAUSE;
             boolsFreshPress = boolsFreshPress & ~PAUSE;
+            boolsFreshPressAccessed = boolsFreshPressAccessed & ~PAUSE;
+            boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~PAUSE;
         }
+
+		public static void UpdateChangeColor()
+		{
+			bools = bools | CHANGECOLOR;
+			boolsHeld = boolsHeld & ~CHANGECOLOR;
+			boolsUp = boolsUp & ~CHANGECOLOR;
+			boolsFreshPress = boolsFreshPress & ~CHANGECOLOR;
+			boolsFreshPressAccessed = boolsFreshPressAccessed & ~CHANGECOLOR;
+			boolsFreshPressDeleteOnRead = boolsFreshPressDeleteOnRead & ~CHANGECOLOR;
+		}
 
         public static string GetText(string input)
         {
@@ -1062,12 +1079,12 @@ namespace Assets.Scripts
                 case "Jump": return usePad ? GamePadJump : KeyBoardJump.ToString();
                 case "CycleLeft": return usePad ? GamePadCycleLeft : KeyBoardCycleLeft.ToString();
                 case "CycleRight": return usePad ? GamePadCycleRight : KeyBoardCycleRight.ToString();
-                case "Left": return usePad ? GamePadLeft : KeyBoardLeft.ToString();
-                case "Right": return usePad ? GamePadRight : KeyBoardRight.ToString();
+                case "Left": return usePad ? GamePadLeft : KeyBoardLeft.ToString() + " / Left Arrow";
+                case "Right": return usePad ? GamePadRight : KeyBoardRight.ToString() + " / Right Arrow";
                 case "Block": return usePad ? GamePadBlock : KeyBoardBlock.ToString();
                 case "ChangeColor": return usePad ? GamePadChangeColor : KeyBoardChangeColor.ToString();
-                case "Up": return usePad ? GamePadUp : KeyBoardUp.ToString();
-                case "Down": return usePad ? GamePadDown : KeyBoardDown.ToString();
+                case "Up": return usePad ? GamePadUp : KeyBoardUp.ToString() + " / Up Arrow";
+                case "Down": return usePad ? GamePadDown : KeyBoardDown.ToString() + " / Down Arrow";
                 case "Super": return usePad ? GamePadSuper : KeyBoardSuper.ToString();
                 case "Accept": return usePad ? GamePadAccept : KeyBoardAccept.ToString();
                 case "Cancel": return usePad ? GamePadCancel : KeyBoardCancel.ToString();

@@ -47,7 +47,7 @@ namespace Assets.Scripts.Enemies
 		
 		void Update ()
 		{
-			if(!GameManager.Paused)
+			if(!GameManager.SuspendedState)
 			{
 				if(_numInLevel > 0)
 				{
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Enemies
 					if(_numEnemies == 0)
 					{
 						//end level here
-						Debug.Log ("Won!");
+						GameManager.State = GameState.Win;
 					}
 				}
 			}

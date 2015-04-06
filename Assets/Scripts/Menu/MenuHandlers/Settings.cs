@@ -30,17 +30,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            SettingsStateMachine.setting prevState = currState;
-            currState = machine.update();
-            if (prevState != currState)
+            if (Kernel.enabled)
             {
-                foreach (GameObject g in cursors)
-                    g.SetActive(false);
-                int cursor = (int)currState - 1;
-                if (cursor >= 0)
-                    cursors[cursor].SetActive(true);
+                SettingsStateMachine.setting prevState = currState;
+                currState = machine.update();
+                if (prevState != currState)
+                {
+                    foreach (GameObject g in cursors)
+                        g.SetActive(false);
+                    int cursor = (int)currState - 1;
+                    if (cursor >= 0)
+                        cursors[cursor].SetActive(true);
+                }
+                doState[(int)currState]();
             }
-            doState[(int)currState]();
         }
 
         public override void wake()
@@ -66,6 +69,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAudio();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doAudio()
         {
@@ -76,6 +81,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doVideo();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doVideo()
         {
@@ -86,6 +93,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doControls();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doControls()
         {
@@ -96,6 +105,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doExit()
         {

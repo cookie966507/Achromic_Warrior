@@ -42,36 +42,38 @@ namespace Assets.Scripts.UI
 		
 		void Update ()
 		{
-			//meters are full so we can flash
-			if(_r.transform.localScale.x == 1 && _g.transform.localScale.x == 1 && _b.transform.localScale.x == 1 ) Full = true;
-			else if(!_achromic) Full = false;
-
-			//if we can flash
-			if(_full && !_achromic)
+			if(!Data.GameManager.SuspendedState)
 			{
-				//going to black
-				if(_increase)
+				//meters are full so we can flash
+				if(_r.transform.localScale.x == 1 && _g.transform.localScale.x == 1 && _b.transform.localScale.x == 1 ) Full = true;
+				else if(!_achromic) Full = false;
+
+				//if we can flash
+				if(_full && !_achromic)
 				{
-					_timer += Time.deltaTime;
-					this.GetComponent<Image>().color = Color.Lerp(CustomColor.GetColor(_color), CustomColor.GetColor(_alt), _timer * 1.5f);
+					//going to black
+					if(_increase)
+					{
+						_timer += Time.deltaTime;
+						this.GetComponent<Image>().color = Color.Lerp(CustomColor.GetColor(_color), CustomColor.GetColor(_alt), _timer * 1.5f);
 
-					if(_timer * 1.5f >= 1) _increase = !_increase;
+						if(_timer * 1.5f >= 1) _increase = !_increase;
+					}
+					//then back to white
+					else{
+						_timer -= Time.deltaTime;
+						this.GetComponent<Image>().color = Color.Lerp(CustomColor.GetColor(_color), CustomColor.GetColor(_alt), _timer * 1.5f);
+						if(_timer * 1.5 <= 0) _increase = !_increase;
+					}
 				}
-				//then back to white
-				else{
-					_timer -= Time.deltaTime;
-					this.GetComponent<Image>().color = Color.Lerp(CustomColor.GetColor(_color), CustomColor.GetColor(_alt), _timer * 1.5f);
-					if(_timer * 1.5 <= 0) _increase = !_increase;
-				}
-			}
 
-			//stop flashing if activated
-			if(_achromic)
-			{
-				if(_r.transform.localScale.x == 0) Full = false;
+				//stop flashing if activated
+				if(_achromic)
+				{
+					if(_r.transform.localScale.x == 0) Full = false;
+				}
 			}
 		}
-
 		//color of the frame
 		public ColorElement FrameColor
 		{

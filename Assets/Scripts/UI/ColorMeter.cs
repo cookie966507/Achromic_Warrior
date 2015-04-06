@@ -28,7 +28,7 @@ namespace Assets.Scripts.UI
 			_wheel = GameObject.Find("ColorWheel").GetComponent<ColorWheel>();
 
 			//init scale at 0
-			this.transform.localScale = new Vector3(0f, 1f, 1f);
+			this.transform.localScale = new Vector3(0.5f, 1f, 1f);
 
 			//set color
 			this.GetComponent<Image>().color = CustomColor.GetColor(_color);
