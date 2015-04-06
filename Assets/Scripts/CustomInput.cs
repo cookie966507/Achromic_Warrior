@@ -728,7 +728,7 @@ namespace Assets.Scripts
         }
         public static string GamePadSuper
         {
-            get { return gamePadDown; }
+            get { return gamePadSuper; }
             set
             {
                 gamePadSuper = value;
