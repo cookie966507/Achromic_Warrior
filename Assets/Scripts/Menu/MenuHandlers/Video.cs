@@ -153,6 +153,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 resolutionBar.value = temp;
                 doResolutions(temp);
             }
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doResolutions(int val)
         {
@@ -167,6 +169,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 fullscreenButton.isOn = !fullscreenButton.isOn;
                 doFullscreen();
             }
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doFullscreen()
         {
@@ -195,6 +199,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 qualityBar.value = temp;
                 doQuality(temp);
             }
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doQuality(int val)
         {
@@ -205,6 +211,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAccept();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doAccept()
         {
@@ -215,6 +223,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doExit()
         {

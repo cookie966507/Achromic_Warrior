@@ -69,6 +69,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAudio();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doAudio()
         {
@@ -79,6 +81,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doVideo();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doVideo()
         {
@@ -89,6 +93,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doControls();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doControls()
         {
@@ -99,6 +105,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doExit()
         {

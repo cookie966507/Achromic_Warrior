@@ -101,6 +101,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
 	                if (currState == ControlBinderStateMachine.State.Exit)
 	                    Kernel.controlsExit();
 	            }
+				if(currState != ControlBinderStateMachine.State.GettingKey)
+				{
+					if(CustomInput.CancelFreshPressDeleteOnRead)
+						Kernel.controlsExit();
+				}
 	        }
 	    }
 

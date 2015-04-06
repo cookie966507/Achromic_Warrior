@@ -90,10 +90,10 @@ namespace Assets.Scripts.Menu.MenuHandlers
 	                    CycleLeft.text = CustomInput.KeyBoardCycleLeft.ToString();
 	                    CycleRight.text = CustomInput.KeyBoardCycleRight.ToString();
 	                    Left.text = CustomInput.KeyBoardLeft.ToString() + " / Left Arrow";
-							Right.text = CustomInput.KeyBoardRight.ToString() + " / Right Arrow";
+						Right.text = CustomInput.KeyBoardRight.ToString() + " / Right Arrow";
 	                    ChangeColor.text = CustomInput.KeyBoardChangeColor.ToString();
-							Up.text = CustomInput.KeyBoardUp.ToString() + " / Up Arrow";
-							Down.text = CustomInput.KeyBoardDown.ToString() + " / Down Arrow";
+						Up.text = CustomInput.KeyBoardUp.ToString() + " / Up Arrow";
+						Down.text = CustomInput.KeyBoardDown.ToString() + " / Down Arrow";
 	                    Super.text = CustomInput.KeyBoardSuper.ToString();
 	                    Accept.text = CustomInput.KeyBoardAccept.ToString();
 	                    Cancel.text = CustomInput.KeyBoardCancel.ToString();
@@ -102,6 +102,13 @@ namespace Assets.Scripts.Menu.MenuHandlers
 	                if (currState == ControlBinderStateMachine.State.Exit)
 	                    Kernel.controlsExit();
 	            }
+				if(currState != ControlBinderStateMachine.State.GettingKey)
+				{
+					if(CustomInput.CancelFreshPressDeleteOnRead)
+					{
+						Kernel.controlsExit();
+					}
+				}
 	        }
 	    }
 
