@@ -38,20 +38,27 @@ namespace Assets.Scripts.Player
             if(attack>0)
             {
                 reset+=UnityEngine.Time.deltaTime;
-                if(reset>.5f)
+                if(reset>1f)
                 {
                     attack = 0;
                     reset = 0;
                 }
             }
             if (hit)
-                return Enums.PlayerState.hit; ;
+			{
+				reset = 0;
+                return Enums.PlayerState.hit;
+			}
             if (inAir)
                 return Enums.PlayerState.inAir;
             if (CustomInput.BlockFreshPress)
+			{
+				reset = 0;
                 return Enums.PlayerState.block;
+			}
             if (CustomInput.AttackFreshPress)
             {
+				reset = 0;
                 if(attack==0)
                     return Enums.PlayerState.attack1;
                 if (attack == 1)
@@ -71,12 +78,19 @@ namespace Assets.Scripts.Player
         private static Enums.PlayerState Attack1(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
+			{
+				reset = 0;
                 return Enums.PlayerState.hit;
+			}
             if (CustomInput.Block)
+			{
+				reset = 0;
                 return Enums.PlayerState.block;
+			}
             if (animDone)
             {
                 attack = 1;
+				reset = 0;
                 return Enums.PlayerState.idle;
             }
             return Enums.PlayerState.attack1;
@@ -84,9 +98,15 @@ namespace Assets.Scripts.Player
         private static Enums.PlayerState Attack2(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
+			{
+				reset = 0;
                 return Enums.PlayerState.hit;
+			}
             if (CustomInput.Block)
+			{
+				reset = 0;
                 return Enums.PlayerState.block;
+			}
             if (animDone)
             {
                 attack = 2;
@@ -98,9 +118,15 @@ namespace Assets.Scripts.Player
         private static Enums.PlayerState Attack3(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
+			{
+				reset = 0;
                 return Enums.PlayerState.hit;
+			}
             if (CustomInput.Block)
+			{
+				reset = 0;
                 return Enums.PlayerState.block;
+			}
             if (animDone)
             {
                 attack = 0;

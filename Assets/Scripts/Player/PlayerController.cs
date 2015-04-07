@@ -88,6 +88,8 @@ namespace Assets.Scripts.Player
             block = _block;
             machine = new PlayerStateMachine();
             doState = new state[] { Idle, Move, Jump, Jump2, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
+			renderTimer = 0;
+			invunTimer = 0;
         }
 
         void Update()

@@ -61,7 +61,8 @@ namespace Assets.Scripts
 			_isCollected = true;
 			this.GetComponentInChildren<ParticleSystem>().Play();
 			Destroy (this.GetComponent<CircleCollider2D>());
-			Destroy (this.GetComponent<Rigidbody2D>());
+			GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+			GetComponent<Rigidbody2D>().gravityScale = 0;
 			this.GetComponent<Renderer>().enabled = false;
 		}
 
