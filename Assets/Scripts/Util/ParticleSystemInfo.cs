@@ -11,13 +11,13 @@ namespace Assets.Scripts.Util
 		
 		void Update()
 		{
-			if(Data.GameManager.Paused && _doOnce)
+			if(Data.GameManager.SuspendedState && _doOnce)
 			{
 				_doOnce = false;
 				_isPlaying = this.GetComponent<ParticleSystem>().isPlaying;
 				if(_isPlaying) this.GetComponent<ParticleSystem>().Pause();
 			}
-			else if (!Data.GameManager.Paused && !_doOnce)
+			else if (!Data.GameManager.SuspendedState && !_doOnce)
 			{
 				_doOnce = true;
 				if(_isPlaying) this.GetComponent<ParticleSystem>().Play();

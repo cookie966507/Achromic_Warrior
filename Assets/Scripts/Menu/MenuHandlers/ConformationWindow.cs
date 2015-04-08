@@ -57,11 +57,15 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAnswer(true);
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doAnswer(false);
         }
         private static void No()
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAnswer(false);
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doAnswer(false);
         }
         private static void doAnswer(bool yesNo)
         {

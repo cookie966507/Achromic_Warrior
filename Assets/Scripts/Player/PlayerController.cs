@@ -88,6 +88,8 @@ namespace Assets.Scripts.Player
             block = _block;
             machine = new PlayerStateMachine();
             doState = new state[] { Idle, Move, Jump, Jump2, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
+			renderTimer = 0;
+			invunTimer = 0;
         }
 
         void Update()
@@ -449,6 +451,7 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 _jump = true;
+				_ghost = true;
             }
         }
         private static void Jump2()
@@ -457,6 +460,7 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 _jump = true;
+				_ghost = true;
             }
         }
         private static void InAirNow()

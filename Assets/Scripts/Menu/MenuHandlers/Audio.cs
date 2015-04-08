@@ -111,6 +111,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 musicBar.value = temp;
                 doMusic(temp);
             }
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doMusic(float val)
         {
@@ -138,6 +140,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 sfxBar.value = temp;
                 doSFX(temp);
             }
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doSFX(float val)
         {
@@ -149,6 +153,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doExit()
         {

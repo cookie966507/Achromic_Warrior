@@ -69,6 +69,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doKeyBoard();
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doKeyBoard()
         {
@@ -79,6 +81,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doGamePad();
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doGamePad()
         {
@@ -89,6 +93,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doExit()
         {

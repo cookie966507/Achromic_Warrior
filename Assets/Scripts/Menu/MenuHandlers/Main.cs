@@ -27,7 +27,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Start()
         {
-            doState = new state[] { Sleep, Play, Settings, Credits };
+            doState = new state[] { Sleep, Play, Settings, Credits, Exit };
         }
 
         void Update()
@@ -71,6 +71,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doPlay();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doPlay()
         {
@@ -89,6 +91,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doSettings();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doSettings()
         {
@@ -99,11 +103,33 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doCredits();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doCredits()
         {
             Data.GameManager.GotoLevel("credits");
         }
+
+		private static void Exit()
+		{
+			if (CustomInput.AcceptFreshPressDeleteOnRead)
+				doExit();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
+		}
+		private static void doExit()
+		{
+			ConformationWindow.getConformation(QuitGame);
+		}
+
+		static void QuitGame(bool update)
+		{
+			if (update)
+			{
+				Application.Quit();
+			}
+		}
 
         public void PlayClick()
         {
@@ -137,10 +163,21 @@ namespace Assets.Scripts.Menu.MenuHandlers
             cursors[(int)MainStateMachine.main.credits - 1].SetActive(true);
             doCredits();
         }
+
+		public void ExitClick()
+		{
+			if (currState == MainStateMachine.main.sleep)
+				Kernel.interrupt(isLeft);
+			machine.goTo(MainStateMachine.main.exit);
+			foreach (GameObject g in cursors)
+				g.SetActive(false);
+			cursors[(int)MainStateMachine.main.exit - 1].SetActive(true);
+			doExit();
+		}
     }
     class MainStateMachine
     {
-        internal enum main { sleep, play, settings, credits };
+        internal enum main { sleep, play, settings, credits, exit };
         private delegate main machine();//function pointer
         private machine[] getNextState;//array of function pointers
         private main currState;
@@ -150,7 +187,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             currState = main.sleep;
             //fill array with functions
-            getNextState = new machine[] { Sleep, Play, Settings, Credits };
+            getNextState = new machine[] { Sleep, Play, Settings, Credits, Exit };
         }
 
         internal main update()
@@ -186,7 +223,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         private static main Play()
         {
             if (CustomInput.UpFreshPressDeleteOnRead)
-                return main.credits;
+                return main.exit;
             if (CustomInput.DownFreshPressDeleteOnRead)
                 return main.settings;
             return main.play;
@@ -204,8 +241,16 @@ namespace Assets.Scripts.Menu.MenuHandlers
             if (CustomInput.UpFreshPressDeleteOnRead)
                 return main.settings;
             if (CustomInput.DownFreshPressDeleteOnRead)
-                return main.play;
+                return main.exit;
             return main.credits;
         }
+		private static main Exit()
+		{
+			if (CustomInput.UpFreshPressDeleteOnRead)
+				return main.credits;
+			if (CustomInput.DownFreshPressDeleteOnRead)
+				return main.play;
+			return main.exit;
+		}
     }
 }
