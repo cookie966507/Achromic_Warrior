@@ -28,6 +28,7 @@ namespace Assets.Scripts.Player
         public float _moveForce = 200f;
         //capping the speed of the player
         public float _maxSpeed = 4f;
+		public float _maxKnockbackSpeed = 4f;
 
 
         //reference to the attack
@@ -320,7 +321,7 @@ namespace Assets.Scripts.Player
 
 
                     // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxSpeed)
+                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxKnockbackSpeed)
                     {
                         //account for air control
                         if (!inAir) GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce);
@@ -328,10 +329,10 @@ namespace Assets.Scripts.Player
                     }
 
                     // If the player's horizontal velocity is greater than the maxSpeed...
-                    if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxSpeed)
+					if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxKnockbackSpeed)
                     {
                         // ... set the player's velocity to the maxSpeed in the x axis.
-                        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
+						GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxKnockbackSpeed, GetComponent<Rigidbody2D>().velocity.y);
                     }
                 }
             }
