@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.Util
 {
     class Bullet : MonoBehaviour
     {
@@ -19,10 +19,6 @@ namespace Assets.Scripts.Enemies
 
         void Start()
         {
-            //prevent error from unitialized params
-            dir = Vector3.forward;
-            speed = 2;
-            lifeTime = 2;
         }
 
         void Update()
