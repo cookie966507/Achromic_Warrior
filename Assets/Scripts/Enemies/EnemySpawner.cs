@@ -78,7 +78,7 @@ namespace Assets.Scripts.Enemies
 			}
 		}
 
-		private void SpawnEnemy()
+		internal void SpawnEnemy()
 		{
 			int _randomEnemy = Random.Range(0, _enemyTypes.Length);
 			int _randomSpawn = Random.Range(0, _spawnNodes.Count);
