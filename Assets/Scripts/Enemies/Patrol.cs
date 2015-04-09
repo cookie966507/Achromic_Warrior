@@ -11,6 +11,7 @@ namespace Assets.Scripts.Enemies
 		public Transform[] jumpPoints;
 		public float changeThreshold = 0.03f;
 		public float moveSpeed;
+		private Transform player;
 		private Transform target;
 		private int currentPoint;
 		private float damping = 3.0f;
@@ -31,19 +32,24 @@ namespace Assets.Scripts.Enemies
 			target = patrolPoints [currentPoint];
 			patLen = patrolPoints.Length;
 			jumpLen = jumpPoints.Length;
+			player = FindObjectOfType<Player.PlayerController> ().gameObject.transform;
 			//this.gameObject.layer = LayerMask.NameToLayer("enemy");
 		}
 		
 		protected override void Run()
 		{
+			bool value = PatrolAround ();
+			//print ("Current point: " + currentPoint);
+		}
+
+		protected bool PatrolAround()
+		{
 			changeInY = transform.position.y - lastYPos;
-			//print ("Change: " + changeInY);
 			lastYPos = transform.position.y;
 			// Check if you need to jump to get to your position
 			if ((target.position.y - transform.position.y) >= 2 && Mathf.Abs (changeInY) < changeThreshold) // && target.tag == "pat") 
 			{
 				jumpMode = true;
-				//print ("Trueeeeeee: " + changeInY);
 				Transform current = jumpPoints[0];
 				for(int i = 0; i < jumpLen; i++)
 				{
@@ -66,15 +72,7 @@ namespace Assets.Scripts.Enemies
 					}
 				}
 				target = current;
-				//if(target != null)
-					//print (target.tag + " " + target.localPosition);
 			}
-			/*
-			else if((target.position.y - transform.position.y) < 2 && jumpMode == true)
-			{
-				jumpMode = false;
-			}
-			*/
 			
 			if(transform.position == target.position)
 			{
@@ -84,11 +82,10 @@ namespace Assets.Scripts.Enemies
 					// Need to calculate jump vector
 					Vector2 vector = patrolPoints[currentPoint].position - target.position;
 					vector.y *= jumpForceY;					
-					vector.x = 0; //vector.x *= jumpForceX;
-                    //rigidbody2D.AddForce(vector); 
-
+					vector.x = 0; 
+					
 					vector.x *= jumpForceX;
-                    GetComponent<Rigidbody2D>().AddForce(vector); 
+					GetComponent<Rigidbody2D>().AddForce(vector); 
 					EnterGhost();
 					jumpMode = false;
 					target = patrolPoints[currentPoint];
@@ -97,27 +94,31 @@ namespace Assets.Scripts.Enemies
 				{
 					if(noWait > 0.25)
 					{
-						currentPoint++;
-						if(currentPoint >= patLen)
-							currentPoint = 0;
+						currentPoint = Random.Range (0, patLen);
 						target = patrolPoints[currentPoint];
 						noWait = 0;
 					}
-					//if(noWait == 0)
-						//this.ExitGhost();
 					noWait += Time.deltaTime;
 				}
-				//if(target != null)
-					//print (target.tag + " " + target.localPosition);
 			}
 			
 			transform.position = Vector2.MoveTowards (transform.position, target.position, moveSpeed * Time.deltaTime);
-			//Quaternion rotation = Quaternion.LookRotation(patrolPoints[currentPoint].position - transform.position); 
 			if(transform.rotation.z <= 1 || transform.rotation.z >= -1)
 			{
 				Quaternion adjust = Quaternion.Euler (0, 0, 0);
 				transform.rotation = Quaternion.Slerp(transform.rotation, adjust, Time.deltaTime * damping);	// Is shifting from rotation to player view gradually
 			}
+
+			// Return true if the player is close, false if he is not within range
+			if(Vector2.Distance (player.position, transform.position) < 3.0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
 		}
 	}
 }
