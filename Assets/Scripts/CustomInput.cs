@@ -799,7 +799,7 @@ namespace Assets.Scripts
                 gamePadUp = PlayerPrefs.GetString(22 + KeyHash);
                 gamePadDown = PlayerPrefs.GetString(23 + KeyHash);
                 gamePadSuper = PlayerPrefs.GetString(24 + KeyHash);
-                gamePadAccept = PlayerPrefs.GetString(23 + KeyHash);
+                gamePadAccept = PlayerPrefs.GetString(25 + KeyHash);
                 gamePadCancel = PlayerPrefs.GetString(26 + KeyHash);
                 gamePadPause = PlayerPrefs.GetString(27 + KeyHash);
             }
