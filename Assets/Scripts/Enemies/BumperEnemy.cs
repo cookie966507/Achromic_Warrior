@@ -75,7 +75,6 @@ namespace Assets.Scripts.Enemies
 
 		protected override void Run ()
 		{
-			if(Input.GetKeyDown(KeyCode.P)) this.Attack();
 			//if not attacking
 			if(!_attacking)
 			{
