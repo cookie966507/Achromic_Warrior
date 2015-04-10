@@ -16,7 +16,7 @@ namespace Assets.Scripts.Player
         private static bool die = false;
         private static bool doubleJumped = false;
         private static int attack = 0;
-        private static float reset=0;
+        private static float reset = 0;
 
         public PlayerStateMachine()
         {
@@ -27,7 +27,21 @@ namespace Assets.Scripts.Player
 
         public Enums.PlayerState update(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
-            return currState = getNextState[((int)currState)](inAir, blockSuccess, hit, animDone);//gets te next Enums.PlayerState
+            if (attack > 0)
+            {
+                reset += UnityEngine.Time.deltaTime;
+                if (reset > 1f)
+                {
+                    attack = 0;
+                    reset = 0;
+                }
+            }
+            int prevAt = attack;
+            //UnityEngine.Debug.Log(currState);
+            currState = getNextState[((int)currState)](inAir, blockSuccess, hit, animDone);//gets te next Enums.PlayerState
+            if (prevAt != attack)
+                reset = 0;
+            return currState;
         }
 
 
@@ -35,34 +49,25 @@ namespace Assets.Scripts.Player
 
         private static Enums.PlayerState Idle(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
-            if(attack>0)
-            {
-                reset+=UnityEngine.Time.deltaTime;
-                if(reset>1f)
-                {
-                    attack = 0;
-                    reset = 0;
-                }
-            }
             if (hit)
-			{
-				reset = 0;
                 return Enums.PlayerState.hit;
-			}
             if (inAir)
                 return Enums.PlayerState.inAir;
             if (CustomInput.BlockFreshPress)
-			{
-				reset = 0;
                 return Enums.PlayerState.block;
-			}
             if (CustomInput.AttackFreshPress)
             {
-				reset = 0;
-                if(attack==0)
+                if (attack == 0)
+                {
+                    UnityEngine.Debug.Log("A");
                     return Enums.PlayerState.attack1;
+                }
                 if (attack == 1)
+                {
+                    UnityEngine.Debug.Log("B");
                     return Enums.PlayerState.attack2;
+                }
+                UnityEngine.Debug.Log("C");
                 return Enums.PlayerState.attack3;
             }
             if (CustomInput.JumpFreshPress)
@@ -78,19 +83,13 @@ namespace Assets.Scripts.Player
         private static Enums.PlayerState Attack1(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
-			{
-				reset = 0;
                 return Enums.PlayerState.hit;
-			}
             if (CustomInput.Block)
-			{
-				reset = 0;
                 return Enums.PlayerState.block;
-			}
             if (animDone)
             {
                 attack = 1;
-				reset = 0;
+                UnityEngine.Debug.Log(attack);
                 return Enums.PlayerState.idle;
             }
             return Enums.PlayerState.attack1;
@@ -98,19 +97,18 @@ namespace Assets.Scripts.Player
         private static Enums.PlayerState Attack2(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
-			{
-				reset = 0;
+            {
+                attack = 0;
                 return Enums.PlayerState.hit;
-			}
+            }
             if (CustomInput.Block)
-			{
-				reset = 0;
+            {
+                attack = 0;
                 return Enums.PlayerState.block;
-			}
+            }
             if (animDone)
             {
                 attack = 2;
-                reset = 0;
                 return Enums.PlayerState.idle;
             }
             return Enums.PlayerState.attack2;
@@ -118,19 +116,18 @@ namespace Assets.Scripts.Player
         private static Enums.PlayerState Attack3(bool inAir, bool blockSuccess, bool hit, bool animDone)
         {
             if (hit)
-			{
-				reset = 0;
+            {
+                attack = 0;
                 return Enums.PlayerState.hit;
-			}
+            }
             if (CustomInput.Block)
-			{
-				reset = 0;
+            {
+                attack = 0;
                 return Enums.PlayerState.block;
-			}
+            }
             if (animDone)
             {
                 attack = 0;
-                reset = 0;
                 return Enums.PlayerState.idle;
             }
             return Enums.PlayerState.attack3;
@@ -146,6 +143,7 @@ namespace Assets.Scripts.Player
                 return Enums.PlayerState.idle;
             if (animDone)
             {
+                attack = 1;
                 if (CustomInput.Left || CustomInput.Right)
                     return Enums.PlayerState.move;
                 if (CustomInput.JumpFreshPress)
@@ -176,7 +174,11 @@ namespace Assets.Scripts.Player
                 if (inAir)
                     return Enums.PlayerState.inAir;
                 if (CustomInput.AttackFreshPress)
+                {
+                    if (attack == 1)
+                        return Enums.PlayerState.attack2;
                     return Enums.PlayerState.movingAttack;
+                }
                 if (CustomInput.DownFreshPress)
                     return Enums.PlayerState.crouch;
                 if (CustomInput.JumpFreshPress)
@@ -193,6 +195,7 @@ namespace Assets.Scripts.Player
                 return Enums.PlayerState.block;
             if (animDone)
             {
+                attack = 1;
                 if (CustomInput.AcceptFreshPress)
                     return Enums.PlayerState.attack2;
                 return Enums.PlayerState.idle;
