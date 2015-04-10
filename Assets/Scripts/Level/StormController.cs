@@ -16,6 +16,9 @@ namespace Assets.Scripts.Level
 		private const float DOUBLECHANCE = 0.15f;
 		private const float DOUBLEDELAY = 0.75f;
 
+		public AudioSource _thunder1;
+		public AudioSource _thunder2;
+
 		private List<StormElement> _elements;
 
 		void Awake()
@@ -35,7 +38,14 @@ namespace Assets.Scripts.Level
 					_time = 0;
 					this.SetLightningDelay();
 					if(_lightningDelay < MINTIME + MINTIME * DOUBLECHANCE) _lightningDelay = DOUBLEDELAY;
-
+					if(_thunder2.isPlaying)
+					{
+						Data.SoundManager.PlaySFX(_thunder1);
+					}
+					else
+					{
+						Data.SoundManager.PlaySFX(_thunder2);
+					}
 					for(int i = 0; i < _elements.Count; i++)
 					{
 						_elements[i].Flash();
