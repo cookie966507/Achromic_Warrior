@@ -182,12 +182,16 @@ namespace Assets.Scripts.Player
 						CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
 						if (potentialDamage != null)
 						{
-							damage = potentialDamage.damage;
-							damage -= (int)colorData.Defense;
-							if (blockSucessful)
-								damage -= (int)(colorData.Defense * .5f);
-							if (damage < 0)
-								damage = 0;
+							if(potentialDamage.damage > 0)
+							{
+								damage = potentialDamage.damage;
+								float calcDamage = damage * (1-(colorData.DefenseRatio));
+								damage = Mathf.CeilToInt(calcDamage);
+								if (blockSucessful)
+									damage -= (int)(colorData.Defense * .5f);
+								if (damage <= 0)
+									damage = 1;
+							}
 							DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
 						}
 						else

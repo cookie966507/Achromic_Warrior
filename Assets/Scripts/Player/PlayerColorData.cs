@@ -366,6 +366,11 @@ namespace Assets.Scripts.Player
             get { return _baseDef + _def * _maxDef; }
         }
 
+		public float DefenseRatio
+		{
+			get { return _def; }
+		}
+
         public float Speed
         {
             get { return _baseSpd + _spd * _maxSpd; }
