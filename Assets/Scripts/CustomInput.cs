@@ -995,7 +995,7 @@ namespace Assets.Scripts
             gamePadSuper = LEFT_STICK;
             PlayerPrefs.SetString(24 + KeyHash, LEFT_STICK);
             gamePadAccept = A;
-            PlayerPrefs.SetString(23 + KeyHash, A);
+            PlayerPrefs.SetString(25 + KeyHash, A);
             gamePadCancel = B;
             PlayerPrefs.SetString(26 + KeyHash, B);
             gamePadPause = START;
