@@ -771,7 +771,7 @@ namespace Assets.Scripts
             boolsFreshPress = 0;
             boolsFreshPressAccessed = 0;
             boolsFreshPressDeleteOnRead = 0;
-            if (PlayerPrefs.HasKey(KeyHash + 0))
+            if (PlayerPrefs.HasKey(0 + KeyHash))
             {
                 keyBoardAttack = (KeyCode)PlayerPrefs.GetInt(0 + KeyHash);
                 keyBoardJump = (KeyCode)PlayerPrefs.GetInt(1 + KeyHash);
