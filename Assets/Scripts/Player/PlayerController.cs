@@ -102,9 +102,6 @@ namespace Assets.Scripts.Player
 			}
             if (!GameManager.SuspendedState)
             {
-                if (Input.GetKey(KeyCode.UpArrow))
-                    colorData.AddColor(Color.white, 500f);
-
                 //going Achromic
                 if (CustomInput.SuperFreshPress && colorData.isfull())
                 {
