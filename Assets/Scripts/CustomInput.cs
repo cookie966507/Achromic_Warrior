@@ -1071,7 +1071,7 @@ namespace Assets.Scripts
         public static string GetText(string input)
         {
             string[] arr = input.Split(' ');
-            if (arr[arr.Length - 1] != "<Input>")
+            if (arr[arr.Length - 1] != "<Input>\r")
                 return input;
             switch (arr[0])
             {

@@ -60,13 +60,13 @@ namespace Assets.Scripts.UI
 		{
 			_current = "";
 			string _temp = _text[_index];
-			while(_temp != "<break>")
+			while(_temp != "<break>\r")
 			{
-				if(_temp.Equals(""))
+				if(_temp.Equals("\n"))
 				{
 					_current += "\n";
 				}
-				else if(_temp.EndsWith(" <Input>"))
+				else if(_temp.EndsWith(" <Input>\r"))
 				{
 					_current += CustomInput.GetText(_temp);
 				}

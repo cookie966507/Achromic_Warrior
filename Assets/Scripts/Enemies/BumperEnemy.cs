@@ -102,8 +102,11 @@ namespace Assets.Scripts.Enemies
 				//if it is time to attack
 				if(_attackTimer >= _attackDelay)
 				{
-					//attack
-					this.Attack();
+					if(!this.GetComponent<CircleCollider2D>().IsTouchingLayers(1 << LayerMask.NameToLayer("wall")))
+					{
+						//attack
+						this.Attack();
+					}
 				}
 
 				//mask for layers to collide with and turn around
