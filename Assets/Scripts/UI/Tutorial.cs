@@ -9,7 +9,7 @@ namespace Assets.Scripts.UI
 {
 	public class Tutorial : MonoBehaviour
 	{
-		private string _path = "Assets/Resources/Files/tutorial.txt";
+		public TextAsset _file;
 
 		private List<string> _text;
 
@@ -29,21 +29,11 @@ namespace Assets.Scripts.UI
 		{
 			_text = new List<string>();
 
-			// Create reader & open file
-			StreamReader _file = new StreamReader(_path);
-			//string _contents = _file.ReadToEnd();
-
-			string _temp = "";
-
-			while((_temp = _file.ReadLine()) != null)
+			string[] _arr = _file.text.Split(new char[] {'\n'});
+			for(int i = 0; i < _arr.Length; i++)
 			{
-				_text.Add(_temp);
+				_text.Add(_arr[i]);
 			}
-
-			//close the stream
-			_file.Close();
-
-			//Debug.Log(_contents);
 
 			LoadNextText();
 		}
@@ -70,13 +60,13 @@ namespace Assets.Scripts.UI
 		{
 			_current = "";
 			string _temp = _text[_index];
-			while(_temp != "\\break/")
+			while(_temp != "<break>")
 			{
 				if(_temp.Equals(""))
 				{
 					_current += "\n";
 				}
-				else if(_temp.EndsWith(" \\Input/"))
+				else if(_temp.EndsWith(" <Input>"))
 				{
 					_current += CustomInput.GetText(_temp);
 				}
