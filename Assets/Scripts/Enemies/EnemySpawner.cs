@@ -16,9 +16,13 @@ namespace Assets.Scripts.Enemies
 
 		private List<Transform> _spawnNodes;
 
-		public int _maxEnemiesOnScreen = 5;
+		//public int _maxEnemiesOnScreen = 5;
 		public int _numInLevel;
 		private int _numEnemies = 0;
+
+		public int _batchLimit = 1;
+		public int _maxBatchIncrement = 5;
+		private bool _newBatch = true;
 
 		public GameObject[] _enemyTypes;
 
@@ -51,12 +55,14 @@ namespace Assets.Scripts.Enemies
 			{
 				if(_numInLevel > 0)
 				{
+					if(_numEnemies == _batchLimit) _newBatch = false;
+
 					_spawnTimer += Time.deltaTime;
 					if(_spawnTimer > _spawnDelay)
 					{
 						_spawnTimer = 0f;
 
-						if(_numEnemies < _maxEnemiesOnScreen)
+						if(_numEnemies < _batchLimit && _newBatch)
 						{
 							SpawnEnemy();
 							_numEnemies++;
@@ -103,6 +109,11 @@ namespace Assets.Scripts.Enemies
 		{
 			_numEnemies--;
 			if(!_endless) _remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
+			if(_numEnemies == 0 && _numInLevel > 0)
+			{
+				_newBatch = true;
+				if(_batchLimit < _maxBatchIncrement) _batchLimit++;
+			}
 		}
 	}
 }
