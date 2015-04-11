@@ -1,35 +1,36 @@
-Achromic Warrior \Title
+Achromic Warrior <Title>
 
-Project Lead \Position
+Project Lead <Position>
 Eric Cook
 
-Programming \Position
+Programming <Position>
 Jonathan Hunter
 Clayton Pierce
 Eric Cook
 
-Animations \Position
+Animations <Position>
 James Lee
 
-Art \Position
+Art <Position>
 Eric Cook
 
-UI Design \Position
+UI Design <Position>
 Christian Brice
 Eric Cook
 
-Music \Position
+Music <Position>
 Nick Shooter
+Zach Moore
 Tanika Bantukul
 Haris Aslam
 Kartik Kini
 
-Playtesters \Position
+Playtesters <Position>
 Guillermo Acosta-Rule
 
 *
 *
 *
 
-VGDev \Title
+VGDev <Title>
 Spring 2015
