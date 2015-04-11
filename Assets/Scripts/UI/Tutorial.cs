@@ -24,12 +24,15 @@ namespace Assets.Scripts.UI
 		public float _delay = 2f;
 		private float _timer = 0f;
 
+		private string _newText;
 
 		void Start ()
 		{
 			_text = new List<string>();
 
-			string[] _arr = _file.text.Split(new char[] {'\n'});
+			_newText = _file.text.Replace(System.Environment.NewLine, "\n");
+
+			string[] _arr = _newText.Split(new char[] {'\n'});
 			for(int i = 0; i < _arr.Length; i++)
 			{
 				_text.Add(_arr[i]);
@@ -60,13 +63,13 @@ namespace Assets.Scripts.UI
 		{
 			_current = "";
 			string _temp = _text[_index];
-			while(_temp != "<break>\r")
+			while(_temp != "<break>")
 			{
-				if(_temp.Equals("\n"))
+				if(_temp.Equals(""))
 				{
-					_current += "\n";
+					_current += "";
 				}
-				else if(_temp.EndsWith(" <Input>\r"))
+				else if(_temp.EndsWith(" <Input>"))
 				{
 					_current += CustomInput.GetText(_temp);
 				}
