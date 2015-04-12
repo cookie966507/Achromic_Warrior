@@ -24,6 +24,8 @@ namespace Assets.Scripts.Enemies
 		public int _maxBatchIncrement = 5;
 		private bool _newBatch = true;
 
+		private int _currentBatch = 0;
+
 		public GameObject[] _enemyTypes;
 
 		private float _spawnTimer = 0f;
@@ -55,17 +57,18 @@ namespace Assets.Scripts.Enemies
 			{
 				if(_numInLevel > 0)
 				{
-					if(_numEnemies == _batchLimit) _newBatch = false;
+					if(_currentBatch == _batchLimit) _newBatch = false;
 
 					_spawnTimer += Time.deltaTime;
 					if(_spawnTimer > _spawnDelay)
 					{
 						_spawnTimer = 0f;
 
-						if(_numEnemies < _batchLimit && _newBatch)
+						if(_currentBatch < _batchLimit && _newBatch)
 						{
 							SpawnEnemy();
 							_numEnemies++;
+							_currentBatch++;
 							if(!_endless)
 							{
 								_numInLevel--;
@@ -95,6 +98,8 @@ namespace Assets.Scripts.Enemies
 
 			_instantiatedEnemey.GetComponent<Enemy>().SaveSpawnerReference(this);
 
+			if(Random.Range(0, 2) == 0) _instantiatedEnemey.GetComponent<Enemy>().Flip();
+
 			if(_endless)
 			{
 				_instantiatedEnemey.GetComponent<Enemy>().Color = (ColorElement)Random.Range(0, (float)(ColorElement.NumTypes - 2));
@@ -109,9 +114,10 @@ namespace Assets.Scripts.Enemies
 		{
 			_numEnemies--;
 			if(!_endless) _remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
-			if(_numEnemies == 0 && _numInLevel > 0)
+			if(_currentBatch == _batchLimit && _numInLevel > 0 && _numEnemies == 0)
 			{
 				_newBatch = true;
+				_currentBatch = 0;
 				if(_batchLimit < _maxBatchIncrement) _batchLimit++;
 			}
 		}
