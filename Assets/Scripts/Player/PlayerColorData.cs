@@ -337,7 +337,7 @@ namespace Assets.Scripts.Player
         public Color MeterColor
         {
             get { return _meterColor; }
-            //set{_meterColor = value;}
+            set{_meterColor = value;}
         }
 
         //color of the player
@@ -382,5 +382,10 @@ namespace Assets.Scripts.Player
         {
             get { return _baseSpd + _spd * _maxSpd; }
         }
+
+		public static void MakeSuper(PlayerColorData _data)
+		{
+			_data.AddColor(new Color(1f, 1f, 1f), 1000f);
+		}
     }
 }
