@@ -43,6 +43,8 @@ namespace Assets.Scripts.Enemies
 
 		private EnemySpawner _spawner;
 
+		protected int _dir = 1;
+
         //Hack
         bool ExitCatcher = true;
 
@@ -217,6 +219,15 @@ namespace Assets.Scripts.Enemies
 		public ColorElement ResolveMultiColor(ColorElement _color)
 		{
 			return CustomColor.Weights(_color);
+		}
+
+		public void Flip()
+		{
+			//turn sprites around, not actual gameobject
+			Transform _sprites = transform.Find("Sprites");
+			//change dir
+			_dir *= -1;
+			_sprites.localScale = new Vector2(_dir, _sprites.localScale.y);
 		}
     }
 }

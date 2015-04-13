@@ -1,5 +1,3 @@
-You may exit the tutorial at any time by pressing: Pause and Exit.
-<break>
 Press: "
 Left <Input>
 " and "
@@ -20,14 +18,18 @@ Press: "
 Attack <Input>
 " to perform an attack.
 <break>
+*****Tip*****
+
 Enemies will drop colored orbs that will fill your color meters when attacked.
-<break>
+
 Run over an orb to collect it.
 <break>
 Press: "
 Block <Input>
 " to block.
 <break>
+*****Tip*****
+
 You cannot move or jump while you are blocking.
 <break>
 Press: "
@@ -36,21 +38,31 @@ CycleLeft <Input>
 CycleRight <Input>
 " to cycle between your colors.
 <break>
-Colors that are unavailable will be grayed out.
-<break>
 Once you find the color you want to equip, press: "
 ChangeColor <Input>
 " to equip that color.
 <break>
-Red will boost your attack. Green will boost your speed. Blue will boost your defense.
+*****Tip****
+
+Red will boost your attack.
+
+Green will boost your speed and regenerate health.
+
+Blue will boost your defense.
 <break>
+*****Tip*****
+
 The colors in between will boost each of the two primary skills it falls between, but by less for each.
 <break>
 Once all your colors are full, you can enter Achromic mode by pressing: "
 Super <Input>
 ".
 <break>
+*****Tip*****
+
 Warning: You will not exit Achromic mode until all the colors run out once activated.
 <break>
 You have completed the tutorial.
+
+Exiting in: 
 <break>

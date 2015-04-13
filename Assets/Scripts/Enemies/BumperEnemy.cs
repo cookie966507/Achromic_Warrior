@@ -8,8 +8,6 @@ namespace Assets.Scripts.Enemies
 {
 	public class BumperEnemy : Enemy
 	{
-		//direction facing
-		private int _dir = 1;
 		//speed
 		public float _maxSpeed = 4f;
 
@@ -212,15 +210,6 @@ namespace Assets.Scripts.Enemies
 		{
 			StopAttack();
 			base.Hit(_damage, _hitPos);
-		}
-
-		public void Flip()
-		{
-			//turn sprites around, not actual gameobject
-			Transform _sprites = transform.Find("Sprites");
-			//change dir
-			_dir *= -1;
-			_sprites.localScale = new Vector2(_dir, _sprites.localScale.y);
 		}
 
 		//setting up attaking the player
