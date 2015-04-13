@@ -14,6 +14,7 @@ namespace Assets.Scripts.Enemies
 
 		//health
 		public int _health = 10;
+		private int _maxHealth;
 
         //time before enemy can be hit again
         public float _hitTime = 1f;
@@ -44,6 +45,8 @@ namespace Assets.Scripts.Enemies
 		private EnemySpawner _spawner;
 
 		protected int _dir = 1;
+
+		public GameObject _healthBar;
 
         //Hack
         bool ExitCatcher = true;
@@ -86,6 +89,7 @@ namespace Assets.Scripts.Enemies
         //Initialize the enemy
         public void Init()
         {
+			_maxHealth = _health;
             //load the orb
             _orb = (GameObject)Resources.Load("Prefabs/orb");
 
@@ -118,6 +122,8 @@ namespace Assets.Scripts.Enemies
                 UI.DamageDisplay.instance.ShowDamage(_damage, _hitPos, _color);
 				//subtract health
 				_health -= _damage;
+				_healthBar.transform.localScale = new Vector3((float)_health/_maxHealth, 1, 1);
+
 				if(_health <= 0)
 				{
 					this.Die();
