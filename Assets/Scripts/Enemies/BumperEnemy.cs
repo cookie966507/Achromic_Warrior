@@ -168,8 +168,8 @@ namespace Assets.Scripts.Enemies
 					//move in a direction
 	                rgb2d.AddForce(new Vector2(_moveForce * _dir, 0f));
 					//limit speed
-	                if (Mathf.Abs(rgb2d.velocity.x) > _maxSpeed)
-	                    rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * _maxSpeed, rgb2d.velocity.y);
+	                if (Mathf.Abs(rgb2d.velocity.x) > Speed)
+	                    rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * Speed, rgb2d.velocity.y);
 				}
 
 				//if it is time to launch into the player

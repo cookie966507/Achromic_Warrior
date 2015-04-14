@@ -184,7 +184,7 @@ namespace Assets.Scripts.Player
 						{
 							if(potentialDamage.damage > 0)
 							{
-								damage = potentialDamage.damage;
+								damage = (int)col.gameObject.GetComponent<Enemies.Enemy>().Attack;
 								float calcDamage = damage * (1-(colorData.DefenseRatio));
 								damage = Mathf.CeilToInt(calcDamage);
 								if (blockSucessful)

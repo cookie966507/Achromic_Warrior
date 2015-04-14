@@ -40,13 +40,32 @@ namespace Assets.Scripts.Enemies
 		public Renderer[] _coloredPieces;
 
         //knockback force
-        public float _force = 75f;
+        private float _force = 2f;
 
 		private EnemySpawner _spawner;
 
 		protected int _dir = 1;
 
 		public GameObject _healthBar;
+
+		protected float _primary = 0.8f;
+		protected float _secondary = 0.4f;
+		protected float _upperTertiary = 0.6f;
+		protected float _lowerTertiary = 0.2f;
+
+		//base stats
+		public float _baseAtk = 2f;
+		public float _baseDef = 0f;
+		public float _baseSpd = 4f;
+		
+		//changing stats (used as ratio with _primary, _secondary, etc)
+		private float _atk = 0f;
+		private float _def = 0f;
+		private float _spd = 0f;
+		
+		//max a stat can be
+		public float _maxAtk = 8f;
+		public float _maxSpd = 11f;
 
         //Hack
         bool ExitCatcher = true;
@@ -104,6 +123,9 @@ namespace Assets.Scripts.Enemies
 			{
 				_coloredPieces[i].material.color = CustomColor.GetColor(_color);
 			}
+
+			this.UpdateStats();
+			_baseAtk = this.GetComponent<CustomDamage>().damage;
         }
 
         //what happens when hit
@@ -118,6 +140,8 @@ namespace Assets.Scripts.Enemies
                 //if player is not achromic produce more orbs ------- CHANGE TO PLAYER STATE LATER
                 if (!_player.GetComponent<Player.PlayerColorData>().Color.Equals(ColorElement.Black))
                     ProduceOrbs(1);
+				float calcDamage = _damage * (1-(this.DefenseRatio));
+				_damage = Mathf.CeilToInt(calcDamage);
                 //show the damage taken
                 UI.DamageDisplay.instance.ShowDamage(_damage, _hitPos, _color);
 				//subtract health
@@ -234,6 +258,106 @@ namespace Assets.Scripts.Enemies
 			//change dir
 			_dir *= -1;
 			_sprites.localScale = new Vector2(_dir, _sprites.localScale.y);
+		}
+
+		public void UpdateStats()
+		{
+			switch (_color)
+			{
+			case ColorElement.Red:
+				_atk = _primary;
+				_spd = 0f;
+				_def = 0f;
+				break;
+				
+			case ColorElement.Green:
+				_atk = 0f;
+				_spd = _primary;
+				_def = 0f;
+				break;
+				
+			case ColorElement.Blue:
+				_atk = 0f;
+				_spd = 0f;
+				_def = _primary;
+				break;
+				
+			case ColorElement.Yellow:
+				_atk = _secondary;
+				_spd = _secondary;
+				_def = 0f;
+				break;
+				
+			case ColorElement.Cyan:
+				_atk = 0f;
+				_spd = _secondary;
+				_def = _secondary;
+				break;
+				
+			case ColorElement.Magenta:
+				_atk = _secondary;
+				_spd = 0f;
+				_def = _secondary;
+				break;
+				
+			case ColorElement.Orange:
+				_atk = _upperTertiary;
+				_spd = _lowerTertiary;
+				_def = 0f;
+				break;
+				
+			case ColorElement.Chartreuse:
+				_atk = _lowerTertiary;
+				_spd = _upperTertiary;
+				_def = 0f;
+				break;
+				
+			case ColorElement.Spring:
+				_atk = 0f;
+				_spd = _upperTertiary;
+				_def = _lowerTertiary;
+				break;
+				
+			case ColorElement.Azure:
+				_atk = 0f;
+				_spd = _lowerTertiary;
+				_def = _upperTertiary;
+				break;
+				
+			case ColorElement.Rose:
+				_atk = _upperTertiary;
+				_spd = 0f;
+				_def = _lowerTertiary;
+				break;
+				
+			case ColorElement.Violet:
+				_atk = _lowerTertiary;
+				_spd = 0f;
+				_def = _upperTertiary;
+				break;
+				
+			case ColorElement.Black:
+				_atk = _primary;
+				_spd = _primary;
+				_def = _primary;
+				break;
+			}
+		}
+
+		//stats that return modified values based on color
+		public float Attack
+		{
+			get { return _baseAtk + _atk * _maxAtk; }
+		}
+
+		public float DefenseRatio
+		{
+			get { return _def; }
+		}
+		
+		public float Speed
+		{
+			get { return _baseSpd + _spd * _maxSpd; }
 		}
     }
 }
