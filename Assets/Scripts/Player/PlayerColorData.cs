@@ -142,7 +142,8 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Green:
                         AddColor(new Color(0f, -_primary, 0f), _decreaseAmount);
-					    PlayerLifeData.damageHealth(Mathf.CeilToInt(-(_decreaseAmount/2)));
+//					    PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2)));
+					    PlayerLifeData.damageHealth(-2);
                         if (_meterColor.g == 0)
                         {
                             ResetToWhite();
@@ -159,7 +160,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Yellow:
                         AddColor(new Color(-_secondary, -_secondary, 0f), _decreaseAmount);
-					    PlayerLifeData.damageHealth(Mathf.CeilToInt(-(_decreaseAmount/2 * _secondary)));
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _secondary)));
 					    if (_meterColor.r == 0 || _meterColor.g == 0)
                         {
                             ResetToWhite();
@@ -168,7 +169,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Cyan:
                         AddColor(new Color(0f, -_secondary, -_secondary), _decreaseAmount);
-					    PlayerLifeData.damageHealth(Mathf.CeilToInt(-(_decreaseAmount/2 * _secondary)));
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _secondary)));
                         if (_meterColor.g == 0 || _meterColor.b == 0)
                         {
                             ResetToWhite();
@@ -185,7 +186,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Orange:
                         AddColor(new Color(-_upperTertiary, -_lowerTertiary, 0f), _decreaseAmount);
-					    PlayerLifeData.damageHealth(Mathf.CeilToInt(-(_decreaseAmount/2 * _lowerTertiary)));
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _lowerTertiary)));
                         if (_meterColor.r == 0 || _meterColor.g == 0)
                         {
                             ResetToWhite();
@@ -193,8 +194,8 @@ namespace Assets.Scripts.Player
                         break;
 
                     case ColorElement.Chartreuse:
-                        AddColor(new Color(-_lowerTertiary, -_upperTertiary, 0f), _decreaseAmount);
-					    PlayerLifeData.damageHealth(Mathf.CeilToInt(-(_decreaseAmount/2 * _upperTertiary)));
+                        //AddColor(new Color(-_lowerTertiary, -_upperTertiary, 0f), _decreaseAmount);
+					    PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _upperTertiary)));
                         if (_meterColor.r == 0 || _meterColor.g == 0)
                         {
                             ResetToWhite();
@@ -203,7 +204,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Spring:
                         AddColor(new Color(0f, -_upperTertiary, -_lowerTertiary), _decreaseAmount);
-					    PlayerLifeData.damageHealth(Mathf.CeilToInt(-(_decreaseAmount/2 * _upperTertiary)));
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _upperTertiary)));
                         if (_meterColor.g == 0 || _meterColor.b == 0)
                         {
                             ResetToWhite();
@@ -212,7 +213,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Azure:
                         AddColor(new Color(0f, -_lowerTertiary, -_upperTertiary), _decreaseAmount);
-					    PlayerLifeData.damageHealth(Mathf.CeilToInt(-(_decreaseAmount/2 * _lowerTertiary)));
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _lowerTertiary)));
                         if (_meterColor.g == 0 || _meterColor.b == 0)
                         {
                             ResetToWhite();
@@ -318,7 +319,6 @@ namespace Assets.Scripts.Player
                     break;
 
                 case ColorElement.Violet:
-                    AddColor(new Color(-_lowerTertiary, 0f, -_upperTertiary), _decreaseAmount);
                     _atk = _lowerTertiary;
                     _spd = 0f;
                     _def = _upperTertiary;
