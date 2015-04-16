@@ -107,10 +107,6 @@ namespace Assets.Scripts.Player
                 {
                     achromic = true;
                 }
-
-                if (temp++ > 3)
-                    animDone = true;
-
                 TouchingSomething();
                 if (_ghost)
                     inAir = true;

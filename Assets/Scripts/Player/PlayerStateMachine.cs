@@ -37,7 +37,6 @@ namespace Assets.Scripts.Player
                 }
             }
             int prevAt = attack;
-            //UnityEngine.Debug.Log(currState);
             currState = getNextState[((int)currState)](inAir, blockSuccess, hit, animDone);//gets te next Enums.PlayerState
             if (prevAt != attack)
                 reset = 0;
@@ -59,15 +58,12 @@ namespace Assets.Scripts.Player
             {
                 if (attack == 0)
                 {
-                    UnityEngine.Debug.Log("A");
                     return Enums.PlayerState.attack1;
                 }
                 if (attack == 1)
                 {
-                    UnityEngine.Debug.Log("B");
                     return Enums.PlayerState.attack2;
                 }
-                UnityEngine.Debug.Log("C");
                 return Enums.PlayerState.attack3;
             }
             if (CustomInput.JumpFreshPress)
@@ -89,7 +85,6 @@ namespace Assets.Scripts.Player
             if (animDone)
             {
                 attack = 1;
-                UnityEngine.Debug.Log(attack);
                 return Enums.PlayerState.idle;
             }
             return Enums.PlayerState.attack1;
