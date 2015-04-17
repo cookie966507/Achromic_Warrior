@@ -5,6 +5,7 @@ namespace Assets.Scripts.Util
 {
     class Bullet : MonoBehaviour
     {
+		private bool dest=false;
         Vector3 dir;
         //speed is in units/sec
         public float speed;
@@ -28,7 +29,7 @@ namespace Assets.Scripts.Util
                 //move bullet
                 transform.Translate(dir * speed * Time.deltaTime);
                 //check if too old
-                if ((lifeTime -= Time.deltaTime) < 0)
+                if ((lifeTime -= Time.deltaTime) < 0 || dest)
                     Destroy(this.gameObject);
             }
         }
@@ -36,7 +37,7 @@ namespace Assets.Scripts.Util
         //standard destory self on collision
         void OnCollisionEnter2D(Collision2D col)
         {
-            Destroy(this.gameObject);
+			dest = true;
         }
     }
 }

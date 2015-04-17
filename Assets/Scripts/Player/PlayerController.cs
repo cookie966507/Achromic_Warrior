@@ -165,22 +165,63 @@ namespace Assets.Scripts.Player
         }
 
         void OnCollisionEnter2D(Collision2D col)
-        {
+		{
             if (GameManager.State != GameState.Pause)
             {
                 if (col.gameObject.tag == "enemy" && !invun)
-                {
+				{
                     if (blocking)
-                        blockSucessful = true;
-                    else
+                        blockSucessful = true;hit = true;
+					CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
+					if (potentialDamage != null)
 					{
-                        hit = true;
+						if(potentialDamage.damage > 0)
+						{
+							Enemies.Enemy enem=col.gameObject.GetComponent<Enemies.Enemy>();
+							if(enem!=null)
+								damage = (int)enem.Attack;
+							else
+								damage=potentialDamage.damage;
+							float calcDamage = damage * (1-(colorData.DefenseRatio));
+							damage = Mathf.CeilToInt(calcDamage);
+							if (blockSucessful)
+								damage -= (int)(colorData.Defense * .5f);
+							if (damage <= 0)
+								damage = 1;
+						}
+						DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+					}
+					else
+						damage = 0;
+	                if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
+	                    enemyOnRight = false;
+	                else
+						enemyOnRight = true;
+				}
+            }
+        }
+
+		void OnTriggerEnter2D(Collider2D col)
+		{
+			if (GameManager.State != GameState.Pause)
+			{
+				if (col.gameObject.tag == "enemy" && !invun)
+				{
+					if (blocking)
+						blockSucessful = true;
+					else
+					{
+						hit = true;
 						CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
 						if (potentialDamage != null)
 						{
 							if(potentialDamage.damage > 0)
 							{
-								damage = (int)col.gameObject.GetComponent<Enemies.Enemy>().Attack;
+								Enemies.Enemy enem=col.gameObject.GetComponent<Enemies.Enemy>();
+								if(enem!=null)
+									damage = (int)enem.Attack;
+								else
+									damage=potentialDamage.damage;
 								float calcDamage = damage * (1-(colorData.DefenseRatio));
 								damage = Mathf.CeilToInt(calcDamage);
 								if (blockSucessful)
@@ -193,13 +234,13 @@ namespace Assets.Scripts.Player
 						else
 							damage = 0;
 					}
-					}
-                    if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
-                        enemyOnRight = false;
-                    else
-						enemyOnRight = true;
-            }
-        }
+				}
+				if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
+					enemyOnRight = false;
+				else
+					enemyOnRight = true;
+			}
+		}
 
         public void AnimDetector()
         {

@@ -43,6 +43,7 @@ namespace Assets.Scripts.Enemies
             target = patrolPoints[currentPoint];
             patLen = patrolPoints.Length;
             jumpLen = jumpPoints.Length;
+			_baseSpd = moveSpeed;
         }
         public void punchTime()
         {
@@ -110,6 +111,7 @@ namespace Assets.Scripts.Enemies
         {
             if(!doOnce)
             {
+				puncher.gameObject.GetComponent<CustomDamage>().damage=(int)Attack;
                 puncher.Show();
                 doOnce = false;
             }
@@ -123,6 +125,7 @@ namespace Assets.Scripts.Enemies
                 else
                     transform.localScale = new Vector3(1, 1, 1);
                 GameObject b = ((GameObject)Instantiate(bullet));
+				b.GetComponent<CustomDamage>().damage=(int)Attack;
                 b.transform.position = barrel.position;
                 b.GetComponent<Util.Bullet>().Direction = new Vector2(Mathf.Sign(this.transform.localScale.x), 0); 
                 doOnce = false;
@@ -183,7 +186,7 @@ namespace Assets.Scripts.Enemies
                 this.ExitGhost();
                 if (jumpMode)
                 {
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpForceX, jumpForceY));
+					GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpForceX, jumpForceY), ForceMode2D.Impulse);
                     EnterGhost();
                     jumpMode = false;
                     target = patrolPoints[currentPoint];
@@ -200,7 +203,7 @@ namespace Assets.Scripts.Enemies
                 }
             }
 
-            transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
             if (transform.rotation.z <= 1 || transform.rotation.z >= -1)
             {
                 Quaternion adjust = Quaternion.Euler(0, 0, 0);
@@ -264,7 +267,7 @@ namespace Assets.Scripts.Enemies
                 this.ExitGhost();
                 if (jumpMode)
                 {
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpForceX, jumpForceY));
+					GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpForceX, jumpForceY), ForceMode2D.Impulse);
                     EnterGhost();
                     jumpMode = false;
                     target = _player.transform;
@@ -281,7 +284,7 @@ namespace Assets.Scripts.Enemies
                 }
             }
 
-            transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
             if (transform.rotation.z <= 1 || transform.rotation.z >= -1)
             {
                 Quaternion adjust = Quaternion.Euler(0, 0, 0);
