@@ -37,7 +37,11 @@ namespace Assets.Scripts.Util
         //standard destory self on collision
         void OnCollisionEnter2D(Collision2D col)
         {
-			dest = true;
+            dest = true;
+        }
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            dest = true;
         }
     }
 }
