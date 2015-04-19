@@ -1,56 +1,68 @@
-You may exit the tutorial at any time by pressing: Pause and Exit.
-\break/
 Press: "
-Left \Input/
+Left <Input>
 " and "
-Right \Input/
+Right <Input>
 " to move left and right.
-\break/
+<break>
 You can jump up through platforms. Press: "
-Jump \Input/
+Jump <Input>
 " once to jump and a second time to perform a double jump.
-\break/
+<break>
 You can fall through platforms by pressing: "
-Down \Input/
+Down <Input>
 " + "
-Jump \Input/
+Jump <Input>
 " together.
-\break/
+<break>
 Press: "
-Attack \Input/
+Attack <Input>
 " to perform an attack.
-\break/
+<break>
+*****Tip*****
+
 Enemies will drop colored orbs that will fill your color meters when attacked.
-\break/
+
 Run over an orb to collect it.
-\break/
+<break>
 Press: "
-Block \Input/
+Block <Input>
 " to block.
-\break/
+<break>
+*****Tip*****
+
 You cannot move or jump while you are blocking.
-\break/
+<break>
 Press: "
-CycleLeft \Input/
+CycleLeft <Input>
 " and "
-CycleRight \Input/
+CycleRight <Input>
 " to cycle between your colors.
-\break/
-Colors that are unavailable will be grayed out.
-\break/
+<break>
 Once you find the color you want to equip, press: "
-ChangeColor \Input/
+ChangeColor <Input>
 " to equip that color.
-\break/
-Red will boost your attack. Green will boost your speed. Blue will boost your defense.
-\break/
+<break>
+*****Tip****
+
+Red will boost your attack.
+
+Green will boost your speed and regenerate health.
+
+Blue will boost your defense.
+<break>
+*****Tip*****
+
 The colors in between will boost each of the two primary skills it falls between, but by less for each.
-\break/
+<break>
 Once all your colors are full, you can enter Achromic mode by pressing: "
-Super \Input/
+Super <Input>
 ".
-\break/
+<break>
+*****Tip*****
+
 Warning: You will not exit Achromic mode until all the colors run out once activated.
-\break/
+<break>
 You have completed the tutorial.
-\break/
+
+Exiting in: 
+<break>

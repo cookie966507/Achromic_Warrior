@@ -28,6 +28,7 @@ namespace Assets.Scripts.Player
         public float _moveForce = 200f;
         //capping the speed of the player
         public float _maxSpeed = 4f;
+		public float _maxKnockbackSpeed = 4f;
 
 
         //reference to the attack
@@ -88,24 +89,24 @@ namespace Assets.Scripts.Player
             block = _block;
             machine = new PlayerStateMachine();
             doState = new state[] { Idle, Move, Jump, Jump2, InAirNow, Attack1, Attack2, Attack3, MovingAttack, InAirAttack, Parry, Block, Crouch, Hit, Dead };
+			renderTimer = 0;
+			invunTimer = 0;
         }
 
         void Update()
         {
-            if (!GameManager.Paused)
+			if(GameManager.State == GameState.Lose)
+			{
+				Destroy(this.gameObject);
+				return;
+			}
+            if (!GameManager.SuspendedState)
             {
-                if (Input.GetKey(KeyCode.UpArrow))
-                    colorData.AddColor(Color.white, 500f);
-
                 //going Achromic
                 if (CustomInput.SuperFreshPress && colorData.isfull())
                 {
                     achromic = true;
                 }
-
-                if (temp++ > 3)
-                    animDone = true;
-
                 TouchingSomething();
                 if (_ghost)
                     inAir = true;
@@ -164,37 +165,82 @@ namespace Assets.Scripts.Player
         }
 
         void OnCollisionEnter2D(Collision2D col)
-        {
+		{
             if (GameManager.State != GameState.Pause)
             {
                 if (col.gameObject.tag == "enemy" && !invun)
-                {
+				{
                     if (blocking)
-                        blockSucessful = true;
-                    else
+                        blockSucessful = true;hit = true;
+					CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
+					if (potentialDamage != null)
 					{
-                        hit = true;
-						CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
-						if (potentialDamage != null)
+						if(potentialDamage.damage > 0)
 						{
-							damage = potentialDamage.damage;
-							damage -= (int)colorData.Defense;
+							Enemies.Enemy enem=col.gameObject.GetComponent<Enemies.Enemy>();
+							if(enem!=null)
+								damage = (int)enem.Attack;
+							else
+								damage=potentialDamage.damage;
+							float calcDamage = damage * (1-(colorData.DefenseRatio));
+							damage = Mathf.CeilToInt(calcDamage);
 							if (blockSucessful)
 								damage -= (int)(colorData.Defense * .5f);
-							if (damage < 0)
-								damage = 0;
-							DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+							if (damage <= 0)
+								damage = 1;
 						}
-						else
-							damage = 0;
+						DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
 					}
-					}
-                    if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
-                        enemyOnRight = false;
-                    else
+					else
+						damage = 0;
+	                if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
+	                    enemyOnRight = false;
+	                else
 						enemyOnRight = true;
+				}
             }
         }
+
+        //void OnTriggerEnter2D(Collider2D col)
+        //{
+        //    if (GameManager.State != GameState.Pause)
+        //    {
+        //        if (col.gameObject.tag == "enemy" && !invun)
+        //        {
+        //            if (blocking)
+        //                blockSucessful = true;
+        //            else
+        //            {
+        //                hit = true;
+        //                CustomDamage potentialDamage = col.gameObject.GetComponent<CustomDamage>();                       
+        //                if (potentialDamage != null)
+        //                {
+        //                    if(potentialDamage.damage > 0)
+        //                    {
+        //                        Enemies.Enemy enem=col.gameObject.GetComponent<Enemies.Enemy>();
+        //                        if(enem!=null)
+        //                            damage = (int)enem.Attack;
+        //                        else
+        //                            damage=potentialDamage.damage;
+        //                        float calcDamage = damage * (1-(colorData.DefenseRatio));
+        //                        damage = Mathf.CeilToInt(calcDamage);
+        //                        if (blockSucessful)
+        //                            damage -= (int)(colorData.Defense * .5f);
+        //                        if (damage <= 0)
+        //                            damage = 1;
+        //                    }
+        //                    DamageDisplay.instance.ShowDamage(damage, transform.position, ColorElement.White);
+        //                }
+        //                else
+        //                    damage = 0;
+        //            }
+        //        }
+        //        if (col.gameObject.transform.position.x < this.gameObject.transform.position.x)
+        //            enemyOnRight = false;
+        //        else
+        //            enemyOnRight = true;
+        //    }
+        //}
 
         public void AnimDetector()
         {
@@ -259,7 +305,7 @@ namespace Assets.Scripts.Player
         //fixed update runs on a timed cycle (for physics stuff)
         void FixedUpdate()
         {
-            if (GameManager.State != GameState.Pause)
+            if (!GameManager.SuspendedState)
             {
                 if (currState == PlayerState.move ||
                     currState == PlayerState.movingAttack ||
@@ -313,7 +359,7 @@ namespace Assets.Scripts.Player
 
 
                     // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxSpeed)
+                    if (_h * GetComponent<Rigidbody2D>().velocity.x < _maxKnockbackSpeed)
                     {
                         //account for air control
                         if (!inAir) GetComponent<Rigidbody2D>().AddForce(Vector2.right * _h * _moveForce);
@@ -321,10 +367,10 @@ namespace Assets.Scripts.Player
                     }
 
                     // If the player's horizontal velocity is greater than the maxSpeed...
-                    if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxSpeed)
+					if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > _maxKnockbackSpeed)
                     {
                         // ... set the player's velocity to the maxSpeed in the x axis.
-                        GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
+						GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * _maxKnockbackSpeed, GetComponent<Rigidbody2D>().velocity.y);
                     }
                 }
             }
@@ -444,6 +490,7 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 _jump = true;
+				_ghost = true;
             }
         }
         private static void Jump2()
@@ -452,6 +499,7 @@ namespace Assets.Scripts.Player
             {
                 doOnce = true;
                 _jump = true;
+				_ghost = true;
             }
         }
         private static void InAirNow()

@@ -16,9 +16,15 @@ namespace Assets.Scripts.Enemies
 
 		private List<Transform> _spawnNodes;
 
-		public int _maxEnemiesOnScreen = 5;
+		//public int _maxEnemiesOnScreen = 5;
 		public int _numInLevel;
 		private int _numEnemies = 0;
+
+		public int _batchLimit = 1;
+		public int _maxBatchIncrement = 5;
+		private bool _newBatch = true;
+
+		private int _currentBatch = 0;
 
 		public GameObject[] _enemyTypes;
 
@@ -47,19 +53,22 @@ namespace Assets.Scripts.Enemies
 		
 		void Update ()
 		{
-			if(!GameManager.Paused)
+			if(!GameManager.SuspendedState)
 			{
 				if(_numInLevel > 0)
 				{
+					if(_currentBatch == _batchLimit) _newBatch = false;
+
 					_spawnTimer += Time.deltaTime;
 					if(_spawnTimer > _spawnDelay)
 					{
 						_spawnTimer = 0f;
 
-						if(_numEnemies < _maxEnemiesOnScreen)
+						if(_currentBatch < _batchLimit && _newBatch)
 						{
 							SpawnEnemy();
 							_numEnemies++;
+							_currentBatch++;
 							if(!_endless)
 							{
 								_numInLevel--;
@@ -72,13 +81,13 @@ namespace Assets.Scripts.Enemies
 					if(_numEnemies == 0)
 					{
 						//end level here
-						Debug.Log ("Won!");
+						GameManager.State = GameState.Win;
 					}
 				}
 			}
 		}
 
-		private void SpawnEnemy()
+		internal void SpawnEnemy()
 		{
 			int _randomEnemy = Random.Range(0, _enemyTypes.Length);
 			int _randomSpawn = Random.Range(0, _spawnNodes.Count);
@@ -88,6 +97,8 @@ namespace Assets.Scripts.Enemies
 			GameObject _instantiatedEnemey = (GameObject)Instantiate(_newEnemy, _spawnNodes[_randomSpawn].position,  Quaternion.identity);
 
 			_instantiatedEnemey.GetComponent<Enemy>().SaveSpawnerReference(this);
+
+			if(Random.Range(0, 2) == 0) _instantiatedEnemey.GetComponent<Enemy>().Flip();
 
 			if(_endless)
 			{
@@ -103,6 +114,12 @@ namespace Assets.Scripts.Enemies
 		{
 			_numEnemies--;
 			if(!_endless) _remaining.UpdateEnemiesRemaining(_numInLevel + _numEnemies);
+			if(_currentBatch == _batchLimit && _numInLevel > 0 && _numEnemies == 0)
+			{
+				_newBatch = true;
+				_currentBatch = 0;
+				if(_batchLimit < _maxBatchIncrement) _batchLimit++;
+			}
 		}
 	}
 }

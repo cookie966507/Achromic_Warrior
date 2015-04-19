@@ -41,7 +41,7 @@ namespace Assets.Scripts.Player
         private float _lowerTertiary = 0.25f;
 
         //base stats
-        private float _baseAtk = 1f;
+        private float _baseAtk = 2f;
         private float _baseDef = 0f;
         private float _baseSpd = 4f;
 
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Player
         private float _spd = 0f;
 
         //max a stat can be
-        private float _maxAtk = 9f;
+        private float _maxAtk = 8f;
         private float _maxDef = 9f;
         private float _maxSpd = 11f;
 
@@ -59,7 +59,7 @@ namespace Assets.Scripts.Player
         {
             _color = ColorElement.White;
             //init meter color
-            _meterColor = new Color(0f, 0f, 0f);
+            _meterColor = new Color(0.5f, 0.5f, 0.5f);
             //find controller
             _controller = this.GetComponent<PlayerController>();
         }
@@ -77,9 +77,12 @@ namespace Assets.Scripts.Player
 
         void Update()
         {
-            //if color meter should be decreasing
-            if (!_color.Equals(ColorElement.White))
-                DeductTime();
+			if(!Data.GameManager.SuspendedState)
+			{
+	            //if color meter should be decreasing
+	            if (!_color.Equals(ColorElement.White))
+	                DeductTime();
+			}
         }
 
         //revert all values
@@ -139,6 +142,8 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Green:
                         AddColor(new Color(0f, -_primary, 0f), _decreaseAmount);
+//					    PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2)));
+					    PlayerLifeData.damageHealth(-2);
                         if (_meterColor.g == 0)
                         {
                             ResetToWhite();
@@ -155,7 +160,8 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Yellow:
                         AddColor(new Color(-_secondary, -_secondary, 0f), _decreaseAmount);
-                        if (_meterColor.r == 0 || _meterColor.g == 0)
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _secondary)));
+					    if (_meterColor.r == 0 || _meterColor.g == 0)
                         {
                             ResetToWhite();
                         }
@@ -163,6 +169,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Cyan:
                         AddColor(new Color(0f, -_secondary, -_secondary), _decreaseAmount);
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _secondary)));
                         if (_meterColor.g == 0 || _meterColor.b == 0)
                         {
                             ResetToWhite();
@@ -179,6 +186,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Orange:
                         AddColor(new Color(-_upperTertiary, -_lowerTertiary, 0f), _decreaseAmount);
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _lowerTertiary)));
                         if (_meterColor.r == 0 || _meterColor.g == 0)
                         {
                             ResetToWhite();
@@ -186,7 +194,8 @@ namespace Assets.Scripts.Player
                         break;
 
                     case ColorElement.Chartreuse:
-                        AddColor(new Color(-_lowerTertiary, -_upperTertiary, 0f), _decreaseAmount);
+                        //AddColor(new Color(-_lowerTertiary, -_upperTertiary, 0f), _decreaseAmount);
+					    PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _upperTertiary)));
                         if (_meterColor.r == 0 || _meterColor.g == 0)
                         {
                             ResetToWhite();
@@ -195,6 +204,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Spring:
                         AddColor(new Color(0f, -_upperTertiary, -_lowerTertiary), _decreaseAmount);
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _upperTertiary)));
                         if (_meterColor.g == 0 || _meterColor.b == 0)
                         {
                             ResetToWhite();
@@ -203,6 +213,7 @@ namespace Assets.Scripts.Player
 
                     case ColorElement.Azure:
                         AddColor(new Color(0f, -_lowerTertiary, -_upperTertiary), _decreaseAmount);
+					    //PlayerLifeData.damageHealth(Mathf.FloorToInt(-(_decreaseAmount/2 * _lowerTertiary)));
                         if (_meterColor.g == 0 || _meterColor.b == 0)
                         {
                             ResetToWhite();
@@ -308,7 +319,6 @@ namespace Assets.Scripts.Player
                     break;
 
                 case ColorElement.Violet:
-                    AddColor(new Color(-_lowerTertiary, 0f, -_upperTertiary), _decreaseAmount);
                     _atk = _lowerTertiary;
                     _spd = 0f;
                     _def = _upperTertiary;
@@ -327,7 +337,7 @@ namespace Assets.Scripts.Player
         public Color MeterColor
         {
             get { return _meterColor; }
-            //set{_meterColor = value;}
+            set{_meterColor = value;}
         }
 
         //color of the player
@@ -363,9 +373,19 @@ namespace Assets.Scripts.Player
             get { return _baseDef + _def * _maxDef; }
         }
 
+		public float DefenseRatio
+		{
+			get { return _def; }
+		}
+
         public float Speed
         {
             get { return _baseSpd + _spd * _maxSpd; }
         }
+
+		public static void MakeSuper(PlayerColorData _data)
+		{
+			_data.AddColor(new Color(1f, 1f, 1f), 1000f);
+		}
     }
 }

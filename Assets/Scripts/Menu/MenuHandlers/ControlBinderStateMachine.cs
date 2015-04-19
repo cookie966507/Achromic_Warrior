@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.Menu.MenuHandlers
 {
@@ -166,7 +167,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
             if (CustomInput.UpFreshPress)
                 return State.Block;
             if (CustomInput.LeftFreshPress)
-                return State.CycleLeft;
+                return State.CycleRight;
             if (CustomInput.RightFreshPress)
                 return State.Left;
             if (CustomInput.DownFreshPress)

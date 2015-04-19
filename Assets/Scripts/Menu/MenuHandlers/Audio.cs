@@ -55,17 +55,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            AudioStateMachine.audio prevState = currState;
-            currState = machine.update();
-            if (prevState != currState)
+            if (Kernel.enabled)
             {
-                foreach (GameObject g in cursors)
-                    g.SetActive(false);
-                int cursor = (int)currState - 1;
-                if (cursor >= 0)
-                    cursors[cursor].SetActive(true);
+                AudioStateMachine.audio prevState = currState;
+                currState = machine.update();
+                if (prevState != currState)
+                {
+                    foreach (GameObject g in cursors)
+                        g.SetActive(false);
+                    int cursor = (int)currState - 1;
+                    if (cursor >= 0)
+                        cursors[cursor].SetActive(true);
+                }
+                doState[(int)currState]();
             }
-            doState[(int)currState]();
 
         }
 
@@ -108,6 +111,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 musicBar.value = temp;
                 doMusic(temp);
             }
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doMusic(float val)
         {
@@ -135,6 +140,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 sfxBar.value = temp;
                 doSFX(temp);
             }
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doSFX(float val)
         {
@@ -146,6 +153,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
+			if(CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doExit()
         {
@@ -154,7 +163,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void MusicClick()
         {
-            if(touchedMusic)
+            if (touchedMusic)
             {
                 touchedMusic = false;
                 return;
@@ -170,7 +179,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void SFXClick()
         {
-            if(touchedSFX)
+            if (touchedSFX)
             {
                 touchedSFX = false;
                 return;

@@ -57,11 +57,13 @@ namespace Assets.Scripts.CameraController
 
             //apply change
             this.transform.position = new Vector3(_currX, _currY, this.transform.position.z);
-
-			_distance = Mathf.Abs(_player.position.y - this.transform.position.y);
-			if(_distance > _ceilingHeight) _angle = Mathf.SmoothDamp(_angle, _maxAngle, ref _angleVel, _fovSpeed);
-			else _angle = Mathf.SmoothDamp(_angle, _minAngle, ref _angleVel, _fovSpeed);
-			GetComponent<Camera>().orthographicSize = _angle;
+			if(_player)
+			{
+				_distance = Mathf.Abs(_player.position.y - this.transform.position.y);
+				if(_distance > _ceilingHeight) _angle = Mathf.SmoothDamp(_angle, _maxAngle, ref _angleVel, _fovSpeed);
+				else _angle = Mathf.SmoothDamp(_angle, _minAngle, ref _angleVel, _fovSpeed);
+				GetComponent<Camera>().orthographicSize = _angle;
+			}
 
 
         }

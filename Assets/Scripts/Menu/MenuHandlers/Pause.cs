@@ -36,7 +36,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void Sleep()
         {
-            if(Data.GameManager.State==Enums.GameState.Pause)
+            if (Data.GameManager.State == Enums.GameState.Pause)
             {
                 machine.goTo(PauseStateMachine.pause.resume);
                 win.enabled = true;
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         private static void Continue()
         {
-            if (CustomInput.AcceptFreshPressDeleteOnRead||CustomInput.PauseFreshPressDeleteOnRead)
+            if (CustomInput.AcceptFreshPressDeleteOnRead || CustomInput.PauseFreshPressDeleteOnRead)
                 doContinue();
         }
         private static void doContinue()
@@ -53,6 +53,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
             win.enabled = false;
             machine.goTo(PauseStateMachine.pause.sleep);
             Data.GameManager.Unpause();
+			Data.GameManager.State = Assets.Scripts.Enums.GameState.Unpause;
+			CustomInput.UpdateChangeColor();
         }
 
         private static void Quit()
@@ -64,6 +66,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         }
         private static void doQuit()
         {
+            win.enabled = false;
+            machine.goTo(PauseStateMachine.pause.sleep);
             Data.GameManager.GotoLevel("Level_Select");
         }
 

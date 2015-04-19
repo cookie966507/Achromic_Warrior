@@ -8,8 +8,6 @@ namespace Assets.Scripts.Enemies
 {
 	public class BumperEnemy : Enemy
 	{
-		//direction facing
-		private int _dir = 1;
 		//speed
 		public float _maxSpeed = 4f;
 
@@ -75,7 +73,6 @@ namespace Assets.Scripts.Enemies
 
 		protected override void Run ()
 		{
-			if(Input.GetKeyDown(KeyCode.P)) this.Attack();
 			//if not attacking
 			if(!_attacking)
 			{
@@ -103,8 +100,11 @@ namespace Assets.Scripts.Enemies
 				//if it is time to attack
 				if(_attackTimer >= _attackDelay)
 				{
-					//attack
-					this.Attack();
+					if(!this.GetComponent<CircleCollider2D>().IsTouchingLayers(1 << LayerMask.NameToLayer("wall")))
+					{
+						//attack
+						this.Attack();
+					}
 				}
 
 				//mask for layers to collide with and turn around
@@ -159,7 +159,7 @@ namespace Assets.Scripts.Enemies
 
 		void FixedUpdate()
 		{
-			if(!Data.GameManager.Paused)
+			if(!Data.GameManager.SuspendedState)
 			{
 				//if not attacking
 				if(!_attacking && !_hit)
@@ -168,8 +168,8 @@ namespace Assets.Scripts.Enemies
 					//move in a direction
 	                rgb2d.AddForce(new Vector2(_moveForce * _dir, 0f));
 					//limit speed
-	                if (Mathf.Abs(rgb2d.velocity.x) > _maxSpeed)
-	                    rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * _maxSpeed, rgb2d.velocity.y);
+	                if (Mathf.Abs(rgb2d.velocity.x) > Speed)
+	                    rgb2d.velocity = new Vector2(Mathf.Sign(rgb2d.velocity.x) * Speed, rgb2d.velocity.y);
 				}
 
 				//if it is time to launch into the player
@@ -210,15 +210,6 @@ namespace Assets.Scripts.Enemies
 		{
 			StopAttack();
 			base.Hit(_damage, _hitPos);
-		}
-
-		public void Flip()
-		{
-			//turn sprites around, not actual gameobject
-			Transform _sprites = transform.Find("Sprites");
-			//change dir
-			_dir *= -1;
-			_sprites.localScale = new Vector2(_dir, _sprites.localScale.y);
 		}
 
 		//setting up attaking the player

@@ -17,8 +17,11 @@ namespace Assets.Scripts.Menu.MenuHanders
 		private float _speed = 0.1f;
 
 		public GameObject _levelPanel;
+		//public GameObject _bossPanel;
 		private List<GameObject> _children;
 		private List<GameObject> _topInstructions;
+
+		//public Text _bossText;
 
 		void Awake()
 		{
@@ -42,19 +45,30 @@ namespace Assets.Scripts.Menu.MenuHanders
 			{
 				_topInstructions[0].GetComponent<Text>().text = "Press: " + CustomInput.GamePadCancel + " Button";
 				_topInstructions[1].GetComponent<Text>().text = "Press: " + CustomInput.GamePadChangeColor + " Button";
+			/*	if(_levelPanel.activeSelf)
+					_bossText.text = "Press \"" + CustomInput.GamePadSuper + "\" for the boss level";
+				else
+					_bossText.text = "Press \"" + CustomInput.GamePadSuper + "\" for the normal levels"; */
 			}
 			else{
 				_topInstructions[0].GetComponent<Text>().text = "Press: " + CustomInput.KeyBoardCancel.ToString() + " Key";
 				_topInstructions[1].GetComponent<Text>().text = "Press: T Key";
+			/*	if(_levelPanel.activeSelf)
+					_bossText.text = "Press \"" + CustomInput.KeyBoardSuper.ToString() + "\" for the boss level";
+				else
+					_bossText.text = "Press \"" + CustomInput.KeyBoardSuper.ToString() + "\" for the normal levels"; */
 			}
 
-			if(CustomInput.LeftFreshPress || CustomInput.CycleLeftFreshPress)
+			if(_levelPanel.activeSelf)
 			{
-				if(_levelCounter != NUMLEVELS) UpdateSelector(-1);
-			}
-			if(CustomInput.RightFreshPress || CustomInput.CycleRightFreshPress)
-			{
-				if(_levelCounter != NUMLEVELS) UpdateSelector(1);
+				if(CustomInput.LeftFreshPress || CustomInput.CycleLeftFreshPress)
+				{
+					if(_levelCounter != NUMLEVELS) UpdateSelector(-1);
+				}
+				if(CustomInput.RightFreshPress || CustomInput.CycleRightFreshPress)
+				{
+					if(_levelCounter != NUMLEVELS) UpdateSelector(1);
+				}
 			}
 			if(CustomInput.AcceptFreshPressDeleteOnRead)
 			{
@@ -69,6 +83,23 @@ namespace Assets.Scripts.Menu.MenuHanders
 			{
 				Data.GameManager.GotoLevel("training");
 			}
+			/*
+			if(CustomInput.SuperFreshPressDeleteOnRead)
+			{
+				if(_levelPanel.activeSelf)
+				{
+					_levelPanel.SetActive(false);
+					_bossPanel.SetActive(true);
+					UpdateSelector(0);
+					_selectedLevel = "boss";
+				}
+				else
+				{
+					_bossPanel.SetActive(false);
+					_levelPanel.SetActive(true);
+				}
+			}
+			*/
 		
 			_currZ = Mathf.SmoothDamp(_currZ, _z, ref _zVel, _speed);
 			
@@ -96,9 +127,6 @@ namespace Assets.Scripts.Menu.MenuHanders
 				break;
 			case 2:
 				_selectedLevel = "defense_level";
-				break;
-			case NUMLEVELS:
-				_selectedLevel = "boss";
 				break;
 			}
 		}

@@ -68,8 +68,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
             resolutionBar.minValue = 0;
             resolutionBar.maxValue = res.Length - 1;
             qualityBar.minValue = 0;
-            qualityBar.maxValue = QualitySettings.names.Length-1;
-            if(PlayerPrefs.HasKey(videoHash+0))
+            qualityBar.maxValue = QualitySettings.names.Length - 1;
+            if (PlayerPrefs.HasKey(videoHash + 0))
             {
                 if (PlayerPrefs.GetInt(videoHash + 0) >= res.Length)
                 {
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 }
                 else
                     resolutionBar.value = PlayerPrefs.GetInt(videoHash + 0);
-                fullscreen.isOn=(PlayerPrefs.GetInt(videoHash+1) == 0) ? false : true;
+                fullscreen.isOn = (PlayerPrefs.GetInt(videoHash + 1) == 0) ? false : true;
                 qualityBar.value = PlayerPrefs.GetInt(videoHash + 2);
             }
             else
@@ -96,18 +96,20 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         void Update()
         {
-            VidioStateMachine.video prevState = currState;
-            currState = machine.update();
-            if (prevState != currState)
+            if (Kernel.enabled)
             {
-                foreach (GameObject g in cursors)
-                    g.SetActive(false);
-                int cursor = (int)currState - 1;
-                if (cursor >= 0)
-                    cursors[cursor].SetActive(true);
+                VidioStateMachine.video prevState = currState;
+                currState = machine.update();
+                if (prevState != currState)
+                {
+                    foreach (GameObject g in cursors)
+                        g.SetActive(false);
+                    int cursor = (int)currState - 1;
+                    if (cursor >= 0)
+                        cursors[cursor].SetActive(true);
+                }
+                doState[(int)currState]();
             }
-            doState[(int)currState]();
-
         }
 
         public override void wake()
@@ -135,9 +137,9 @@ namespace Assets.Scripts.Menu.MenuHandlers
             {
                 touchedResolution = true;
                 int temp = (int)resolutionBar.value;
-                temp --;
+                temp--;
                 if (temp < 0)
-                    temp = res.Length;
+                    temp = res.Length - 1;
                 resolutionBar.value = temp;
                 doResolutions(temp);
             }
@@ -145,12 +147,14 @@ namespace Assets.Scripts.Menu.MenuHandlers
             {
                 touchedResolution = true;
                 int temp = (int)resolutionBar.value;
-                temp ++;
+                temp++;
                 if (temp >= res.Length)
                     temp = 0;
                 resolutionBar.value = temp;
                 doResolutions(temp);
             }
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doResolutions(int val)
         {
@@ -165,10 +169,12 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 fullscreenButton.isOn = !fullscreenButton.isOn;
                 doFullscreen();
             }
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doFullscreen()
         {
-            
+
         }
 
         private static void Quality()
@@ -179,7 +185,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 int temp = (int)qualityBar.value;
                 temp--;
                 if (temp < 0)
-                    temp = QualitySettings.names.Length;
+                    temp = QualitySettings.names.Length - 1;
                 qualityBar.value = temp;
                 doQuality(temp);
             }
@@ -193,6 +199,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
                 qualityBar.value = temp;
                 doQuality(temp);
             }
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doQuality(int val)
         {
@@ -203,6 +211,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doAccept();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doAccept()
         {
@@ -213,6 +223,8 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (CustomInput.AcceptFreshPressDeleteOnRead)
                 doExit();
+			if (CustomInput.CancelFreshPressDeleteOnRead)
+				doExit();
         }
         private static void doExit()
         {
@@ -221,7 +233,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void ResolutionClick()
         {
-            if(touchedResolution)
+            if (touchedResolution)
             {
                 touchedResolution = false;
                 return;
@@ -237,7 +249,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void FullscreenClick()
         {
-            if(touchedFullscreen)
+            if (touchedFullscreen)
             {
                 touchedFullscreen = false;
                 return;
@@ -253,7 +265,7 @@ namespace Assets.Scripts.Menu.MenuHandlers
 
         public void QualityClick()
         {
-            if(touchedQuality)
+            if (touchedQuality)
             {
                 touchedQuality = false;
                 return;

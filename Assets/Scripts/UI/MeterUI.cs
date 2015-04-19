@@ -42,7 +42,7 @@ namespace Assets.Scripts.UI
 		
 		void Update ()
 		{
-			if(!Data.GameManager.Paused)
+			if(!Data.GameManager.SuspendedState)
 			{
 				//meters are full so we can flash
 				if(_r.transform.localScale.x == 1 && _g.transform.localScale.x == 1 && _b.transform.localScale.x == 1 ) Full = true;

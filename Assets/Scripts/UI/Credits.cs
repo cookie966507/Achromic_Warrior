@@ -10,10 +10,6 @@ namespace Assets.Scripts.UI
 {
 	public class Credits : MonoBehaviour
 	{
-
-		//set the path for the credits.txt file
-		private string _path = "Assets/Resources/Files/credits.txt";
-
 		//list of the lines in credits
 		private List<string> _credits;
 		//list of the gamobjects representing text
@@ -30,28 +26,24 @@ namespace Assets.Scripts.UI
 		//speed for the text to flow upward
 		private float _speed = 2f;
 
+		public TextAsset _file;
+		private string _newText;
+
 
 
 		void Start () 
 		{
-			
-			// Create reader & open file
-			StreamReader _file = new StreamReader(_path);
 			//init lists
 			_credits = new List<string>();
 			_creditObjects = new List<GameObject>();
 
-			//temp var for each line
-			string _name;
-			//while there are more lines in the file
-			while((_name = _file.ReadLine()) != null)
+			_newText = _file.text.Replace(System.Environment.NewLine, "\n");
+
+			string[] _arr = _newText.Split(new char[] {'\n'});
+			for(int i = 0; i < _arr.Length; i++)
 			{
-				//add that line to the list
-				_credits.Add(_name);
+				_credits.Add(_arr[i]);
 			}
-			
-			//close the stream
-			_file.Close();
 
 			//init the credits
 			this.CreateCredits();
@@ -84,22 +76,22 @@ namespace Assets.Scripts.UI
 				//create new text object
 				GameObject _text = (GameObject)GameObject.Instantiate(_creditTextItem, _start.position + (new Vector3(0, _spacing * i, 0)), Quaternion.identity);
 				//formatting text
-				if(_c.EndsWith(" \\Title"))
+				if(_c.EndsWith(" <Title>"))
 				{
 					//make biggest
 					_text.GetComponent<TextMesh>().fontSize = 125;
 					//don't include the title tag in the name
-					_text.GetComponent<TextMesh>().text = _c.Substring(0, _c.LastIndexOf(" \\Title"));
+					_text.GetComponent<TextMesh>().text = _c.Substring(0, _c.LastIndexOf(" <Title>"));
 					//change text color
 					_text.GetComponent<TextMesh>().color = Color.black;
 				}
 				//formatting text
-				else if(_c.EndsWith(" \\Position"))
+				else if(_c.EndsWith(" <Position>"))
 				{
 					//make smaller than title
 					_text.GetComponent<TextMesh>().fontSize = 100;
 					//don't include the position tag in the name
-					_text.GetComponent<TextMesh>().text = _c.Substring(0, _c.LastIndexOf(" \\Position"));
+					_text.GetComponent<TextMesh>().text = _c.Substring(0, _c.LastIndexOf(" <Position>"));
 					//change text color
 					_text.GetComponent<TextMesh>().color = new Color(0.05f, 0.05f, 0.05f);
 				}
