@@ -43,16 +43,19 @@ namespace Assets.Scripts
         //pickup collides with something
         void OnCollisionEnter2D(Collision2D col)
         {
-            //if the pickup hits the ground
-            if (col.transform.tag.Equals("ground") || col.transform.tag.Equals("platform"))
-            {
-                //if falling down
-                if (GetComponent<Rigidbody2D>().velocity.y <= 0 && col.transform.position.y < transform.position.y)
-                {
-                    //stop velocity
-                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    GetComponent<Rigidbody2D>().gravityScale = 0;
-                }
+			if(!Data.GameManager.SuspendedState)
+			{
+	            //if the pickup hits the ground
+	            if (col.transform.tag.Equals("ground") || col.transform.tag.Equals("platform"))
+	            {
+	                //if falling down
+	                if (GetComponent<Rigidbody2D>().velocity.y <= 0 && col.transform.position.y < transform.position.y)
+	                {
+	                    //stop velocity
+	                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+	                    GetComponent<Rigidbody2D>().gravityScale = 0;
+	                }
+				}
             }
         }
 
