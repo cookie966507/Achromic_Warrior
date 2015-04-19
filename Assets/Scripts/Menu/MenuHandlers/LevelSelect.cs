@@ -17,11 +17,11 @@ namespace Assets.Scripts.Menu.MenuHanders
 		private float _speed = 0.1f;
 
 		public GameObject _levelPanel;
-		//public GameObject _bossPanel;
+		public GameObject _bossPanel;
 		private List<GameObject> _children;
 		private List<GameObject> _topInstructions;
 
-		//public Text _bossText;
+		public Text _bossText;
 
 		void Awake()
 		{
@@ -45,18 +45,18 @@ namespace Assets.Scripts.Menu.MenuHanders
 			{
 				_topInstructions[0].GetComponent<Text>().text = "Press: " + CustomInput.GamePadCancel + " Button";
 				_topInstructions[1].GetComponent<Text>().text = "Press: " + CustomInput.GamePadChangeColor + " Button";
-			/*	if(_levelPanel.activeSelf)
+				if(_levelPanel.activeSelf)
 					_bossText.text = "Press \"" + CustomInput.GamePadSuper + "\" for the boss level";
 				else
-					_bossText.text = "Press \"" + CustomInput.GamePadSuper + "\" for the normal levels"; */
+					_bossText.text = "Press \"" + CustomInput.GamePadSuper + "\" for the normal levels";
 			}
 			else{
 				_topInstructions[0].GetComponent<Text>().text = "Press: " + CustomInput.KeyBoardCancel.ToString() + " Key";
 				_topInstructions[1].GetComponent<Text>().text = "Press: T Key";
-			/*	if(_levelPanel.activeSelf)
+				if(_levelPanel.activeSelf)
 					_bossText.text = "Press \"" + CustomInput.KeyBoardSuper.ToString() + "\" for the boss level";
 				else
-					_bossText.text = "Press \"" + CustomInput.KeyBoardSuper.ToString() + "\" for the normal levels"; */
+					_bossText.text = "Press \"" + CustomInput.KeyBoardSuper.ToString() + "\" for the normal levels";
 			}
 
 			if(_levelPanel.activeSelf)
@@ -83,7 +83,7 @@ namespace Assets.Scripts.Menu.MenuHanders
 			{
 				Data.GameManager.GotoLevel("training");
 			}
-			/*
+
 			if(CustomInput.SuperFreshPressDeleteOnRead)
 			{
 				if(_levelPanel.activeSelf)
@@ -99,7 +99,6 @@ namespace Assets.Scripts.Menu.MenuHanders
 					_levelPanel.SetActive(true);
 				}
 			}
-			*/
 		
 			_currZ = Mathf.SmoothDamp(_currZ, _z, ref _zVel, _speed);
 			

@@ -107,11 +107,15 @@ namespace Assets.Scripts
 			case ColorElement.Violet:
 				_rand = Random.Range(0f, 1f);
 				return (_rand >= 0.75f ? ColorElement.Red : ColorElement.Blue);
-				
-			case ColorElement.White:
-				return ColorElement.White;
 			}
-			return ColorElement.Black;
+				
+			//case ColorElement.White:
+				//return ColorElement.White;
+			//}
+			_rand = Random.Range(0, 1.5f);
+			if(_rand < 0.5f) return ColorElement.Red;
+			else if(_rand < 1f) return ColorElement.Green;
+			else return ColorElement.Blue;
 		}
 
         //converting colors if using 0-255 instead of 0-1
