@@ -50,7 +50,7 @@ namespace Assets.Scripts.UI
 				_alpha = 0;
 				if(_alphaStep < 0) _alphaStep =-_alphaStep;
 			}
-			else Data.GameManager.GotoLevel("Menu");
+			else Data.GameManager.GotoLevel("Menu_Web");
 		}
 	}
 }
