@@ -228,6 +228,11 @@ namespace Assets.Scripts.Menu.MenuHandlers
         {
             if (update)
             {
+				Screen.SetResolution(
+					Screen.width,
+					Screen.height,
+					fullscreenButton.isOn);
+				FindObjectOfType<Camera>().ResetAspect();
                 QualitySettings.SetQualityLevel((int)qualityBar.value);
                 PlayerPrefs.SetInt(videoHash + 1, fullscreenButton.isOn ? 1 : 0);
                 PlayerPrefs.SetInt(videoHash + 2, (int)qualityBar.value);

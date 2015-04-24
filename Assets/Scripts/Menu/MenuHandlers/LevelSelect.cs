@@ -76,8 +76,11 @@ namespace Assets.Scripts.Menu.MenuHanders
 			}
 			if(CustomInput.CancelFreshPressDeleteOnRead)
 			{
-				//Data.GameManager.GotoLevel("Menu");
+				#if UNITY_WEBPLAYER
 				Data.GameManager.GotoLevel("Menu_Web");
+				#else
+				Data.GameManager.GotoLevel("Menu");
+				#endif
 			}
 
 			if((CustomInput.UsePad && CustomInput.ChangeColorFreshPressDeleteOnRead) || (!CustomInput.UsePad && Input.GetKeyDown(KeyCode.T)))
