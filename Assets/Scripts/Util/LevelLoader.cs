@@ -9,7 +9,15 @@ namespace Assets.Scripts.Util
 
 		public void LoadLevel()
 		{
-			Data.GameManager.GotoLevel(_level);
+			if(_level.Equals("Menu"))
+			{
+				#if UNITY_WEBPLAYER
+				Data.GameManager.GotoLevel("Menu_Web");
+				#else
+				Data.GameManager.GotoLevel("Menu");
+				#endif
+			}
+			else Data.GameManager.GotoLevel(_level);
 		}
 	}
 }

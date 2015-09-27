@@ -120,7 +120,9 @@ namespace Assets.Scripts.Menu.MenuHandlers
 		}
 		private static void doExit()
 		{
+			#if !UNITY_WEBPLAYER
 			ConformationWindow.getConformation(QuitGame);
+			#endif
 		}
 
 		static void QuitGame(bool update)
