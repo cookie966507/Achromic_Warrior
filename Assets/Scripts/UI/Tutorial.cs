@@ -34,8 +34,6 @@ namespace Assets.Scripts.UI
 		public static float _delay = 7f;
 		private static float _timer = 0f;
 
-		private static string _newText;
-
 		private static PlayerColorData _data;
 
 		private static TutorialStateMachine machine = new TutorialStateMachine();
@@ -62,10 +60,8 @@ namespace Assets.Scripts.UI
 			doState = new state[] { Move, Jump, Fall, Attack, Block, Cycle, Equip, Super, Exit };
 			_text = new List<string>();
 
-			_newText = _file.text.Replace(System.Environment.NewLine, "\n");
-
-			string[] _arr = _newText.Split(new char[] {'\n'});
-			for(int i = 0; i < _arr.Length; i++)
+            string[] _arr = _file.text.Split(new string[] { System.Environment.NewLine }, System.StringSplitOptions.None);
+            for (int i = 0; i < _arr.Length; i++)
 			{
 				_text.Add(_arr[i]);
 			}

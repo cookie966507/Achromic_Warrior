@@ -27,7 +27,6 @@ namespace Assets.Scripts.UI
 		private float _speed = 2f;
 
 		public TextAsset _file;
-		private string _newText;
 
 
 
@@ -37,9 +36,7 @@ namespace Assets.Scripts.UI
 			_credits = new List<string>();
 			_creditObjects = new List<GameObject>();
 
-			_newText = _file.text.Replace(System.Environment.NewLine, "\n");
-
-			string[] _arr = _newText.Split(new char[] {'\n'});
+			string[] _arr = _file.text.Split(new string[] {System.Environment.NewLine}, System.StringSplitOptions.None);
 			for(int i = 0; i < _arr.Length; i++)
 			{
 				_credits.Add(_arr[i]);
