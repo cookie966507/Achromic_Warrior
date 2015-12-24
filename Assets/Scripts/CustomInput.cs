@@ -763,8 +763,17 @@ namespace Assets.Scripts
             }
         }
 
+        private static CustomInput instance;
+
         void Awake()
         {
+            if (instance == null)
+                instance = this;
+            else
+            {
+                Destroy(this.gameObject);
+                return;
+            }
             bools = 0;
             boolsUp = 0;
             boolsHeld = 0;
@@ -890,7 +899,7 @@ namespace Assets.Scripts
         {
             float input = Input.GetAxis(axes);
             bool key = false, keyUp = false;
-            if (axes == LEFT_STICK_LEFT || axes == LEFT_STICK_UP || axes == RIGHT_STICK_LEFT || axes == RIGHT_STICK_UP || axes == DPAD_LEFT || axes == DPAD_DOWN || axes == RIGHT_TRIGGER)
+            if (axes == LEFT_STICK_LEFT || axes == LEFT_STICK_UP || axes == RIGHT_STICK_LEFT || axes == RIGHT_STICK_UP || axes == DPAD_LEFT || axes == DPAD_DOWN)
             {
                 if (input < 0)
                     key = true;
